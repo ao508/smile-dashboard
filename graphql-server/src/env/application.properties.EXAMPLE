@@ -42,3 +42,9 @@ web_cert_pem=
 
 [oncotree]
 oncotree_api=
+
+[igolims]
+request_endpoint=
+usrename=
+password=
+

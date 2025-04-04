@@ -214,3 +214,32 @@ query GetPatientIdsTriplets($patientIds: [String!]!) {
     PT_MRN
   }
 }
+
+query GetIgoLimsRequestJson($requestId: String!) {
+  igoLimsRequestJson(requestId: $requestId) {
+    requestId
+    recipe
+    projectManagerName
+    piEmail
+    labHeadName
+    labHeadEmail
+    investigatorName
+    investigatorEmail
+    dataAnalystName
+    dataAnalystEmail
+    otherContactEmails
+    dataAccessEmails
+    qcAccessEmails
+    strand
+    libraryType
+    isCmoRequest
+    bicAnalysis
+    deliveryDate
+    pooledNormals
+    samples {
+      investigatorSampleId
+      igoSampleId
+      igoComplete
+    }
+  }
+}

@@ -1524,6 +1524,30 @@ export type DeleteInfo = {
   relationshipsDeleted: Scalars["Int"];
 };
 
+export type IgoLimsRequestJson = {
+  __typename?: "IgoLimsRequestJson";
+  bicAnalysis?: Maybe<Scalars["Boolean"]>;
+  dataAccessEmails?: Maybe<Scalars["String"]>;
+  dataAnalystEmail?: Maybe<Scalars["String"]>;
+  dataAnalystName?: Maybe<Scalars["String"]>;
+  deliveryDate?: Maybe<Scalars["Int"]>;
+  investigatorEmail?: Maybe<Scalars["String"]>;
+  investigatorName?: Maybe<Scalars["String"]>;
+  isCmoRequest?: Maybe<Scalars["Boolean"]>;
+  labHeadEmail?: Maybe<Scalars["String"]>;
+  labHeadName?: Maybe<Scalars["String"]>;
+  libraryType?: Maybe<Scalars["String"]>;
+  otherContactEmails?: Maybe<Scalars["String"]>;
+  piEmail?: Maybe<Scalars["String"]>;
+  pooledNormals?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  projectManagerName?: Maybe<Scalars["String"]>;
+  qcAccessEmails?: Maybe<Scalars["String"]>;
+  recipe?: Maybe<Scalars["String"]>;
+  requestId: Scalars["String"];
+  samples?: Maybe<Array<Maybe<RequestSampleJson>>>;
+  strand?: Maybe<Scalars["String"]>;
+};
+
 export type MafComplete = {
   __typename?: "MafComplete";
   date: Scalars["String"];
@@ -2056,28 +2080,16 @@ export type MutationDeleteTemposArgs = {
 };
 
 export type MutationUpdateBamCompletesArgs = {
-  connect?: InputMaybe<BamCompleteConnectInput>;
-  create?: InputMaybe<BamCompleteRelationInput>;
-  delete?: InputMaybe<BamCompleteDeleteInput>;
-  disconnect?: InputMaybe<BamCompleteDisconnectInput>;
   update?: InputMaybe<BamCompleteUpdateInput>;
   where?: InputMaybe<BamCompleteWhere>;
 };
 
 export type MutationUpdateCohortCompletesArgs = {
-  connect?: InputMaybe<CohortCompleteConnectInput>;
-  create?: InputMaybe<CohortCompleteRelationInput>;
-  delete?: InputMaybe<CohortCompleteDeleteInput>;
-  disconnect?: InputMaybe<CohortCompleteDisconnectInput>;
   update?: InputMaybe<CohortCompleteUpdateInput>;
   where?: InputMaybe<CohortCompleteWhere>;
 };
 
 export type MutationUpdateCohortsArgs = {
-  connect?: InputMaybe<CohortConnectInput>;
-  create?: InputMaybe<CohortRelationInput>;
-  delete?: InputMaybe<CohortDeleteInput>;
-  disconnect?: InputMaybe<CohortDisconnectInput>;
   update?: InputMaybe<CohortUpdateInput>;
   where?: InputMaybe<CohortWhere>;
 };
@@ -2087,109 +2099,61 @@ export type MutationUpdateDashboardSamplesArgs = {
 };
 
 export type MutationUpdateMafCompletesArgs = {
-  connect?: InputMaybe<MafCompleteConnectInput>;
-  create?: InputMaybe<MafCompleteRelationInput>;
-  delete?: InputMaybe<MafCompleteDeleteInput>;
-  disconnect?: InputMaybe<MafCompleteDisconnectInput>;
   update?: InputMaybe<MafCompleteUpdateInput>;
   where?: InputMaybe<MafCompleteWhere>;
 };
 
 export type MutationUpdatePatientAliasesArgs = {
-  connect?: InputMaybe<PatientAliasConnectInput>;
-  create?: InputMaybe<PatientAliasRelationInput>;
-  delete?: InputMaybe<PatientAliasDeleteInput>;
-  disconnect?: InputMaybe<PatientAliasDisconnectInput>;
   update?: InputMaybe<PatientAliasUpdateInput>;
   where?: InputMaybe<PatientAliasWhere>;
 };
 
 export type MutationUpdatePatientsArgs = {
-  connect?: InputMaybe<PatientConnectInput>;
-  create?: InputMaybe<PatientRelationInput>;
-  delete?: InputMaybe<PatientDeleteInput>;
-  disconnect?: InputMaybe<PatientDisconnectInput>;
   update?: InputMaybe<PatientUpdateInput>;
   where?: InputMaybe<PatientWhere>;
 };
 
 export type MutationUpdateProjectsArgs = {
-  connect?: InputMaybe<ProjectConnectInput>;
-  create?: InputMaybe<ProjectRelationInput>;
-  delete?: InputMaybe<ProjectDeleteInput>;
-  disconnect?: InputMaybe<ProjectDisconnectInput>;
   update?: InputMaybe<ProjectUpdateInput>;
   where?: InputMaybe<ProjectWhere>;
 };
 
 export type MutationUpdateQcCompletesArgs = {
-  connect?: InputMaybe<QcCompleteConnectInput>;
-  create?: InputMaybe<QcCompleteRelationInput>;
-  delete?: InputMaybe<QcCompleteDeleteInput>;
-  disconnect?: InputMaybe<QcCompleteDisconnectInput>;
   update?: InputMaybe<QcCompleteUpdateInput>;
   where?: InputMaybe<QcCompleteWhere>;
 };
 
 export type MutationUpdateRequestMetadataArgs = {
-  connect?: InputMaybe<RequestMetadataConnectInput>;
-  create?: InputMaybe<RequestMetadataRelationInput>;
-  delete?: InputMaybe<RequestMetadataDeleteInput>;
-  disconnect?: InputMaybe<RequestMetadataDisconnectInput>;
   update?: InputMaybe<RequestMetadataUpdateInput>;
   where?: InputMaybe<RequestMetadataWhere>;
 };
 
 export type MutationUpdateRequestsArgs = {
-  connect?: InputMaybe<RequestConnectInput>;
-  create?: InputMaybe<RequestRelationInput>;
-  delete?: InputMaybe<RequestDeleteInput>;
-  disconnect?: InputMaybe<RequestDisconnectInput>;
   update?: InputMaybe<RequestUpdateInput>;
   where?: InputMaybe<RequestWhere>;
 };
 
 export type MutationUpdateSampleAliasesArgs = {
-  connect?: InputMaybe<SampleAliasConnectInput>;
-  create?: InputMaybe<SampleAliasRelationInput>;
-  delete?: InputMaybe<SampleAliasDeleteInput>;
-  disconnect?: InputMaybe<SampleAliasDisconnectInput>;
   update?: InputMaybe<SampleAliasUpdateInput>;
   where?: InputMaybe<SampleAliasWhere>;
 };
 
 export type MutationUpdateSampleMetadataArgs = {
-  connect?: InputMaybe<SampleMetadataConnectInput>;
-  create?: InputMaybe<SampleMetadataRelationInput>;
-  delete?: InputMaybe<SampleMetadataDeleteInput>;
-  disconnect?: InputMaybe<SampleMetadataDisconnectInput>;
   update?: InputMaybe<SampleMetadataUpdateInput>;
   where?: InputMaybe<SampleMetadataWhere>;
 };
 
 export type MutationUpdateSamplesArgs = {
-  connect?: InputMaybe<SampleConnectInput>;
-  create?: InputMaybe<SampleRelationInput>;
-  delete?: InputMaybe<SampleDeleteInput>;
-  disconnect?: InputMaybe<SampleDisconnectInput>;
   update?: InputMaybe<SampleUpdateInput>;
   where?: InputMaybe<SampleWhere>;
 };
 
 export type MutationUpdateStatusesArgs = {
-  connect?: InputMaybe<StatusConnectInput>;
-  create?: InputMaybe<StatusRelationInput>;
-  delete?: InputMaybe<StatusDeleteInput>;
-  disconnect?: InputMaybe<StatusDisconnectInput>;
   update?: InputMaybe<StatusUpdateInput>;
   where?: InputMaybe<StatusWhere>;
 };
 
 export type MutationUpdateTemposArgs = {
-  connect?: InputMaybe<TempoConnectInput>;
-  create?: InputMaybe<TempoRelationInput>;
-  delete?: InputMaybe<TempoDeleteInput>;
-  disconnect?: InputMaybe<TempoDisconnectInput>;
   update?: InputMaybe<TempoUpdateInput>;
   where?: InputMaybe<TempoWhere>;
 };
@@ -3818,6 +3782,7 @@ export type Query = {
   dashboardPatients: Array<DashboardPatient>;
   dashboardRequests: Array<DashboardRequest>;
   dashboardSamples: Array<DashboardSample>;
+  igoLimsRequestJson?: Maybe<IgoLimsRequestJson>;
   mafCompletes: Array<MafComplete>;
   mafCompletesAggregate: MafCompleteAggregateSelection;
   mafCompletesConnection: MafCompletesConnection;
@@ -3936,6 +3901,10 @@ export type QueryDashboardSamplesArgs = {
   offset: Scalars["Int"];
   searchVals?: InputMaybe<Array<Scalars["String"]>>;
   sort: DashboardRecordSort;
+};
+
+export type QueryIgoLimsRequestJsonArgs = {
+  requestId: Scalars["String"];
 };
 
 export type QueryMafCompletesArgs = {
@@ -5498,6 +5467,13 @@ export type RequestSampleHasSampleSamplesNodeAggregateSelection = {
   sampleCategory: StringAggregateSelection;
   sampleClass: StringAggregateSelection;
   smileSampleId: StringAggregateSelection;
+};
+
+export type RequestSampleJson = {
+  __typename?: "RequestSampleJson";
+  igoComplete?: Maybe<Scalars["Boolean"]>;
+  igoSampleId?: Maybe<Scalars["String"]>;
+  investigatorSampleId?: Maybe<Scalars["String"]>;
 };
 
 /** Fields to sort Requests by. The order in which sorts are applied is not guaranteed when specifying many fields in one RequestSort object. */
@@ -10831,6 +10807,42 @@ export type GetPatientIdsTripletsQuery = {
   } | null> | null;
 };
 
+export type GetIgoLimsRequestJsonQueryVariables = Exact<{
+  requestId: Scalars["String"];
+}>;
+
+export type GetIgoLimsRequestJsonQuery = {
+  __typename?: "Query";
+  igoLimsRequestJson?: {
+    __typename?: "IgoLimsRequestJson";
+    requestId: string;
+    recipe?: string | null;
+    projectManagerName?: string | null;
+    piEmail?: string | null;
+    labHeadName?: string | null;
+    labHeadEmail?: string | null;
+    investigatorName?: string | null;
+    investigatorEmail?: string | null;
+    dataAnalystName?: string | null;
+    dataAnalystEmail?: string | null;
+    otherContactEmails?: string | null;
+    dataAccessEmails?: string | null;
+    qcAccessEmails?: string | null;
+    strand?: string | null;
+    libraryType?: string | null;
+    isCmoRequest?: boolean | null;
+    bicAnalysis?: boolean | null;
+    deliveryDate?: number | null;
+    pooledNormals?: Array<string | null> | null;
+    samples?: Array<{
+      __typename?: "RequestSampleJson";
+      investigatorSampleId?: string | null;
+      igoSampleId?: string | null;
+      igoComplete?: boolean | null;
+    } | null> | null;
+  } | null;
+};
+
 export const DashboardSamplePartsFragmentDoc = gql`
   fragment DashboardSampleParts on DashboardSample {
     smileSampleId
@@ -11365,4 +11377,85 @@ export type GetPatientIdsTripletsLazyQueryHookResult = ReturnType<
 export type GetPatientIdsTripletsQueryResult = Apollo.QueryResult<
   GetPatientIdsTripletsQuery,
   GetPatientIdsTripletsQueryVariables
+>;
+export const GetIgoLimsRequestJsonDocument = gql`
+  query GetIgoLimsRequestJson($requestId: String!) {
+    igoLimsRequestJson(requestId: $requestId) {
+      requestId
+      recipe
+      projectManagerName
+      piEmail
+      labHeadName
+      labHeadEmail
+      investigatorName
+      investigatorEmail
+      dataAnalystName
+      dataAnalystEmail
+      otherContactEmails
+      dataAccessEmails
+      qcAccessEmails
+      strand
+      libraryType
+      isCmoRequest
+      bicAnalysis
+      deliveryDate
+      pooledNormals
+      samples {
+        investigatorSampleId
+        igoSampleId
+        igoComplete
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetIgoLimsRequestJsonQuery__
+ *
+ * To run a query within a React component, call `useGetIgoLimsRequestJsonQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIgoLimsRequestJsonQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIgoLimsRequestJsonQuery({
+ *   variables: {
+ *      requestId: // value for 'requestId'
+ *   },
+ * });
+ */
+export function useGetIgoLimsRequestJsonQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetIgoLimsRequestJsonQuery,
+    GetIgoLimsRequestJsonQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetIgoLimsRequestJsonQuery,
+    GetIgoLimsRequestJsonQueryVariables
+  >(GetIgoLimsRequestJsonDocument, options);
+}
+export function useGetIgoLimsRequestJsonLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetIgoLimsRequestJsonQuery,
+    GetIgoLimsRequestJsonQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetIgoLimsRequestJsonQuery,
+    GetIgoLimsRequestJsonQueryVariables
+  >(GetIgoLimsRequestJsonDocument, options);
+}
+export type GetIgoLimsRequestJsonQueryHookResult = ReturnType<
+  typeof useGetIgoLimsRequestJsonQuery
+>;
+export type GetIgoLimsRequestJsonLazyQueryHookResult = ReturnType<
+  typeof useGetIgoLimsRequestJsonLazyQuery
+>;
+export type GetIgoLimsRequestJsonQueryResult = Apollo.QueryResult<
+  GetIgoLimsRequestJsonQuery,
+  GetIgoLimsRequestJsonQueryVariables
 >;

@@ -7,6 +7,7 @@ import CohortsPage from "./pages/cohorts/CohortsPage";
 import LoginSuccessPage from "./pages/auth/LoginSuccessPage";
 import SmileNavBar from "./shared/components/SmileNavBar";
 import { getUserEmail } from "./utils/getUserEmail";
+import IgoLimsEditorPage from "./pages/igolims/IgoLimsEditor";
 
 export default function App() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -47,6 +48,8 @@ export default function App() {
           >
             <Route path=":cohortId" />
           </Route>
+
+          <Route path="/igolims/" element={<IgoLimsEditorPage />}></Route>
           <Route path="/auth/login-success" element={<LoginSuccessPage />} />
         </>
       </Routes>

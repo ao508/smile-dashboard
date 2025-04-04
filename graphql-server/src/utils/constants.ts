@@ -38,6 +38,10 @@ export const props = {
   web_cert_pem: properties.get("web.web_cert_pem"),
 
   oncotree_api: properties.get("oncotree.oncotree_api"),
+
+  lims_request_endpoint: properties.get("igolims.request_endpoint"),
+  lims_username: properties.get("igolims.username"),
+  lims_password: properties.get("igolims.password"),
 };
 
 export const REACT_APP_EXPRESS_SERVER_ORIGIN =
