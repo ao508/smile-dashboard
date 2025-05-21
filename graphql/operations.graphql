@@ -227,3 +227,87 @@ query GetPatientIdsTriplets($patientIds: [String!]!) {
     PT_MRN
   }
 }
+
+query GetIgoLimsRequest($requestId: String!) {
+  igoLimsRequest(requestId: $requestId) {
+    requestId
+    requestName
+    recipe
+    projectManagerName
+    piEmail
+    labHeadName
+    labHeadEmail
+    investigatorName
+    investigatorEmail
+    dataAnalystName
+    dataAnalystEmail
+    otherContactEmails
+    dataAccessEmails
+    qcAccessEmails
+    strand
+    libraryType
+    isCmoRequest
+    bicAnalysis
+    neoAg
+    deliveryDate
+    deliveryPath
+    pooledNormals
+    samples {
+      investigatorSampleId
+      igoSampleId
+      igoComplete
+    }
+  }
+}
+
+query GetIgoLimsSampleManifest($igoSampleId: String!) {
+  igoLimsSampleManifest(igoSampleId: $igoSampleId) {
+    igoId
+    altid
+    cmoSampleName
+    sampleName
+    cmoSampleClass
+    cmoPatientId
+    investigatorSampleId
+    oncoTreeCode
+    tumorOrNormal
+    tissueLocation
+    specimenType
+    sampleOrigin
+    preservation
+    collectionYear
+    sex
+    species
+    tubeId
+    cfDNA2dBarcode
+    baitSet
+    estimatedPurity
+    igoLimsQcReports
+    igoLimsLibraries {
+      barcodeId
+      barcodeIndex
+      libraryIgoId
+      libraryVolume
+      libraryConcentrationNgul
+      dnaInputNg
+      captureConcentrationNm
+      captureInputNg
+      captureName
+      igoLimsRuns {
+        runMode
+        runId
+        flowCellId
+        readLength
+        runDate
+        flowCellLanes
+        fastqs
+      }
+    }
+    igoLimsCmoSampleIdFields {
+      naToExtract
+      normalizedPatientId
+      sampleType
+      recipe
+    }
+  }
+}

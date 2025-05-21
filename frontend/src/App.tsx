@@ -7,6 +7,7 @@ import CohortsPage from "./pages/cohorts/CohortsPage";
 import LoginSuccessPage from "./pages/auth/LoginSuccessPage";
 import SmileNavBar from "./shared/components/SmileNavBar";
 import { getUserEmail } from "./utils/getUserEmail";
+import DataTools from "./pages/tools/DataTools";
 
 export default function App() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -48,6 +49,7 @@ export default function App() {
             <Route path=":cohortId" />
           </Route>
           <Route path="/auth/login-success" element={<LoginSuccessPage />} />
+          <Route path="/datatools" element={<DataTools />} />
         </>
       </Routes>
     </main>

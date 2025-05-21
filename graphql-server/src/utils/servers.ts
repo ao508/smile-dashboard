@@ -6,6 +6,7 @@ import { buildNeo4jDbSchema } from "../schemas/neo4j";
 import { buildCustomSchema } from "../schemas/custom";
 import { mergeSchemas } from "@graphql-tools/schema";
 import { buildOracleDbSchema } from "../schemas/oracle";
+import { buildIgoLimsRestSchema } from "../schemas/igodatatools";
 import { ApolloServer } from "apollo-server-express";
 import {
   ApolloServerPluginDrainHttpServer,
@@ -49,8 +50,9 @@ export async function initializeApolloServer(
   const { neo4jDbSchema, ogm } = await buildNeo4jDbSchema();
   const customSchema = await buildCustomSchema(ogm);
   const oracleDbSchema = await buildOracleDbSchema();
+  const igoLimsSchema = await buildIgoLimsRestSchema();
   const mergedSchema = mergeSchemas({
-    schemas: [neo4jDbSchema, oracleDbSchema, customSchema],
+    schemas: [neo4jDbSchema, oracleDbSchema, customSchema, igoLimsSchema],
   });
 
   const inMemoryCache = await initializeInMemoryCache();

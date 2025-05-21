@@ -39,6 +39,12 @@ export const props = {
   web_cert_pem: properties.get("web.web_cert_pem"),
 
   oncotree_api: properties.get("oncotree.oncotree_api"),
+
+  igolims_base_url: properties.get("igolims.base_url"),
+  igolims_request_endpoint: properties.get("igolims.request_endpoint"),
+  igolims_sample_endpoint: properties.get("igolims.sample_endpoint"),
+  igolims_username: properties.get("igolims.username"),
+  igolims_password: properties.get("igolims.password"),
 };
 
 export const REACT_APP_EXPRESS_SERVER_ORIGIN =
