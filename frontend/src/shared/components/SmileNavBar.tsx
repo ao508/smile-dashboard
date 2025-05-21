@@ -34,6 +34,7 @@ export default function SmileNavBar({
           <NavLink href="/patients">Patients</NavLink>
           <NavLink href="/samples">Samples</NavLink>
           <NavLink href="/cohorts">Cohorts</NavLink>
+          <NavLink href="/datatools">Data Tools</NavLink>
         </Nav>
         {userEmail && (
           <div className="ms-auto d-none d-md-flex">

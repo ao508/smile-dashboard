@@ -1823,6 +1823,100 @@ export type DeleteInfo = {
   relationshipsDeleted: Scalars["Int"];
 };
 
+export type IgoLimsCmoSampleIdFields = {
+  __typename?: "IgoLimsCmoSampleIdFields";
+  naToExtract?: Maybe<Scalars["String"]>;
+  normalizedPatientId?: Maybe<Scalars["String"]>;
+  recipe?: Maybe<Scalars["String"]>;
+  sampleType?: Maybe<Scalars["String"]>;
+};
+
+export type IgoLimsLibrary = {
+  __typename?: "IgoLimsLibrary";
+  barcodeId?: Maybe<Scalars["String"]>;
+  barcodeIndex?: Maybe<Scalars["String"]>;
+  captureConcentrationNm?: Maybe<Scalars["String"]>;
+  captureInputNg?: Maybe<Scalars["String"]>;
+  captureName?: Maybe<Scalars["String"]>;
+  dnaInputNg?: Maybe<Scalars["Float"]>;
+  igoLimsRuns?: Maybe<Array<Maybe<IgoLimsRun>>>;
+  libraryConcentrationNgul?: Maybe<Scalars["Float"]>;
+  libraryIgoId?: Maybe<Scalars["String"]>;
+  libraryVolume?: Maybe<Scalars["Float"]>;
+};
+
+export type IgoLimsRequest = {
+  __typename?: "IgoLimsRequest";
+  bicAnalysis?: Maybe<Scalars["Boolean"]>;
+  dataAccessEmails?: Maybe<Scalars["String"]>;
+  dataAnalystEmail?: Maybe<Scalars["String"]>;
+  dataAnalystName?: Maybe<Scalars["String"]>;
+  deliveryDate?: Maybe<Scalars["Float"]>;
+  deliveryPath?: Maybe<Scalars["String"]>;
+  investigatorEmail?: Maybe<Scalars["String"]>;
+  investigatorName?: Maybe<Scalars["String"]>;
+  isCmoRequest?: Maybe<Scalars["Boolean"]>;
+  labHeadEmail?: Maybe<Scalars["String"]>;
+  labHeadName?: Maybe<Scalars["String"]>;
+  libraryType?: Maybe<Scalars["String"]>;
+  neoAg?: Maybe<Scalars["Boolean"]>;
+  otherContactEmails?: Maybe<Scalars["String"]>;
+  piEmail?: Maybe<Scalars["String"]>;
+  pooledNormals?: Maybe<Scalars["String"]>;
+  projectManagerName?: Maybe<Scalars["String"]>;
+  qcAccessEmails?: Maybe<Scalars["String"]>;
+  recipe?: Maybe<Scalars["String"]>;
+  requestId?: Maybe<Scalars["String"]>;
+  requestName?: Maybe<Scalars["String"]>;
+  samples?: Maybe<Array<Maybe<IgoLimsRequestSample>>>;
+  strand?: Maybe<Scalars["String"]>;
+};
+
+export type IgoLimsRequestSample = {
+  __typename?: "IgoLimsRequestSample";
+  igoComplete?: Maybe<Scalars["Boolean"]>;
+  igoSampleId?: Maybe<Scalars["String"]>;
+  investigatorSampleId?: Maybe<Scalars["String"]>;
+};
+
+export type IgoLimsRun = {
+  __typename?: "IgoLimsRun";
+  fastqs?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  flowCellId?: Maybe<Scalars["String"]>;
+  flowCellLanes?: Maybe<Array<Maybe<Scalars["Int"]>>>;
+  readLength?: Maybe<Scalars["String"]>;
+  runDate?: Maybe<Scalars["String"]>;
+  runId?: Maybe<Scalars["String"]>;
+  runMode?: Maybe<Scalars["String"]>;
+};
+
+export type IgoLimsSampleManifest = {
+  __typename?: "IgoLimsSampleManifest";
+  altid?: Maybe<Scalars["String"]>;
+  baitSet?: Maybe<Scalars["String"]>;
+  cfDNA2dBarcode?: Maybe<Scalars["String"]>;
+  cmoPatientId?: Maybe<Scalars["String"]>;
+  cmoSampleClass?: Maybe<Scalars["String"]>;
+  cmoSampleName?: Maybe<Scalars["String"]>;
+  collectionYear?: Maybe<Scalars["String"]>;
+  estimatedPurity?: Maybe<Scalars["Float"]>;
+  igoId?: Maybe<Scalars["String"]>;
+  igoLimsCmoSampleIdFields?: Maybe<IgoLimsCmoSampleIdFields>;
+  igoLimsLibraries?: Maybe<Array<Maybe<IgoLimsLibrary>>>;
+  igoLimsQcReports?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  investigatorSampleId?: Maybe<Scalars["String"]>;
+  oncoTreeCode?: Maybe<Scalars["String"]>;
+  preservation?: Maybe<Scalars["String"]>;
+  sampleName?: Maybe<Scalars["String"]>;
+  sampleOrigin?: Maybe<Scalars["String"]>;
+  sex?: Maybe<Scalars["String"]>;
+  species?: Maybe<Scalars["String"]>;
+  specimenType?: Maybe<Scalars["String"]>;
+  tissueLocation?: Maybe<Scalars["String"]>;
+  tubeId?: Maybe<Scalars["String"]>;
+  tumorOrNormal?: Maybe<Scalars["String"]>;
+};
+
 export type MafComplete = {
   __typename?: "MafComplete";
   date: Scalars["String"];
@@ -4077,6 +4171,8 @@ export type Query = {
   dbGaps: Array<DbGap>;
   dbGapsAggregate: DbGapAggregateSelection;
   dbGapsConnection: DbGapsConnection;
+  igoLimsRequest?: Maybe<IgoLimsRequest>;
+  igoLimsSampleManifest?: Maybe<Array<Maybe<IgoLimsSampleManifest>>>;
   mafCompletes: Array<MafComplete>;
   mafCompletesAggregate: MafCompleteAggregateSelection;
   mafCompletesConnection: MafCompletesConnection;
@@ -4211,6 +4307,14 @@ export type QueryDbGapsConnectionArgs = {
   first?: InputMaybe<Scalars["Int"]>;
   sort?: InputMaybe<Array<InputMaybe<DbGapSort>>>;
   where?: InputMaybe<DbGapWhere>;
+};
+
+export type QueryIgoLimsRequestArgs = {
+  requestId: Scalars["String"];
+};
+
+export type QueryIgoLimsSampleManifestArgs = {
+  igoSampleId: Scalars["String"];
 };
 
 export type QueryMafCompletesArgs = {
@@ -11324,6 +11428,106 @@ export type GetPatientIdsTripletsQuery = {
   } | null> | null;
 };
 
+export type GetIgoLimsRequestQueryVariables = Exact<{
+  requestId: Scalars["String"];
+}>;
+
+export type GetIgoLimsRequestQuery = {
+  __typename?: "Query";
+  igoLimsRequest?: {
+    __typename?: "IgoLimsRequest";
+    requestId?: string | null;
+    requestName?: string | null;
+    recipe?: string | null;
+    projectManagerName?: string | null;
+    piEmail?: string | null;
+    labHeadName?: string | null;
+    labHeadEmail?: string | null;
+    investigatorName?: string | null;
+    investigatorEmail?: string | null;
+    dataAnalystName?: string | null;
+    dataAnalystEmail?: string | null;
+    otherContactEmails?: string | null;
+    dataAccessEmails?: string | null;
+    qcAccessEmails?: string | null;
+    strand?: string | null;
+    libraryType?: string | null;
+    isCmoRequest?: boolean | null;
+    bicAnalysis?: boolean | null;
+    neoAg?: boolean | null;
+    deliveryDate?: number | null;
+    deliveryPath?: string | null;
+    pooledNormals?: string | null;
+    samples?: Array<{
+      __typename?: "IgoLimsRequestSample";
+      investigatorSampleId?: string | null;
+      igoSampleId?: string | null;
+      igoComplete?: boolean | null;
+    } | null> | null;
+  } | null;
+};
+
+export type GetIgoLimsSampleManifestQueryVariables = Exact<{
+  igoSampleId: Scalars["String"];
+}>;
+
+export type GetIgoLimsSampleManifestQuery = {
+  __typename?: "Query";
+  igoLimsSampleManifest?: Array<{
+    __typename?: "IgoLimsSampleManifest";
+    igoId?: string | null;
+    altid?: string | null;
+    cmoSampleName?: string | null;
+    sampleName?: string | null;
+    cmoSampleClass?: string | null;
+    cmoPatientId?: string | null;
+    investigatorSampleId?: string | null;
+    oncoTreeCode?: string | null;
+    tumorOrNormal?: string | null;
+    tissueLocation?: string | null;
+    specimenType?: string | null;
+    sampleOrigin?: string | null;
+    preservation?: string | null;
+    collectionYear?: string | null;
+    sex?: string | null;
+    species?: string | null;
+    tubeId?: string | null;
+    cfDNA2dBarcode?: string | null;
+    baitSet?: string | null;
+    estimatedPurity?: number | null;
+    igoLimsQcReports?: Array<string | null> | null;
+    igoLimsLibraries?: Array<{
+      __typename?: "IgoLimsLibrary";
+      barcodeId?: string | null;
+      barcodeIndex?: string | null;
+      libraryIgoId?: string | null;
+      libraryVolume?: number | null;
+      libraryConcentrationNgul?: number | null;
+      dnaInputNg?: number | null;
+      captureConcentrationNm?: string | null;
+      captureInputNg?: string | null;
+      captureName?: string | null;
+      igoLimsRuns?: Array<{
+        __typename?: "IgoLimsRun";
+        runMode?: string | null;
+        runId?: string | null;
+        flowCellId?: string | null;
+        readLength?: string | null;
+        runDate?: string | null;
+        flowCellLanes?: Array<number | null> | null;
+        fastqs?: Array<string | null> | null;
+      } | null> | null;
+    } | null> | null;
+    igoLimsCmoSampleIdFields?: {
+      __typename?: "IgoLimsCmoSampleIdFields";
+      naToExtract?: string | null;
+      normalizedPatientId?: string | null;
+      sampleType?: string | null;
+      recipe?: string | null;
+    } | null;
+  } | null> | null;
+};
+
 export const DashboardSamplePartsFragmentDoc = gql`
   fragment DashboardSampleParts on DashboardSample {
     smileSampleId
@@ -11886,4 +12090,192 @@ export type GetPatientIdsTripletsLazyQueryHookResult = ReturnType<
 export type GetPatientIdsTripletsQueryResult = Apollo.QueryResult<
   GetPatientIdsTripletsQuery,
   GetPatientIdsTripletsQueryVariables
+>;
+export const GetIgoLimsRequestDocument = gql`
+  query GetIgoLimsRequest($requestId: String!) {
+    igoLimsRequest(requestId: $requestId) {
+      requestId
+      requestName
+      recipe
+      projectManagerName
+      piEmail
+      labHeadName
+      labHeadEmail
+      investigatorName
+      investigatorEmail
+      dataAnalystName
+      dataAnalystEmail
+      otherContactEmails
+      dataAccessEmails
+      qcAccessEmails
+      strand
+      libraryType
+      isCmoRequest
+      bicAnalysis
+      neoAg
+      deliveryDate
+      deliveryPath
+      pooledNormals
+      samples {
+        investigatorSampleId
+        igoSampleId
+        igoComplete
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetIgoLimsRequestQuery__
+ *
+ * To run a query within a React component, call `useGetIgoLimsRequestQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIgoLimsRequestQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIgoLimsRequestQuery({
+ *   variables: {
+ *      requestId: // value for 'requestId'
+ *   },
+ * });
+ */
+export function useGetIgoLimsRequestQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetIgoLimsRequestQuery,
+    GetIgoLimsRequestQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetIgoLimsRequestQuery,
+    GetIgoLimsRequestQueryVariables
+  >(GetIgoLimsRequestDocument, options);
+}
+export function useGetIgoLimsRequestLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetIgoLimsRequestQuery,
+    GetIgoLimsRequestQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetIgoLimsRequestQuery,
+    GetIgoLimsRequestQueryVariables
+  >(GetIgoLimsRequestDocument, options);
+}
+export type GetIgoLimsRequestQueryHookResult = ReturnType<
+  typeof useGetIgoLimsRequestQuery
+>;
+export type GetIgoLimsRequestLazyQueryHookResult = ReturnType<
+  typeof useGetIgoLimsRequestLazyQuery
+>;
+export type GetIgoLimsRequestQueryResult = Apollo.QueryResult<
+  GetIgoLimsRequestQuery,
+  GetIgoLimsRequestQueryVariables
+>;
+export const GetIgoLimsSampleManifestDocument = gql`
+  query GetIgoLimsSampleManifest($igoSampleId: String!) {
+    igoLimsSampleManifest(igoSampleId: $igoSampleId) {
+      igoId
+      altid
+      cmoSampleName
+      sampleName
+      cmoSampleClass
+      cmoPatientId
+      investigatorSampleId
+      oncoTreeCode
+      tumorOrNormal
+      tissueLocation
+      specimenType
+      sampleOrigin
+      preservation
+      collectionYear
+      sex
+      species
+      tubeId
+      cfDNA2dBarcode
+      baitSet
+      estimatedPurity
+      igoLimsQcReports
+      igoLimsLibraries {
+        barcodeId
+        barcodeIndex
+        libraryIgoId
+        libraryVolume
+        libraryConcentrationNgul
+        dnaInputNg
+        captureConcentrationNm
+        captureInputNg
+        captureName
+        igoLimsRuns {
+          runMode
+          runId
+          flowCellId
+          readLength
+          runDate
+          flowCellLanes
+          fastqs
+        }
+      }
+      igoLimsCmoSampleIdFields {
+        naToExtract
+        normalizedPatientId
+        sampleType
+        recipe
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetIgoLimsSampleManifestQuery__
+ *
+ * To run a query within a React component, call `useGetIgoLimsSampleManifestQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIgoLimsSampleManifestQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIgoLimsSampleManifestQuery({
+ *   variables: {
+ *      igoSampleId: // value for 'igoSampleId'
+ *   },
+ * });
+ */
+export function useGetIgoLimsSampleManifestQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetIgoLimsSampleManifestQuery,
+    GetIgoLimsSampleManifestQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetIgoLimsSampleManifestQuery,
+    GetIgoLimsSampleManifestQueryVariables
+  >(GetIgoLimsSampleManifestDocument, options);
+}
+export function useGetIgoLimsSampleManifestLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetIgoLimsSampleManifestQuery,
+    GetIgoLimsSampleManifestQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetIgoLimsSampleManifestQuery,
+    GetIgoLimsSampleManifestQueryVariables
+  >(GetIgoLimsSampleManifestDocument, options);
+}
+export type GetIgoLimsSampleManifestQueryHookResult = ReturnType<
+  typeof useGetIgoLimsSampleManifestQuery
+>;
+export type GetIgoLimsSampleManifestLazyQueryHookResult = ReturnType<
+  typeof useGetIgoLimsSampleManifestLazyQuery
+>;
+export type GetIgoLimsSampleManifestQueryResult = Apollo.QueryResult<
+  GetIgoLimsSampleManifestQuery,
+  GetIgoLimsSampleManifestQueryVariables
 >;
