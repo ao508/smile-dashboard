@@ -1377,6 +1377,20 @@ export type DashboardCohort = {
   type?: Maybe<Scalars["String"]>;
 };
 
+export type DashboardCohortInput = {
+  billed?: InputMaybe<Scalars["String"]>;
+  cohortId: Scalars["String"];
+  endUsers?: InputMaybe<Scalars["String"]>;
+  initialCohortDeliveryDate?: InputMaybe<Scalars["String"]>;
+  pmUsers?: InputMaybe<Scalars["String"]>;
+  projectSubtitle?: InputMaybe<Scalars["String"]>;
+  projectTitle?: InputMaybe<Scalars["String"]>;
+  searchableSampleIds?: InputMaybe<Scalars["String"]>;
+  status?: InputMaybe<Scalars["String"]>;
+  totalSampleCount?: InputMaybe<Scalars["Int"]>;
+  type?: InputMaybe<Scalars["String"]>;
+};
+
 export type DashboardPatient = {
   __typename?: "DashboardPatient";
   _total?: Maybe<Scalars["Int"]>;
@@ -2234,6 +2248,7 @@ export type Mutation = {
   updateSampleMetadata: UpdateSampleMetadataMutationResponse;
   updateSamples: UpdateSamplesMutationResponse;
   updateStatuses: UpdateStatusesMutationResponse;
+  updateTempoCohort?: Maybe<DashboardCohort>;
   updateTempos: UpdateTemposMutationResponse;
 };
 
@@ -2458,6 +2473,10 @@ export type MutationUpdateSamplesArgs = {
 export type MutationUpdateStatusesArgs = {
   update?: InputMaybe<StatusUpdateInput>;
   where?: InputMaybe<StatusWhere>;
+};
+
+export type MutationUpdateTempoCohortArgs = {
+  dashboardCohort?: InputMaybe<DashboardCohortInput>;
 };
 
 export type MutationUpdateTemposArgs = {
@@ -11366,6 +11385,30 @@ export type AllAnchorSeqDateDataQuery = {
   }>;
 };
 
+export type UpdateTempoCohortMutationVariables = Exact<{
+  dashboardCohort: DashboardCohortInput;
+}>;
+
+export type UpdateTempoCohortMutation = {
+  __typename?: "Mutation";
+  updateTempoCohort?: {
+    __typename?: "DashboardCohort";
+    cohortId: string;
+    totalSampleCount?: number | null;
+    billed?: string | null;
+    initialCohortDeliveryDate?: string | null;
+    endUsers?: string | null;
+    pmUsers?: string | null;
+    projectTitle?: string | null;
+    projectSubtitle?: string | null;
+    status?: string | null;
+    type?: string | null;
+    searchableSampleIds?: string | null;
+    _total?: number | null;
+    _uniqueSampleCount?: number | null;
+  } | null;
+};
+
 export const DashboardSamplePartsFragmentDoc = gql`
   fragment DashboardSampleParts on DashboardSample {
     smileSampleId
@@ -11654,4 +11697,33 @@ export const AllAnchorSeqDateDataDocument = gql`
 export type AllAnchorSeqDateDataQueryResult = Apollo.QueryResult<
   AllAnchorSeqDateDataQuery,
   AllAnchorSeqDateDataQueryVariables
+>;
+export const UpdateTempoCohortDocument = gql`
+  mutation UpdateTempoCohort($dashboardCohort: DashboardCohortInput!) {
+    updateTempoCohort(dashboardCohort: $dashboardCohort) {
+      cohortId
+      totalSampleCount
+      billed
+      initialCohortDeliveryDate
+      endUsers
+      pmUsers
+      projectTitle
+      projectSubtitle
+      status
+      type
+      searchableSampleIds
+      _total
+      _uniqueSampleCount
+    }
+  }
+`;
+export type UpdateTempoCohortMutationFn = Apollo.MutationFunction<
+  UpdateTempoCohortMutation,
+  UpdateTempoCohortMutationVariables
+>;
+export type UpdateTempoCohortMutationResult =
+  Apollo.MutationResult<UpdateTempoCohortMutation>;
+export type UpdateTempoCohortMutationOptions = Apollo.BaseMutationOptions<
+  UpdateTempoCohortMutation,
+  UpdateTempoCohortMutationVariables
 >;

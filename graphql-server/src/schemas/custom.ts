@@ -2,6 +2,8 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { ApolloServerContext } from "../utils/servers";
 import {
   AnchorSeqDateData,
+  DashboardCohort,
+  DashboardCohortInput,
   DashboardSampleInput,
   PatientIdsTriplet,
   QueryDashboardCohortsArgs,
@@ -49,6 +51,7 @@ const request = require("request-promise-native");
 import { AuthenticationError, ForbiddenError } from "apollo-server-express";
 import { applyMiddleware } from "graphql-middleware";
 import { IMiddlewareResolver } from "graphql-middleware/dist/types";
+import { resolve } from "path";
 
 const KEYCLOAK_PHI_ACCESS_GROUP = "mrn-search";
 
@@ -397,6 +400,14 @@ export async function buildCustomSchema(ogm: OGM) {
         // https://www.apollographql.com/docs/react/performance/optimistic-ui/#optimistic-mutation-lifecycle
         return newDashboardSamples;
       },
+      async updateTempoCohort({
+        dashboardCohort,
+      }: {
+        dashboardCohort: DashboardCohortInput;
+      }) {
+        await updateTempoCohortPromise(dashboardCohort);
+        return dashboardCohort;
+      },
     },
   };
 
@@ -507,6 +518,21 @@ async function updateDbGapPromise(newDashboardSample: DashboardSampleInput) {
   });
 }
 
+async function updateTempoCohortPromise(dashboardCohort: DashboardCohort) {
+  return new Promise((resolve) => {
+    const dataForTempoCohortUpdate = { ...dashboardCohort };
+
+    console.log("NATS message to publish:");
+    console.log(dataForTempoCohortUpdate);
+    resolve(null);
+  });
+
+  // publishNatsMessage(
+  //   props.pub_tempo_cohort_update,
+  //   JSON.stringify(dashboardCohort)
+  // )
+}
+
 const EDITABLE_SAMPLEMETADATA_FIELDS = new Set([
   "cmoPatientId",
   "investigatorSampleId",
@@ -527,6 +553,8 @@ const EDITABLE_TEMPO_FIELDS = new Set([
   "billedBy",
   "custodianInformation",
   "accessLevel",
+  "pmUsers",
+  "endUsers",
 ]);
 
 const EDITABLE_DBGAP_FIELDS = new Set(["dbGapStudy"]);

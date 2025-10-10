@@ -251,3 +251,21 @@ query AllAnchorSeqDateData($phiEnabled: Boolean = false) {
     ANCHOR_ONCOTREE_CODE
   }
 }
+
+mutation UpdateTempoCohort($dashboardCohort: DashboardCohortInput!) {
+  updateTempoCohort(dashboardCohort: $dashboardCohort) {
+    cohortId
+    totalSampleCount
+    billed
+    initialCohortDeliveryDate
+    endUsers
+    pmUsers
+    projectTitle
+    projectSubtitle
+    status
+    type
+    searchableSampleIds
+    _total
+    _uniqueSampleCount
+  }
+}

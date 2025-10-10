@@ -813,6 +813,8 @@ const editableWesSampleFields = new Set([
   "costCenter",
   "custodianInformation",
   "accessLevel",
+  "pmUsers",
+  "endUsers",
 ]);
 
 export const allEditableFields = new Set(

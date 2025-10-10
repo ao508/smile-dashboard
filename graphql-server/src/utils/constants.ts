@@ -23,6 +23,7 @@ export const props = {
   ),
   pub_tempo_sample_billing: properties.get("topics.pub_tempo_sample_billing"),
   pub_dbgap_sample_update: properties.get("topics.pub_dbgap_sample_update"),
+  pub_tempo_cohort_update: properties.get("topics.pub_tempo_cohort_update"),
 
   keycloak_client_id: properties.get("auth.keycloak_client_id"),
   keycloak_client_secret: properties.get("auth.keycloak_client_secret"),

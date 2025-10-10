@@ -8,6 +8,7 @@ import {
 import { formatCellDate } from "../../utils/agGrid";
 import { DownloadOption } from "../../hooks/useDownload";
 import { BuildDownloadOptionsParamsBase } from "../../types/shared";
+import { createCustomHeader } from "../../configs/gridIcons";
 
 type BuildDownloadOptionsParams = BuildDownloadOptionsParamsBase & {
   // Put additional parameters here if needed
@@ -70,10 +71,14 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
   {
     field: "endUsers",
     headerName: "End Users",
+    editable: true,
+    headerComponentParams: createCustomHeader(""),
   },
   {
     field: "pmUsers",
     headerName: "PM Users",
+    editable: true,
+    headerComponentParams: createCustomHeader(""),
   },
   {
     field: "projectTitle",
