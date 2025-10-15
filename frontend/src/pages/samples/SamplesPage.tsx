@@ -108,6 +108,12 @@ export function SamplesPage() {
     if (filterButtonLabel === "WES") {
       setDisableCohortBuildling(false);
     } else {
+      // reset everything if not WES or cohort builder disabled
+      if (gridRef.current) {
+        gridRef.current.api.deselectAll();
+      }
+      setSelectedRowIds([]);
+      setShowSelectedPopup(false);
       setDisableCohortBuildling(true);
     }
 
@@ -174,7 +180,7 @@ export function SamplesPage() {
           <Button
             style={{ marginRight: 5, border: "none", padding: 3 }}
             onClick={() => setShowSelectedPopup(true)}
-            title="Build new cohort for TEMPO processing"
+            title="Build a new cohort for TEMPO processing"
             disabled={disableCohortBuildling}
           >
             <NoteAddOutlined />
