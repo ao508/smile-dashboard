@@ -1379,7 +1379,10 @@ export type DashboardCohort = {
 };
 
 export type DashboardCohortInput = {
+  _total?: InputMaybe<Scalars["Int"]>;
+  _uniqueSampleCount?: InputMaybe<Scalars["Int"]>;
   billed?: InputMaybe<Scalars["String"]>;
+  changedFieldNames: Array<Scalars["String"]>;
   cohortId: Scalars["String"];
   endUsers?: InputMaybe<Scalars["String"]>;
   initialCohortDeliveryDate?: InputMaybe<Scalars["String"]>;

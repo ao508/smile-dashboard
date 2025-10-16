@@ -10,9 +10,11 @@ import { openLoginPopup } from "../utils/openLoginPopup";
 import { AgGridReact as AgGridReactType } from "ag-grid-react/lib/agGridReact";
 import {
   DashboardCohort,
+  DashboardCohortInput,
   DashboardSample,
   DashboardSampleInput,
   useUpdateDashboardSamplesMutation,
+  useUpdateTempoCohortMutation,
 } from "../generated/graphql";
 import { handleAgGridPaste } from "../utils/handleAgGridPaste";
 import { RecordChange } from "../types/shared";
@@ -43,6 +45,7 @@ export function useCellChanges({
   const { userEmail, setUserEmail } = useUserEmail();
   const { setWarningModalContent } = useWarningModal();
   const [updateDashboardSamplesMutation] = useUpdateDashboardSamplesMutation();
+  const [updateTempoCohortMutation] = useUpdateTempoCohortMutation();
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   async function handleCellEditRequest(params: CellEditRequestEvent) {
@@ -228,6 +231,11 @@ export function useCellChanges({
       gridRef.current?.api?.setServerSideDatasource(optimisticDatasource);
     } else {
       console.log("handling cohort-level changes");
+      const newDashboardCohorts = buildNewDashboardCohorts(changesByRecordId);
+      for (const dashboardCohort of newDashboardCohorts) {
+        console.log("Attempting to submit data for update: ", dashboardCohort);
+        updateTempoCohortMutation({ variables: { dashboardCohort } });
+      }
     }
 
     // "Reset" the grid with the latest data
@@ -285,4 +293,22 @@ function buildNewDashboardSamples(
     });
   });
   return Array.from(newDashboardSamplesByPrimaryId.values());
+}
+
+function buildNewDashboardCohorts(
+  changesByCohortId: Map<string, Array<RecordChange>>
+) {
+  const newDashboardCohortsByCohortId = new Map<string, DashboardCohortInput>();
+  changesByCohortId.forEach((changes, cohortId) => {
+    const cohortData = { ...changes[0].rowNode.data };
+    for (const change of changes) {
+      (cohortData as any)[change.fieldName] = change.newValue;
+    }
+    delete cohortData.__typename;
+    newDashboardCohortsByCohortId.set(cohortId, {
+      ...cohortData,
+      changedFieldNames: changes.map((c) => c.fieldName),
+    });
+  });
+  return Array.from(newDashboardCohortsByCohortId.values());
 }

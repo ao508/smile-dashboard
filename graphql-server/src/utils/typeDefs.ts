@@ -241,6 +241,7 @@ const MUTATION_TYPEDEFS = gql`
   }
 
   input DashboardCohortInput {
+    changedFieldNames: [String!]!
     cohortId: String!
     totalSampleCount: Int
     billed: String
@@ -252,6 +253,8 @@ const MUTATION_TYPEDEFS = gql`
     status: String
     type: String
     searchableSampleIds: String
+    _total: Int
+    _uniqueSampleCount: Int
   }
 
   type Mutation {

@@ -52,6 +52,7 @@ import { AuthenticationError, ForbiddenError } from "apollo-server-express";
 import { applyMiddleware } from "graphql-middleware";
 import { IMiddlewareResolver } from "graphql-middleware/dist/types";
 import { resolve } from "path";
+import { chain } from "lodash";
 
 const KEYCLOAK_PHI_ACCESS_GROUP = "mrn-search";
 
@@ -400,13 +401,16 @@ export async function buildCustomSchema(ogm: OGM) {
         // https://www.apollographql.com/docs/react/performance/optimistic-ui/#optimistic-mutation-lifecycle
         return newDashboardSamples;
       },
-      async updateTempoCohort({
-        dashboardCohort,
-      }: {
-        dashboardCohort: DashboardCohortInput;
-      }) {
+      async updateTempoCohort(
+        _source: undefined,
+        {
+          dashboardCohort,
+        }: {
+          dashboardCohort: DashboardCohortInput;
+        }
+      ) {
+        console.log(dashboardCohort);
         await updateTempoCohortPromise(dashboardCohort);
-        return dashboardCohort;
       },
     },
   };
@@ -520,9 +524,18 @@ async function updateDbGapPromise(newDashboardSample: DashboardSampleInput) {
 
 async function updateTempoCohortPromise(dashboardCohort: DashboardCohort) {
   return new Promise((resolve) => {
-    const dataForTempoCohortUpdate = { ...dashboardCohort };
-
-    console.log("NATS message to publish:");
+    const dataForTempoCohortUpdate = {
+      cohortId: dashboardCohort.cohortId,
+      date: dashboardCohort.initialCohortDeliveryDate,
+      type: dashboardCohort.type,
+      endUsers: formatUsersString(dashboardCohort.endUsers || ""),
+      pmUsers: formatUsersString(dashboardCohort.pmUsers || ""),
+      status: dashboardCohort.status,
+      projectTitle: dashboardCohort.projectTitle,
+      projectSubtitle: dashboardCohort.projectSubtitle,
+      //pipelineVersion: to be added soon - will need default
+    };
+    console.log("\n\n\n\nNATS message to publish:");
     console.log(dataForTempoCohortUpdate);
     resolve(null);
   });
@@ -639,4 +652,25 @@ async function publishNatsMessage(topic: string, message: string) {
       err
     );
   }
+}
+
+function formatUsersString(val: string) {
+  return (
+    chain(val)
+      // Split on space and comma delimiters, but ignore them inside single/double quotes. Breakdown:
+      // [\s,]+ matches >= 1 whitespace/comma characters
+      // (?=...) is a positive lookahead, "match the previous pattern only if it's followed by ..."
+      // (?:...) is a non-capturing group that groups the pattern inside it without capturing it
+      // [^'"] matches any non-quote character
+      // '[^']*' and "[^"]*" match single and double quoted strings, respectively
+      // *$ asserts that the lookahead pattern occurs >= 0 times until the end of the string
+      .split(/[\s,]+(?=(?:[^'"]|'[^']*'|"[^"]*")*$)/)
+      .compact()
+      .uniq()
+      .map((val) => {
+        // handle users entering full email addresses just in case
+        return val.split("@")[0].trim();
+      })
+      .value()
+  );
 }
