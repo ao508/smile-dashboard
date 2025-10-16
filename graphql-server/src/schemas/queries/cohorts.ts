@@ -137,8 +137,8 @@ export function buildCohortsQueryBody({
 
     WITH
       tempNode{.*,
-        endUsers: latestCC.endUsers,
-        pmUsers: latestCC.pmUsers,
+        endUsers: apoc.text.join(apoc.convert.fromJsonList(latestCC.endUsers), ", "),
+        pmUsers: apoc.text.join(apoc.convert.fromJsonList(latestCC.pmUsers), ", "),
         projectTitle: latestCC.projectTitle,
         projectSubtitle: latestCC.projectSubtitle,
         status: latestCC.status,
