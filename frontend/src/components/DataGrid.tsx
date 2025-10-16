@@ -8,7 +8,7 @@ import {
 } from "ag-grid-community";
 import { useNavigate } from "react-router-dom";
 import { createCustomHeader, lockIcon } from "../configs/gridIcons";
-import { SampleChange } from "../types/shared";
+import { RecordChange } from "../types/shared";
 import { CACHE_BLOCK_SIZE } from "../configs/shared";
 import { allEditableFields } from "../pages/samples/config";
 import { CohortBuilderSample } from "./CohortBuilderContainer";
@@ -54,7 +54,7 @@ const defaultColDef: ColDef = {
 };
 
 interface EditableGridProps {
-  changes: Array<SampleChange>;
+  changes: Array<RecordChange>;
   handleCellEditRequest: (params: CellEditRequestEvent) => Promise<void>;
   handlePaste: (e: ClipboardEvent<HTMLDivElement>) => void;
 }
@@ -160,6 +160,18 @@ export function DataGrid({
     );
   };
 
+  const handleGetRowId = (params: any) => {
+    return params.data?.primaryId
+      ? params.data?.primaryId
+      : params.data.cohortId
+      ? params.data.cohortId
+      : params.data.igoRequestId
+      ? params.data.igoRequestId
+      : params.data.smilePatientId
+      ? params.data.smilePatientId
+      : undefined;
+  };
+
   return (
     <div className="ag-theme-alpine flex-grow-1" onPaste={handlePaste}>
       <AgGridReact
@@ -187,7 +199,7 @@ export function DataGrid({
         tooltipMouseTrack={true}
         suppressClipboardPaste={true}
         // these props are for checkbox selection
-        getRowId={(params) => params.data?.primaryId} // primary id is stable row id
+        getRowId={handleGetRowId}
         rowSelection="multiple"
         suppressRowClickSelection={true}
         onSelectionChanged={handleGridSelectionChanged}

@@ -21,6 +21,8 @@ import { useParams } from "react-router-dom";
 import { SamplesModal } from "../../components/SamplesModal";
 import { ROUTE_PARAMS } from "../../configs/shared";
 import { wesSampleColDefs } from "../samples/config";
+import { useCellChanges } from "../../hooks/useCellChanges";
+import { CellChangesContainer } from "../../components/CellChangesContainer";
 
 const QUERY_NAME = "dashboardCohorts";
 const INITIAL_SORT_FIELD_NAME = "initialCohortDeliveryDate";
@@ -37,7 +39,10 @@ export function CohortsPage() {
     uniqueSampleCount,
     isLoading,
     error,
+    data,
     fetchMore,
+    startPolling,
+    stopPolling,
   } = useFetchData({
     useRecordsLazyQuery: useDashboardCohortsLazyQuery,
     queryName: QUERY_NAME,
@@ -45,6 +50,16 @@ export function CohortsPage() {
     gridRef,
     userSearchVal,
   });
+
+  const { changes, cellChangesHandlers, handleCellEditRequest, handlePaste } =
+    useCellChanges({
+      gridRef,
+      startPolling,
+      stopPolling,
+      records: data?.[QUERY_NAME],
+      refreshData,
+      isSampleLevelChanges: false,
+    });
 
   const { isDownloading, handleDownload, getCurrentData } =
     useDownload<DashboardCohort>({
@@ -86,6 +101,13 @@ export function CohortsPage() {
             uniqueSampleCount={uniqueSampleCount}
             isLoading={isLoading}
           />
+          {changes.length > 0 && (
+            <CellChangesContainer
+              changes={changes}
+              cellChangesHandlers={cellChangesHandlers}
+              isSampleLevelChanges={false}
+            />
+          )}
         </Col>
 
         <Col className="text-end">
@@ -100,6 +122,9 @@ export function CohortsPage() {
         gridRef={gridRef}
         colDefs={cohortColDefs}
         refreshData={refreshData}
+        changes={changes}
+        handleCellEditRequest={handleCellEditRequest}
+        handlePaste={handlePaste}
         selectedRowIds={[]}
         onSelectionChanged={() => {}}
       />

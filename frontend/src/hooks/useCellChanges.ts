@@ -9,12 +9,13 @@ import { getUserEmail } from "../utils/getUserEmail";
 import { openLoginPopup } from "../utils/openLoginPopup";
 import { AgGridReact as AgGridReactType } from "ag-grid-react/lib/agGridReact";
 import {
+  DashboardCohort,
   DashboardSample,
   DashboardSampleInput,
   useUpdateDashboardSamplesMutation,
 } from "../generated/graphql";
 import { handleAgGridPaste } from "../utils/handleAgGridPaste";
-import { SampleChange } from "../types/shared";
+import { RecordChange } from "../types/shared";
 import { formatCellDate, isInvalidCostCenter } from "../utils/agGrid";
 import {
   INVALID_COST_CENTER_WARNING,
@@ -25,25 +26,29 @@ interface UseCellChangesParams {
   gridRef: RefObject<AgGridReactType<any>>;
   startPolling: () => void;
   stopPolling: () => void;
-  samples: Array<DashboardSample> | undefined;
+  records: Array<DashboardSample> | Array<DashboardCohort> | undefined;
   refreshData: () => void;
+  isSampleLevelChanges: boolean;
 }
 
 export function useCellChanges({
   gridRef,
   startPolling,
   stopPolling,
-  samples,
+  records,
   refreshData,
+  isSampleLevelChanges,
 }: UseCellChangesParams) {
-  const [changes, setChanges] = useState<Array<SampleChange>>([]);
+  const [changes, setChanges] = useState<Array<RecordChange>>([]);
   const { userEmail, setUserEmail } = useUserEmail();
   const { setWarningModalContent } = useWarningModal();
   const [updateDashboardSamplesMutation] = useUpdateDashboardSamplesMutation();
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   async function handleCellEditRequest(params: CellEditRequestEvent) {
-    const primaryId = params.data.primaryId;
+    const recordId = isSampleLevelChanges
+      ? params.data.primaryId
+      : params.data.cohortId;
     const fieldName = params.colDef.field!;
     const { oldValue, newValue, node: rowNode } = params;
 
@@ -53,7 +58,7 @@ export function useCellChanges({
     if (noChangeInVal || noChangeInEmptyCell) {
       setChanges((changes) => {
         const updatedChanges = changes.filter(
-          (c) => !(c.primaryId === primaryId && c.fieldName === fieldName)
+          (c) => !(c.recordId === recordId && c.fieldName === fieldName)
         );
         return updatedChanges;
       });
@@ -92,13 +97,13 @@ export function useCellChanges({
 
       setChanges((changes) => {
         const billedBy = changes.find(
-          (c) => c.primaryId === primaryId && c.fieldName === "billedBy"
+          (c) => c.recordId === recordId && c.fieldName === "billedBy"
         );
         if (billedBy) {
           billedBy.newValue = currUsername;
         } else {
           changes.push({
-            primaryId,
+            recordId,
             fieldName: "billedBy",
             oldValue: "",
             newValue: currUsername,
@@ -112,12 +117,18 @@ export function useCellChanges({
     // Add/update the edited cell to/in the changes array
     setChanges((changes) => {
       const change = changes.find(
-        (c) => c.primaryId === primaryId && c.fieldName === fieldName
+        (c) => c.recordId === recordId && c.fieldName === fieldName
       );
       if (change) {
         change.newValue = newValue;
       } else {
-        changes.push({ primaryId, fieldName, oldValue, newValue, rowNode });
+        changes.push({
+          recordId,
+          fieldName,
+          oldValue,
+          newValue,
+          rowNode,
+        });
       }
       return [...changes];
     });
@@ -169,50 +180,55 @@ export function useCellChanges({
       return;
     }
 
-    const changesByPrimaryId = groupChangesByPrimaryId(changes);
-    const newDashboardSamples = buildNewDashboardSamples(changesByPrimaryId);
+    const changesByRecordId = groupChangesByRecordId(changes);
+    if (isSampleLevelChanges) {
+      const newDashboardSamples = buildNewDashboardSamples(changesByRecordId);
 
-    // Send to GraphQL server to publish
-    updateDashboardSamplesMutation({
-      variables: { newDashboardSamples },
-    });
+      // Send to GraphQL server to publish
+      updateDashboardSamplesMutation({
+        variables: { newDashboardSamples },
+      });
 
-    // Manually handle optimistic updates by refreshing updated rows' UI to indicate them being updated
-    // (We can't use GraphQL's optimistic response because it isn't a good fit for
-    // AG Grid's Server-Side data model. e.g. GraphQL's optimistic response only returns
-    // the updated data, while AG Grid expects the datasource == the entire dataset.)
-    const optimisticSamples = samples!.map((s) => {
-      const changesForSample =
-        s.primaryId != null ? changesByPrimaryId.get(s.primaryId) : undefined;
-      if (changesForSample) {
-        const changedFields = changesForSample.reduce((acc, change) => {
-          acc[change.fieldName] = change.newValue;
-          return acc;
-        }, {} as Record<string, any>);
-        return {
-          ...s,
-          ...changedFields,
-          revisable: false,
-          importDate: formatCellDate(new Date()) as string,
-        };
-      }
-      return s;
-    });
-    optimisticSamples.sort((a, b) => {
-      return (
-        new Date(b.importDate ?? "").getTime() -
-        new Date(a.importDate ?? "").getTime()
-      );
-    });
-    const optimisticDatasource = {
-      getRows: (params: IServerSideGetRowsParams) => {
-        params.success({
-          rowData: optimisticSamples!,
-          rowCount: optimisticSamples[0]?._total || 0,
-        });
-      },
-    };
-    gridRef.current?.api?.setServerSideDatasource(optimisticDatasource);
+      // Manually handle optimistic updates by refreshing updated rows' UI to indicate them being updated
+      // (We can't use GraphQL's optimistic response because it isn't a good fit for
+      // AG Grid's Server-Side data model. e.g. GraphQL's optimistic response only returns
+      // the updated data, while AG Grid expects the datasource == the entire dataset.)
+      const optimisticSamples = records!.map((s) => {
+        s = s as DashboardSample; // we already know we're dealing with DashboardSample here
+        const changesForSample =
+          s.primaryId != null ? changesByRecordId.get(s.primaryId) : undefined;
+        if (changesForSample) {
+          const changedFields = changesForSample.reduce((acc, change) => {
+            acc[change.fieldName] = change.newValue;
+            return acc;
+          }, {} as Record<string, any>);
+          return {
+            ...s,
+            ...changedFields,
+            revisable: false,
+            importDate: formatCellDate(new Date()) as string,
+          };
+        }
+        return s;
+      });
+      optimisticSamples.sort((a, b) => {
+        return (
+          new Date(b.importDate ?? "").getTime() -
+          new Date(a.importDate ?? "").getTime()
+        );
+      });
+      const optimisticDatasource = {
+        getRows: (params: IServerSideGetRowsParams) => {
+          params.success({
+            rowData: optimisticSamples!,
+            rowCount: optimisticSamples[0]?._total || 0,
+          });
+        },
+      };
+      gridRef.current?.api?.setServerSideDatasource(optimisticDatasource);
+    } else {
+      console.log("handling cohort-level changes");
+    }
 
     // "Reset" the grid with the latest data
     setTimeout(async () => {
@@ -238,19 +254,19 @@ export function useCellChanges({
   };
 }
 
-function groupChangesByPrimaryId(changes: SampleChange[]) {
-  const changesByPrimaryId = new Map<string, Array<SampleChange>>();
+function groupChangesByRecordId(changes: RecordChange[]) {
+  const changesByRecordId = new Map<string, Array<RecordChange>>();
   for (const change of changes) {
-    if (!changesByPrimaryId.has(change.primaryId)) {
-      changesByPrimaryId.set(change.primaryId, []);
+    if (!changesByRecordId.has(change.recordId)) {
+      changesByRecordId.set(change.recordId, []);
     }
-    changesByPrimaryId.get(change.primaryId)!.push(change);
+    changesByRecordId.get(change.recordId)!.push(change);
   }
-  return changesByPrimaryId;
+  return changesByRecordId;
 }
 
 function buildNewDashboardSamples(
-  changesByPrimaryId: Map<string, Array<SampleChange>>
+  changesByPrimaryId: Map<string, Array<RecordChange>>
 ) {
   const newDashboardSamplesByPrimaryId = new Map<
     string,

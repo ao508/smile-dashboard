@@ -85,8 +85,9 @@ export function SamplesPage() {
       gridRef,
       startPolling,
       stopPolling,
-      samples: data?.[QUERY_NAME],
+      records: data?.[QUERY_NAME],
       refreshData,
+      isSampleLevelChanges: true,
     });
 
   const { isDownloading, handleDownload, getCurrentData } =
@@ -166,6 +167,7 @@ export function SamplesPage() {
             <CellChangesContainer
               changes={changes}
               cellChangesHandlers={cellChangesHandlers}
+              isSampleLevelChanges={true}
             />
           )}
         </Col>

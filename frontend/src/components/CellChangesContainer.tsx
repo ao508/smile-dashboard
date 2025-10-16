@@ -1,10 +1,10 @@
 import { Button, Modal } from "react-bootstrap";
 import { AgGridReact } from "ag-grid-react";
-import { SampleChange } from "../types/shared";
+import { RecordChange } from "../types/shared";
 import { Dispatch, SetStateAction } from "react";
 
 const updateModalColumnDefs = [
-  { field: "primaryId", rowGroup: true, hide: true },
+  { field: "recordId", rowGroup: true, hide: true },
   { field: "fieldName" },
   { field: "oldValue" },
   { field: "newValue" },
@@ -12,11 +12,12 @@ const updateModalColumnDefs = [
 
 const autoGroupColumnDef = {
   headerName: "Primary Id",
-  field: "primaryId",
+  field: "recordId",
 };
 
 interface CellChangesContainerProps {
-  changes: Array<SampleChange>;
+  isSampleLevelChanges: boolean;
+  changes: Array<RecordChange>;
   cellChangesHandlers: {
     handleDiscardChanges: () => void;
     handleConfirmUpdates: () => void;
@@ -35,7 +36,14 @@ export function CellChangesContainer({
     showUpdateModal,
     setShowUpdateModal,
   },
+  isSampleLevelChanges,
 }: CellChangesContainerProps) {
+  if (isSampleLevelChanges) {
+    autoGroupColumnDef.headerName = "Primary ID";
+  } else {
+    autoGroupColumnDef.headerName = "Cohort ID";
+  }
+
   function handleUpdateModalHide() {
     setShowUpdateModal(false);
   }

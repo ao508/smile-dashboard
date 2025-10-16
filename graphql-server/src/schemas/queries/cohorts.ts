@@ -75,7 +75,7 @@ export function buildCohortsQueryBody({
         apoc.coll.min(collect(cc.date)) AS initialCohortDeliveryDate,
         apoc.coll.max(collect(cc.date)) AS latestCohortDeliveryDate,
         count(t) AS tempoCount,
-        count(CASE WHEN t.billed = true THEN 1 END) AS billedCount
+        count(CASE WHEN t.billed = true THEN 1 END) AS billedCounts
 
     // Aggregate Sample data and get the latest CohortComplete
     WITH
@@ -85,7 +85,7 @@ export function buildCohortsQueryBody({
       collect(s.smileSampleId) AS sampleIdsByCohort,
       size(collect(s)) AS totalSampleCount,
       tempoCount,
-      billedCount,
+      REDUCE(sum = 0, x in COLLECT(billedCounts) | sum + x) AS billedCount,
       apoc.coll.toSet(
         COLLECT(DISTINCT latestSm[0].cmoSampleName) +
         COLLECT(DISTINCT latestSm[0].primaryId)

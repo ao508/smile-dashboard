@@ -30,7 +30,7 @@ import { Link } from "react-router-dom";
 import { formatCellDate } from "../../utils/agGrid";
 import {
   BuildDownloadOptionsParamsBase,
-  SampleChange,
+  RecordChange,
 } from "../../types/shared";
 import { DownloadOption } from "../../hooks/useDownload";
 
@@ -831,11 +831,11 @@ export function setupEditableSampleFields(
   samplesColDefs.forEach((colDef) => {
     const newClassRule = {
       unsubmittedChange: (params: CellClassParams) => {
-        const changes: Array<SampleChange> = params.context?.getChanges();
+        const changes: Array<RecordChange> = params.context?.getChanges();
         const changedValue = changes?.find((change) => {
           return (
             change.fieldName === params.colDef.field &&
-            change.primaryId === params.data.primaryId
+            change.recordId === params.data.primaryId
           );
         });
         return changedValue !== undefined;
@@ -860,11 +860,11 @@ export function setupEditableSampleFields(
     if (colDef.valueGetter === undefined) {
       colDef.valueGetter = (params) => {
         if (params.data && params.colDef.field) {
-          const changes: Array<SampleChange> = params.context?.getChanges();
+          const changes: Array<RecordChange> = params.context?.getChanges();
           const changedValue = changes?.find((change) => {
             return (
               change.fieldName === params.colDef.field &&
-              change.primaryId === params.data.primaryId
+              change.recordId === params.data.primaryId
             );
           });
           if (changedValue) {

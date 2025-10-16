@@ -25,7 +25,7 @@ import { DataGrid } from "./DataGrid";
 import { DownloadModal } from "./DownloadModal";
 import { ColDef } from "ag-grid-community";
 import { POLL_INTERVAL, ROUTE_PARAMS } from "../configs/shared";
-import { SampleChange } from "../types/shared";
+import { RecordChange } from "../types/shared";
 
 const QUERY_NAME = "dashboardSamples";
 const INTIAL_SORT_FIELD_NAME = "importDate";
@@ -83,8 +83,9 @@ export function SamplesModal({
     gridRef,
     startPolling,
     stopPolling,
-    samples: data?.[QUERY_NAME],
+    records: data?.[QUERY_NAME],
     refreshData,
+    isSampleLevelChanges: true,
   });
 
   const { isDownloading, handleDownload, getCurrentData } =
@@ -146,6 +147,7 @@ export function SamplesModal({
             <CellChangesContainer
               changes={changes}
               cellChangesHandlers={cellChangesHandlers}
+              isSampleLevelChanges={true}
             />
           )}
         </Col>
@@ -175,8 +177,8 @@ export function SamplesModal({
 }
 
 interface ModalContainerProps {
-  changes: Array<SampleChange>;
-  setChanges: Dispatch<SetStateAction<Array<SampleChange>>>;
+  changes: Array<RecordChange>;
+  setChanges: Dispatch<SetStateAction<Array<RecordChange>>>;
   parentRecordName: keyof typeof ROUTE_PARAMS;
   children: ReactNode;
 }
