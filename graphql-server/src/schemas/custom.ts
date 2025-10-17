@@ -53,6 +53,7 @@ import { applyMiddleware } from "graphql-middleware";
 import { IMiddlewareResolver } from "graphql-middleware/dist/types";
 import { resolve } from "path";
 import { chain } from "lodash";
+import { randomUUID } from "crypto";
 
 const KEYCLOAK_PHI_ACCESS_GROUP = "mrn-search";
 
@@ -533,17 +534,14 @@ async function updateTempoCohortPromise(dashboardCohort: DashboardCohort) {
       status: dashboardCohort.status,
       projectTitle: dashboardCohort.projectTitle,
       projectSubtitle: dashboardCohort.projectSubtitle,
-      //pipelineVersion: to be added soon - will need default
+      //pipelineVersion: to be added soon - will need default value if null/empty
     };
-    console.log("\n\n\n\nNATS message to publish:");
-    console.log(dataForTempoCohortUpdate);
+    publishNatsMessage(
+      props.pub_tempo_cohort_update,
+      JSON.stringify(dataForTempoCohortUpdate)
+    );
     resolve(null);
   });
-
-  // publishNatsMessage(
-  //   props.pub_tempo_cohort_update,
-  //   JSON.stringify(dashboardCohort)
-  // )
 }
 
 const EDITABLE_SAMPLEMETADATA_FIELDS = new Set([
@@ -645,6 +643,7 @@ async function publishNatsMessage(topic: string, message: string) {
     );
     const h = headers();
     h.append("Nats-Msg-Subject", topic);
+    h.append("Nats-Msg-Id", randomUUID());
     natsConn.publish(topic, sc.encode(JSON.stringify(message)), { headers: h });
   } catch (err) {
     console.error(
