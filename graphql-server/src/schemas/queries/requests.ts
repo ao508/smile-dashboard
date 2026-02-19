@@ -136,7 +136,7 @@ export function buildRequestsQueryBody({
       ilabRequestId: r.ilabRequestId,
       validationReport: latestStatus.validationReport,
       validationStatus: latestStatus.validationStatus,
-      importDate: latestImportDate,
+      importDate: apoc.date.format(latestImportDate, 'ms', 'yyyy-MM-dd'),
       totalSampleCount: totalSampleCount,
       projectManagerName: r.projectManagerName,
       investigatorName: r.investigatorName,
