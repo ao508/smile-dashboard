@@ -344,7 +344,7 @@ export function buildSamplesQueryBody({
 
         primaryId: latestSm.primaryId,
         cmoSampleName: latestSm.cmoSampleName,
-        importDate: latestSm.importDate,
+        importDate: apoc.date.format(latestSm.importDate, 'ms', 'yyyy-MM-dd'),
         historicalCmoSampleNames: historicalCmoSampleNames,
         validationReport: latestSt.validationReport,
         validationStatus: latestSt.validationStatus,

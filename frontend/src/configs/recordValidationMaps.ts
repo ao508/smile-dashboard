@@ -135,6 +135,15 @@ export const REQUEST_STATUS_MAP: StatusMap = {
       actionItem: getActionItemForMissingIgoField("cmoRequest"),
       responsibleParty: "IGO",
     },
+  "samples (missing) Request JSON is missing 'samples' or 'samples' is an empty list.":
+    {
+      item: "'samples' field is missing or empty in request JSON",
+      description:
+        "Request JSON is missing 'samples' or 'samples' is an empty list. This field is required and must contain at least one sample for import into SMILE. " +
+        "This is often due to an HTTP 500 error on IGO's end for the `getSampleManifests` endpoint.",
+      actionItem: getActionItemForMissingIgoField("samples"),
+      responsibleParty: "IGO",
+    },
 };
 
 /**
