@@ -176,6 +176,7 @@ fragment DashboardSampleMetadataParts on DashboardSample {
   platform
   igoSampleStatus
   dmpRecommendedCoverage
+  changelog
   ## (sm:SampleMetadata)-[:HAS_STATUS]->(s:Status)
   validationReport
   validationStatus
