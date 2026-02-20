@@ -483,6 +483,9 @@ async function updateSampleMetadataPromises(
     // Ensure validator and label generator use latest status data added during validation
     delete sampleManifest.status;
 
+    // Ensure importDate is updated by smile-server, not anywhere else
+    delete sampleManifest.importDate;
+
     // Ensure isCmoSample is set in sample's 'additionalProperties' if not already present
     if (sampleManifest.additionalProperties.isCmoSample == null) {
       // For research samples, this ensures that they get sent to the label generator after
