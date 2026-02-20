@@ -60,6 +60,7 @@ const SAMPLE_FIELDS = `
   platform: String
   igoSampleStatus: String
   dmpRecommendedCoverage: String
+  changelog: String
   ## (sm:SampleMetadata)-[:HAS_STATUS]->(s:Status)
   validationReport: String
   validationStatus: Boolean

@@ -1542,6 +1542,7 @@ export type DashboardSample = {
   cancerType?: Maybe<Scalars["String"]>;
   cancerTypeDetailed?: Maybe<Scalars["String"]>;
   cfDNA2dBarcode?: Maybe<Scalars["String"]>;
+  changelog?: Maybe<Scalars["String"]>;
   cmoPatientId?: Maybe<Scalars["String"]>;
   cmoSampleName?: Maybe<Scalars["String"]>;
   collectionYear?: Maybe<Scalars["String"]>;
@@ -1604,6 +1605,7 @@ export type DashboardSampleInput = {
   cancerTypeDetailed?: InputMaybe<Scalars["String"]>;
   cfDNA2dBarcode?: InputMaybe<Scalars["String"]>;
   changedFieldNames: Array<Scalars["String"]>;
+  changelog?: InputMaybe<Scalars["String"]>;
   cmoPatientId?: InputMaybe<Scalars["String"]>;
   cmoSampleName?: InputMaybe<Scalars["String"]>;
   collectionYear?: InputMaybe<Scalars["String"]>;
@@ -11523,6 +11525,7 @@ export type DashboardSamplesQuery = {
     platform?: string | null;
     igoSampleStatus?: string | null;
     dmpRecommendedCoverage?: string | null;
+    changelog?: string | null;
     validationReport?: string | null;
     validationStatus?: boolean | null;
     cancerType?: string | null;
@@ -11586,6 +11589,7 @@ export type DashboardSampleMetadataPartsFragment = {
   platform?: string | null;
   igoSampleStatus?: string | null;
   dmpRecommendedCoverage?: string | null;
+  changelog?: string | null;
   validationReport?: string | null;
   validationStatus?: boolean | null;
   cancerType?: string | null;
@@ -11686,6 +11690,7 @@ export type UpdateDashboardSamplesMutation = {
     platform?: string | null;
     igoSampleStatus?: string | null;
     dmpRecommendedCoverage?: string | null;
+    changelog?: string | null;
     validationReport?: string | null;
     validationStatus?: boolean | null;
     cancerType?: string | null;
@@ -11819,6 +11824,7 @@ export const DashboardSampleMetadataPartsFragmentDoc = gql`
     platform
     igoSampleStatus
     dmpRecommendedCoverage
+    changelog
     validationReport
     validationStatus
     cancerType

@@ -341,6 +341,13 @@ export const sampleColDefs: Array<ColDef<DashboardSample>> = [
     field: "sampleCategory",
     headerName: "SMILE Sample Category",
   },
+  {
+    field: "changelog",
+    headerName: "Reason for Change",
+    headerTooltip:
+      "Mandatory description of reason for making changes to sample metadata (used for auditing purposes).",
+    headerComponentParams: createCustomHeader(toolTipIcon),
+  },
 ];
 
 const dbGapPhenotypeColumns: Array<ColDef<DashboardSample>> = [
@@ -841,6 +848,7 @@ const editableSampleFields = new Set([
   "sampleOrigin",
   "tissueLocation",
   "sex",
+  "changelog",
 ]);
 
 const editableWesSampleFields = new Set([
