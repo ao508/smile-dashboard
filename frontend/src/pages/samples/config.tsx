@@ -150,6 +150,11 @@ export const sampleColDefs: Array<ColDef<DashboardSample>> = [
     ...getPhiColDefProps({ widthSize: 260 }),
   },
   {
+    field: "molecularAccessionNumber",
+    headerName: "Molecular Accession Number",
+    ...getPhiColDefProps({ widthSize: 260 }),
+  },
+  {
     field: "cmoPatientId",
     headerName: "CMO Patient ID",
     cellRenderer: (params: any) => {

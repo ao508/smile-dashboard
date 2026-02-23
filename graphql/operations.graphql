@@ -133,6 +133,7 @@ query DashboardSamples(
     ...DashboardDbGapParts
     ...DashboardPatientParts
     sequencingDate
+    molecularAccessionNumber
     race
     _total
   }

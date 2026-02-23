@@ -3,7 +3,7 @@ import {
   DashboardSample,
   InputMaybe,
   QueryDashboardSamplesArgs,
-  SeqDateBySampleId,
+  SeqDateAccessionBySampleId,
 } from "../../generated/graphql";
 import { OncotreeCache, PatientDemographicsCache } from "../../utils/cache";
 import { neo4jDriver } from "../../utils/servers";
@@ -655,14 +655,17 @@ export async function querySeqDatesByDmpSampleId(dmpSampleIds: string[]) {
     .join(",");
   const query = `
     SELECT
-      DMP_SAMPLE_ID,
-      SEQUENCING_DATE
+      ${props.databricks_seq_dates_by_sample_table}.DMP_SAMPLE_ID AS DMP_SAMPLE_ID,
+      ${props.databricks_seq_dates_by_sample_table}.SEQUENCING_DATE AS SEQUENCING_DATE,
+      ${props.databricks_phi_mol_accession_table}.PDRX_ACCESSION_NO AS MOLECULAR_ACCESSION_NUMBER
     FROM
       ${props.databricks_seq_dates_by_sample_table}
+    JOIN
+      ${props.databricks_phi_mol_accession_table} ON ${props.databricks_seq_dates_by_sample_table}.DMP_SAMPLE_ID = ${props.databricks_phi_mol_accession_table}.SAMPLE_ID
     WHERE
-      DMP_SAMPLE_ID IN (${dmpSampleIdsList})
+      ${props.databricks_seq_dates_by_sample_table}.DMP_SAMPLE_ID IN (${dmpSampleIdsList})
   `;
-  return await queryDatabricks<SeqDateBySampleId>(query);
+  return await queryDatabricks<SeqDateAccessionBySampleId>(query);
 }
 
 export function mapPhiToSamplesData({
@@ -670,17 +673,23 @@ export function mapPhiToSamplesData({
   seqDatesBySampleId,
 }: {
   samplesData: Array<DashboardSample>;
-  seqDatesBySampleId: Array<SeqDateBySampleId>;
+  seqDatesBySampleId: Array<SeqDateAccessionBySampleId>;
 }): Array<DashboardSample> {
   const seqDateBySampleIdMap: Record<string, string> = {};
+  const molAccessionBySampleIdMap: Record<string, string> = {};
   seqDatesBySampleId.forEach((seqDate) => {
     seqDateBySampleIdMap[seqDate.DMP_SAMPLE_ID] = seqDate.SEQUENCING_DATE;
+    molAccessionBySampleIdMap[seqDate.DMP_SAMPLE_ID] =
+      seqDate.MOLECULAR_ACCESSION_NUMBER ?? "";
   });
   return samplesData.map((sample) => {
     return {
       ...sample,
       sequencingDate: sample.primaryId
         ? seqDateBySampleIdMap[sample.primaryId]
+        : null,
+      molecularAccessionNumber: sample.primaryId
+        ? molAccessionBySampleIdMap[sample.primaryId]
         : null,
     };
   });

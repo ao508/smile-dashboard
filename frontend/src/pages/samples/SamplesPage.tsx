@@ -36,7 +36,7 @@ import { NoteAddOutlined } from "@material-ui/icons";
 const QUERY_NAME = "dashboardSamples";
 const INITIAL_SORT_FIELD_NAME = "importDate";
 const RECORD_NAME = "samples";
-const PHI_FIELDS = new Set(["sequencingDate"]);
+const PHI_FIELDS = new Set(["sequencingDate", "molecularAccessionNumber"]);
 
 export function SamplesPage() {
   const [userSearchVal, setUserSearchVal] = useState("");

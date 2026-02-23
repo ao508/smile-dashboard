@@ -106,6 +106,7 @@ const SAMPLE_FIELDS = `
 
   # Databricks
   sequencingDate: String
+  molecularAccessionNumber: String
   race: String
 
   # results total
@@ -198,9 +199,10 @@ const QUERY_RESULT_TYPEDEFS = gql`
     ANCHOR_ONCOTREE_CODE: String!
   }
 
-  type SeqDateBySampleId {
+  type SeqDateAccessionBySampleId {
     DMP_SAMPLE_ID: String!
     SEQUENCING_DATE: String!
+    MOLECULAR_ACCESSION_NUMBER: String
   }
 
   type TempoCohortSample {
