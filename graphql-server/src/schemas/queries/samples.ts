@@ -215,7 +215,7 @@ export function buildSamplesQueryBody({
         apoc.coll.toSet(
           [sid IN apoc.coll.sortMaps(sampleIdsList, "importDate")
             WHERE sid.cmoSampleName <> latestSm.cmoSampleName AND sid.cmoSampleName <> ""
-            | sid.cmoSampleName + " (" + sid.importDate + ")"
+            | sid.cmoSampleName + " (" + apoc.date.format(sid.importDate, 'ms', 'yyyy-MM-dd') + ")"
           ]
         ),
       ", ") AS historicalCmoSampleNames
