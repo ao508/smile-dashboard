@@ -49,6 +49,7 @@ databricks_phi_id_mapping_table=
 databricks_seq_dates_by_patient_table=
 databricks_seq_dates_by_sample_table=
 databricks_cdsi_demographics_table=
+databricks_phi_mol_accession_table=
 
 [ccs]
 blocked_cohort_ids=

@@ -14421,6 +14421,18 @@
             "deprecationReason": null
           },
           {
+            "name": "molecularAccessionNumber",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "oncotreeCode",
             "description": null,
             "args": [],
@@ -15138,6 +15150,18 @@
           },
           {
             "name": "mafCompleteStatus",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "molecularAccessionNumber",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -45367,11 +45391,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_EQUAL",
+            "name": "importDate_AVERAGE_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45379,11 +45403,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GT",
+            "name": "importDate_AVERAGE_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45391,11 +45415,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GTE",
+            "name": "importDate_AVERAGE_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45403,11 +45427,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LT",
+            "name": "importDate_AVERAGE_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45415,11 +45439,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LTE",
+            "name": "importDate_AVERAGE_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45427,11 +45451,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_EQUAL",
+            "name": "importDate_MAX_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45439,11 +45463,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GT",
+            "name": "importDate_MAX_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45451,11 +45475,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GTE",
+            "name": "importDate_MAX_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45463,11 +45487,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LT",
+            "name": "importDate_MAX_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45475,11 +45499,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LTE",
+            "name": "importDate_MAX_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45487,11 +45511,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_EQUAL",
+            "name": "importDate_MIN_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45499,11 +45523,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GT",
+            "name": "importDate_MIN_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45511,11 +45535,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GTE",
+            "name": "importDate_MIN_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45523,11 +45547,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LT",
+            "name": "importDate_MIN_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -45535,11 +45559,71 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LTE",
+            "name": "importDate_MIN_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_EQUAL",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -47596,7 +47680,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "BigInt",
                 "ofType": null
               }
             },
@@ -47854,7 +47938,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelection",
+                "name": "BigIntAggregateSelection",
                 "ofType": null
               }
             },
@@ -48070,7 +48154,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "BigInt",
                 "ofType": null
               }
             },
@@ -54426,7 +54510,31 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_DECREMENT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_INCREMENT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -54721,7 +54829,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -54729,11 +54837,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_CONTAINS",
+            "name": "importDate_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -54741,11 +54849,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_ENDS_WITH",
+            "name": "importDate_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -54763,7 +54871,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "String",
+                  "name": "BigInt",
                   "ofType": null
                 }
               }
@@ -54773,11 +54881,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_MATCHES",
+            "name": "importDate_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -54785,11 +54893,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_STARTS_WITH",
+            "name": "importDate_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -56377,7 +56485,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelection",
+                "name": "BigIntAggregateSelection",
                 "ofType": null
               }
             },
@@ -68951,11 +69059,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_EQUAL",
+            "name": "importDate_AVERAGE_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -68963,11 +69071,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GT",
+            "name": "importDate_AVERAGE_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -68975,11 +69083,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GTE",
+            "name": "importDate_AVERAGE_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -68987,11 +69095,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LT",
+            "name": "importDate_AVERAGE_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -68999,11 +69107,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LTE",
+            "name": "importDate_AVERAGE_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69011,11 +69119,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_EQUAL",
+            "name": "importDate_MAX_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69023,11 +69131,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GT",
+            "name": "importDate_MAX_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69035,11 +69143,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GTE",
+            "name": "importDate_MAX_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69047,11 +69155,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LT",
+            "name": "importDate_MAX_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69059,11 +69167,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LTE",
+            "name": "importDate_MAX_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69071,11 +69179,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_EQUAL",
+            "name": "importDate_MIN_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69083,11 +69191,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GT",
+            "name": "importDate_MIN_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69095,11 +69203,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GTE",
+            "name": "importDate_MIN_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69107,11 +69215,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LT",
+            "name": "importDate_MIN_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -69119,11 +69227,71 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LTE",
+            "name": "importDate_MIN_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_EQUAL",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -74368,7 +74536,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "BigInt",
                 "ofType": null
               }
             },
@@ -74946,7 +75114,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelection",
+                "name": "BigIntAggregateSelection",
                 "ofType": null
               }
             },
@@ -75514,7 +75682,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "BigInt",
                 "ofType": null
               }
             },
@@ -79062,7 +79230,31 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_DECREMENT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_INCREMENT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -80229,7 +80421,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -80237,11 +80429,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_CONTAINS",
+            "name": "importDate_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -80249,11 +80441,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_ENDS_WITH",
+            "name": "importDate_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -80271,7 +80463,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "String",
+                  "name": "BigInt",
                   "ofType": null
                 }
               }
@@ -80281,11 +80473,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_MATCHES",
+            "name": "importDate_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -80293,11 +80485,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_STARTS_WITH",
+            "name": "importDate_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -89155,7 +89347,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelection",
+                "name": "BigIntAggregateSelection",
                 "ofType": null
               }
             },
@@ -91068,7 +91260,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "SeqDateBySampleId",
+        "name": "SeqDateAccessionBySampleId",
         "description": null,
         "fields": [
           {
@@ -91083,6 +91275,18 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MOLECULAR_ACCESSION_NUMBER",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -92710,11 +92914,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_EQUAL",
+            "name": "importDate_AVERAGE_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92722,11 +92926,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GT",
+            "name": "importDate_AVERAGE_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92734,11 +92938,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GTE",
+            "name": "importDate_AVERAGE_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92746,11 +92950,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LT",
+            "name": "importDate_AVERAGE_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92758,11 +92962,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LTE",
+            "name": "importDate_AVERAGE_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92770,11 +92974,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_EQUAL",
+            "name": "importDate_MAX_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92782,11 +92986,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GT",
+            "name": "importDate_MAX_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92794,11 +92998,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GTE",
+            "name": "importDate_MAX_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92806,11 +93010,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LT",
+            "name": "importDate_MAX_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92818,11 +93022,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LTE",
+            "name": "importDate_MAX_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92830,11 +93034,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_EQUAL",
+            "name": "importDate_MIN_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92842,11 +93046,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GT",
+            "name": "importDate_MIN_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92854,11 +93058,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GTE",
+            "name": "importDate_MIN_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92866,11 +93070,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LT",
+            "name": "importDate_MIN_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -92878,11 +93082,71 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LTE",
+            "name": "importDate_MIN_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_EQUAL",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -93324,7 +93588,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelection",
+                "name": "BigIntAggregateSelection",
                 "ofType": null
               }
             },
@@ -95719,11 +95983,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_EQUAL",
+            "name": "importDate_AVERAGE_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95731,11 +95995,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GT",
+            "name": "importDate_AVERAGE_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95743,11 +96007,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_GTE",
+            "name": "importDate_AVERAGE_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95755,11 +96019,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LT",
+            "name": "importDate_AVERAGE_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95767,11 +96031,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_AVERAGE_LENGTH_LTE",
+            "name": "importDate_AVERAGE_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95779,11 +96043,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_EQUAL",
+            "name": "importDate_MAX_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95791,11 +96055,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GT",
+            "name": "importDate_MAX_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95803,11 +96067,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_GTE",
+            "name": "importDate_MAX_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95815,11 +96079,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LT",
+            "name": "importDate_MAX_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95827,11 +96091,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_LONGEST_LENGTH_LTE",
+            "name": "importDate_MAX_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95839,11 +96103,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_EQUAL",
+            "name": "importDate_MIN_EQUAL",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95851,11 +96115,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GT",
+            "name": "importDate_MIN_GT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95863,11 +96127,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_GTE",
+            "name": "importDate_MIN_GTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95875,11 +96139,11 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LT",
+            "name": "importDate_MIN_LT",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -95887,11 +96151,71 @@
             "deprecationReason": null
           },
           {
-            "name": "importDate_SHORTEST_LENGTH_LTE",
+            "name": "importDate_MIN_LTE",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_EQUAL",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_GTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LT",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "importDate_SUM_LTE",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigInt",
               "ofType": null
             },
             "defaultValue": null,
@@ -98997,7 +99321,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "StringAggregateSelection",
+                "name": "BigIntAggregateSelection",
                 "ofType": null
               }
             },
