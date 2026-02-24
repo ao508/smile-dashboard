@@ -549,15 +549,15 @@ export async function querySelectSampleDataForCacheUpdate(
         apoc.coll.toSet(
           [sid IN apoc.coll.sortMaps(sampleIdsList, "importDate")
             WHERE sid.cmoSampleName <> latestSm.cmoSampleName AND sid.cmoSampleName <> ""
-            | sid.cmoSampleName + " (" + sid.importDate + ")"
+            | sid.cmoSampleName + " (" + apoc.date.format(sid.importDate, 'ms', 'yyyy-MM-dd') + ")"
           ]
         ),
       ", ") AS historicalCmoSampleNames
     WHERE latestSm.primaryId IN $primaryIds
-    RETURN
+    RETURN DISTINCT
       latestSm.primaryId AS primaryId,
       latestSm.cmoSampleName AS cmoSampleName,
-      latestSm.importDate AS importDate,
+      apoc.date.format(latestSm.importDate, 'ms', 'yyyy-MM-dd') AS importDate,
       historicalCmoSampleNames,
       s.revisable AS revisable
   `;
