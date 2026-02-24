@@ -590,26 +590,33 @@ function getInstrumentModelByLibraries(
   try {
     const libs = JSON.parse(libraries) as Array<{
       runs?: Array<{
+        runId?: string;
         runMode?: string;
         runDate?: string;
       }>;
     }>;
     const latestRun = {
+      runId: null as string | null,
       runMode: null as string | null,
       runDate: null as Date | null,
     };
     for (const currLib of libs) {
       if (!Array.isArray(currLib.runs) || currLib.runs.length === 0) continue;
       for (const currRun of currLib.runs) {
-        if (!currRun.runMode || !currRun.runDate) continue;
+        if (!currRun.runId || !currRun.runDate) continue;
         const currRunDate = new Date(currRun.runDate);
         if (!latestRun.runDate || currRunDate > latestRun.runDate) {
           latestRun.runDate = currRunDate;
-          latestRun.runMode = currRun.runMode;
+          latestRun.runId = currRun.runId;
+          latestRun.runMode = currRun.runMode ?? null;
         }
       }
     }
-    return latestRun.runMode;
+    const parsedInstrumentName = latestRun.runId?.split("_")[0] ?? null;
+    return parsedInstrumentName &&
+      INSTRUMENT_NAME_TO_MODEL_MAPPINGS.hasOwnProperty(parsedInstrumentName)
+      ? INSTRUMENT_NAME_TO_MODEL_MAPPINGS[parsedInstrumentName]
+      : null;
   } catch (e) {
     return null;
   }
@@ -620,22 +627,56 @@ function getInstrumentModelByLibraries(
  * Source: Sinisa
  */
 const ILLUMINA_INSTRUMENT_MODELS = new Set([
-  "HiSeq",
   "HiSeq High Output",
   "HiSeq Rapid Run",
   "HiSeq X",
+  "HiSeq",
+  "Illumina HiSeq 2000",
+  "Illumina HiSeq 2500",
+  "Illumina HiSeq 4000",
+  "Illumina MiSeq",
+  "Illumina NovaSeq 6000",
+  "Illumina NovaSeq X",
   "MiSeq",
-  "NextSeq",
+  "NextSeq 1000",
   "NextSeq 2000",
-  "NovaSeq",
+  "NextSeq 500",
+  "NextSeq",
   "NovaSeq S1",
   "NovaSeq S2",
   "NovaSeq S4",
   "NovaSeq SP",
-  "NovaSeq X 10B",
   "NovaSeq X 1.5B",
+  "NovaSeq X 10B",
   "NovaSeq X 25B",
+  "NovaSeq",
 ]);
+
+/**
+ * Instrument name to model mappings.
+ * Provided by IGO data team and PMs.
+ */
+const INSTRUMENT_NAME_TO_MODEL_MAPPINGS: Record<string, string> = {
+  TOMS: "Illumina MiSeq",
+  VIC: "Illumina MiSeq",
+  JOHNSAWYERS: "Illumina MiSeq",
+  AYYAN: "Illumina MiSeq",
+  SCOTT: "NextSeq 500",
+  AMELIE: "NextSeq 1000",
+  PEPE: "NextSeq 2000",
+  MOMO: "Illumina HiSeq 2500",
+  KIM: "Illumina HiSeq 2500",
+  LIZ: "Illumina HiSeq 2000",
+  BRAD: "Illumina HiSeq 2000",
+  PITT: "Illumina HiSeq 4000",
+  JAX: "Illumina HiSeq 4000",
+  MICHELLE: "Illumina NovaSeq 6000",
+  DIANA: "Illumina NovaSeq 6000",
+  RUTH: "Illumina NovaSeq 6000",
+  FAUCI: "Illumina NovaSeq X",
+  FAUCI2: "Illumina NovaSeq X",
+  BONO: "Illumina NovaSeq X",
+};
 
 /**
  * Returns the platform based on the instrument model value
