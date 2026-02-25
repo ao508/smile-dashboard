@@ -690,10 +690,8 @@ function getPlatformByInstrumentModel(
     : null;
 }
 
-export async function querySeqDatesByDmpSampleId(dmpSampleIds: string[]) {
-  const dmpSampleIdsList = dmpSampleIds
-    .map((dmpSampleId) => `'${dmpSampleId}'`)
-    .join(",");
+export async function querySeqDatesByDmpSampleId(searchVals: string[]) {
+  const searchValList = searchVals.map((value) => `'${value}'`).join(",");
   const query = `
     SELECT
       ${props.databricks_seq_dates_by_sample_table}.DMP_SAMPLE_ID AS DMP_SAMPLE_ID,
@@ -704,7 +702,8 @@ export async function querySeqDatesByDmpSampleId(dmpSampleIds: string[]) {
     JOIN
       ${props.databricks_phi_mol_accession_table} ON ${props.databricks_seq_dates_by_sample_table}.DMP_SAMPLE_ID = ${props.databricks_phi_mol_accession_table}.SAMPLE_ID
     WHERE
-      ${props.databricks_seq_dates_by_sample_table}.DMP_SAMPLE_ID IN (${dmpSampleIdsList})
+      ${props.databricks_seq_dates_by_sample_table}.DMP_SAMPLE_ID IN (${searchValList})
+      OR ${props.databricks_phi_mol_accession_table}.PDRX_ACCESSION_NO IN (${searchValList})
   `;
   return await queryDatabricks<SeqDateAccessionBySampleId>(query);
 }
