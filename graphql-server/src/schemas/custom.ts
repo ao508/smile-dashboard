@@ -9,6 +9,7 @@ import {
   QueryDashboardPatientsArgs,
   QueryDashboardRequestsArgs,
   QueryDashboardSamplesArgs,
+  SeqDateAccessionBySampleId,
   TempoCohortRequestInput,
 } from "../generated/graphql";
 import { props } from "../utils/constants";
@@ -358,6 +359,34 @@ export async function buildCustomSchema(ogm: OGM) {
         const patientDemographicsCache = inMemoryCache.get(
           PATIENT_DEMOGRAPHICS_CACHE_KEY
         ) as PatientDemographicsCache;
+
+        // if phi enabled, query for possible mapped sample ids to add to search vals list while removing phi searchables from search vals list
+        let dmpSampleSeqDateAccessions: Array<SeqDateAccessionBySampleId> = [];
+        if (searchVals && canSearchPhiData({ phiEnabled, searchVals })) {
+          dmpSampleSeqDateAccessions = await querySeqDatesByDmpSampleId(
+            searchVals
+          );
+          let mappedSampleIds: string[] = [];
+          let toRemove: string[] = [];
+          dmpSampleSeqDateAccessions.forEach((v) => {
+            if (
+              v.DMP_SAMPLE_ID &&
+              searchVals &&
+              !searchVals.includes(v.DMP_SAMPLE_ID)
+            ) {
+              mappedSampleIds.push(v.DMP_SAMPLE_ID);
+            }
+            if (
+              v.MOLECULAR_ACCESSION_NUMBER &&
+              searchVals &&
+              searchVals.includes(v.MOLECULAR_ACCESSION_NUMBER)
+            ) {
+              toRemove.push(v.MOLECULAR_ACCESSION_NUMBER);
+            }
+          });
+          searchVals.push(...mappedSampleIds);
+          searchVals = searchVals.filter((val) => !toRemove.includes(val));
+        }
 
         const addlOncotreeCodes = getAddlOtCodesMatchingCtOrCtdVals({
           searchVals,
