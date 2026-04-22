@@ -265,6 +265,41 @@ export function useCellChanges({
       for (const dashboardCohort of newDashboardCohorts) {
         updateTempoCohortMutation({ variables: { dashboardCohort } });
       }
+
+      // Manually handle optimistic updates for cohorts (same pattern as samples)
+      const optimisticCohorts = records!.map((c) => {
+        c = c as DashboardCohort;
+        const changesForCohort =
+          c.cohortId != null ? changesByRecordId.get(c.cohortId) : undefined;
+        if (changesForCohort) {
+          const changedFields = changesForCohort.reduce((acc, change) => {
+            acc[change.fieldName] = change.newValue;
+            return acc;
+          }, {} as Record<string, any>);
+          return {
+            ...c,
+            ...changedFields,
+            revisable: false,
+            importDate: formatCellDate(new Date()) as string,
+          };
+        }
+        return c;
+      });
+      optimisticCohorts.sort((a, b) => {
+        return (
+          new Date(b.importDate ?? "").getTime() -
+          new Date(a.importDate ?? "").getTime()
+        );
+      });
+      const optimisticDatasource = {
+        getRows: (params: IServerSideGetRowsParams) => {
+          params.success({
+            rowData: optimisticCohorts!,
+            rowCount: optimisticCohorts[0]?._total || 0,
+          });
+        },
+      };
+      gridRef.current?.api?.setServerSideDatasource(optimisticDatasource);
     }
 
     // "Reset" the grid with the latest data
