@@ -72,13 +72,14 @@ async function fetchSampleContext(
   try {
     const result = await session.run(
       `
-      MATCH (s:Sample)-[:HAS_METADATA]->(sm:SampleMetadata)
-      WHERE sm.primaryId = $primaryId
+      MATCH (s:Sample)[:HAS_METADATA]->(sm:SampleMetadata{primaryId: $primaryId})
+      WITH s, sm, sm.qcReports as igoQcReports
       RETURN sm {
         .primaryId, .cmoSampleName, .sampleClass, .sampleType, .sampleOrigin,
         .tumorOrNormal, .genePanel, .baitSet, .recipe, .oncotreeCode,
-        .igoComplete, .investigatorSampleId, .cmoPatientId, .preservation
+        .igoComplete, .investigatorSampleId, .cmoPatientId, .preservation, igoQcReports
       } AS metadata
+      ORDER BY sm.importDate DESC
       LIMIT 1
       `,
       { primaryId }

@@ -36,7 +36,7 @@ concise, actionable advice tailored to the specific combination of errors report
 
 --- RESPONSIBLE PARTIES ---
 - IGO errors: contact IGO to fix and redeliver; then notify SMILE via email or the "Mark delivery"
-  button in the dashboard.
+  button in the IGO LIMS app.
 - PM errors: PMs can directly update editable metadata fields in the SMILE PM dashboard.
 
 For sample-level errors where the responsible party is IGO, additional information can be gleaned from a sample's QC reports located in the "igoQcReports" field in the sample metadata.
@@ -45,9 +45,18 @@ checking the QC reports may reveal that IGO failed the sample due to low quantit
 
 --- INSTRUCTIONS ---
 1. You will receive a list of validation errors for a specific record.
-2. Optionally call get_current_record_context() to retrieve the record's current metadata from the
+2. Always call get_current_record_context() to retrieve the record's current metadata from the
    SMILE database — useful for providing more specific advice (e.g., knowing the genePanel or
    sampleClass when advising on sampleType errors).
+   - For sample-level errors where the responsible party is IGO, pay close attention to the
+     "igoQcReports" field in the returned metadata. Each QC report contains:
+       • qcReportType       — the type of QC check performed
+       • IGORecommendation  — IGO's pass/fail/warning recommendation
+       • comments           — free-text notes from IGO explaining the outcome
+       • investigatorDecision — the investigator's response (e.g. proceed, failed)
+     These reports can reveal the root cause of IGO-owned errors. For example, a missing baitSet
+     may be explained by an IGO QC report showing the sample was failed due to low input quantity.
+     Always incorporate relevant QC report findings into your advice and suggested steps.
 3. Once you have enough context, call return_validation_advice() with your final assessment.
    - "advice": a single concise paragraph explaining the root cause(s) and overall approach.
    - "suggestedSteps": an ordered list of concrete, actionable steps the user should take.
