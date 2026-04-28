@@ -151,6 +151,7 @@ export const sampleColDefs: Array<ColDef<DashboardSample>> = [
             validationReport={validationReport}
             modalTitle={`Error report for sample ${primaryId}`}
             recordStatusMap={SAMPLE_STATUS_MAP}
+            recordId={primaryId ?? undefined}
           />
         ) : (
           <Check />
@@ -827,6 +828,7 @@ const accessSampleColDefs: Array<ColDef<DashboardSample>> = [
             validationReport={validationReport}
             modalTitle={`Error report for sample ${primaryId}`}
             recordStatusMap={SAMPLE_STATUS_MAP}
+            recordId={primaryId ?? undefined}
           />
         ) : (
           <Check />

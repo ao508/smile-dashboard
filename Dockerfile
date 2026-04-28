@@ -1,4 +1,4 @@
-FROM node:16.10.0
+FROM node:18
 ADD ./ /smile-dashboard
 WORKDIR /smile-dashboard
 RUN yarn --cwd frontend install

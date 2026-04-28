@@ -53,3 +53,20 @@ databricks_phi_mol_accession_table=
 
 [ccs]
 blocked_cohort_ids=
+
+# --- AI Validation Advice (optional) ---
+# Set provider to "anthropic", "gemini", or "openai"
+[llm]
+provider=gemini
+
+[anthropic]
+anthropic_api_key=
+anthropic_model=claude-3-5-haiku-20241022
+
+[gemini]
+gemini_api_key=
+gemini_model=gemini-2.5-flash
+
+[openai]
+openai_api_key=
+openai_model=gpt-4o-mini

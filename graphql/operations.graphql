@@ -300,6 +300,21 @@ query AllBlockedCohortIds {
   allBlockedCohortIds
 }
 
+query GetValidationAdvice(
+  $validationReport: String!
+  $recordType: String!
+  $recordId: String
+) {
+  getValidationAdvice(
+    validationReport: $validationReport
+    recordType: $recordType
+    recordId: $recordId
+  ) {
+    advice
+    suggestedSteps
+  }
+}
+
 query AllAnchorSeqDateData($phiEnabled: Boolean = false) {
   allAnchorSeqDateData(phiEnabled: $phiEnabled) {
     MRN

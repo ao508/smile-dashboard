@@ -235,6 +235,11 @@ const QUERY_RESULT_TYPEDEFS = gql`
     type: String!
     samples: [TempoCohortSample!]!
   }
+
+  type ValidationAdvice {
+    advice: String!
+    suggestedSteps: [String!]!
+  }
 `;
 
 const QUERY_TYPEDEFS = gql`
@@ -285,6 +290,12 @@ const QUERY_TYPEDEFS = gql`
     allAnchorSeqDateData(phiEnabled: Boolean): [AnchorSeqDateData!]!
 
     allBlockedCohortIds: [String!]!
+
+    getValidationAdvice(
+      validationReport: String!
+      recordType: String!
+      recordId: String
+    ): ValidationAdvice
   }
 `;
 

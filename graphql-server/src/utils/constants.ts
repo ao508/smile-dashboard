@@ -62,6 +62,18 @@ export const props = {
   ),
 
   ccs_blocked_cohort_ids: properties.get("ccs.blocked_cohort_ids"),
+
+  llm_provider: properties.get("llm.provider") ?? "gemini",
+
+  anthropic_api_key: properties.get("anthropic.anthropic_api_key"),
+  anthropic_model:
+    properties.get("anthropic.anthropic_model") ?? "claude-3-5-haiku-20241022",
+
+  gemini_api_key: properties.get("gemini.gemini_api_key"),
+  gemini_model: properties.get("gemini.gemini_model") ?? "gemini-2.5-flash",
+
+  openai_api_key: properties.get("openai.openai_api_key"),
+  openai_model: properties.get("openai.openai_model") ?? "gpt-4o-mini",
 };
 
 export const REACT_APP_EXPRESS_SERVER_ORIGIN =

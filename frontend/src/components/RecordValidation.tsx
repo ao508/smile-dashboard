@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { DashboardRequest } from "../generated/graphql";
 import { CustomTooltip } from "../components/CustomToolTip";
 import WarningIcon from "@material-ui/icons/Warning";
-import { Button, Modal } from "react-bootstrap";
+import { Alert, Button, Modal, Spinner } from "react-bootstrap";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import {
@@ -13,6 +13,7 @@ import {
   StatusMap,
 } from "../configs/recordValidationMaps";
 import { multiLineColDef } from "../configs/shared";
+import { useGetValidationAdviceLazyQuery } from "../generated/graphql";
 
 type ModalTitle = `Error report for ${string}`;
 
@@ -22,14 +23,18 @@ export function RecordValidation({
   toleratedSampleErrors,
   modalTitle,
   recordStatusMap,
+  recordId,
 }: {
   validationStatus: DashboardRequest["validationStatus"];
   validationReport: DashboardRequest["validationReport"];
   toleratedSampleErrors?: DashboardRequest["toleratedSampleErrors"];
   modalTitle: ModalTitle;
   recordStatusMap: StatusMap;
+  recordId?: string;
 }) {
   const [modalShow, setModalShow] = useState(false);
+  const recordType =
+    typeof toleratedSampleErrors === "undefined" ? "SAMPLE" : "REQUEST";
   return (
     <>
       <WarningIconButton setModalShow={setModalShow} />
@@ -42,6 +47,8 @@ export function RecordValidation({
           toleratedSampleErrors={toleratedSampleErrors}
           title={modalTitle}
           recordStatusMap={recordStatusMap}
+          recordId={recordId}
+          recordType={recordType}
         />
       )}
     </>
@@ -106,6 +113,8 @@ function ErrorReportModal({
   toleratedSampleErrors,
   title,
   recordStatusMap,
+  recordId,
+  recordType,
 }: {
   show: boolean;
   onHide: () => void;
@@ -114,7 +123,13 @@ function ErrorReportModal({
   toleratedSampleErrors: DashboardRequest["toleratedSampleErrors"];
   title: ModalTitle;
   recordStatusMap: StatusMap;
+  recordId?: string;
+  recordType: string;
 }) {
+  const [
+    getAdvice,
+    { loading: adviceLoading, data: adviceData, error: adviceError },
+  ] = useGetValidationAdviceLazyQuery();
   const validationDataForAgGrid: StatusItem[] = [];
 
   // Prepare the data for AG Grid
@@ -202,6 +217,8 @@ function ErrorReportModal({
     return null;
   }
 
+  const advice = adviceData?.getValidationAdvice;
+
   return (
     <Modal dialogClassName="modal-90w" show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -217,8 +234,62 @@ function ErrorReportModal({
             onGridReady={(params) => params.api.sizeColumnsToFit()}
           />
         </div>
+        {/* refactor to its own component */}
+        {adviceLoading && (
+          <div className="mt-3 d-flex align-items-center gap-2">
+            <Spinner animation="border" size="sm" role="status" />
+            <span>Getting AI advice…</span>
+          </div>
+        )}
+        {adviceError && (
+          <Alert variant="danger" className="mt-3">
+            Unable to get AI advice. Please try again or contact the SMILE team.
+          </Alert>
+        )}
+        {advice && (
+          <Alert variant="info" className="mt-3">
+            <Alert.Heading>AI Advice</Alert.Heading>
+            <p>{advice.advice}</p>
+            {advice.suggestedSteps.length > 0 && (
+              <>
+                <strong>Suggested steps:</strong>
+                <ol className="mb-0 mt-1">
+                  {advice.suggestedSteps.map((step, i) => (
+                    <li key={i}>{step}</li>
+                  ))}
+                </ol>
+              </>
+            )}
+          </Alert>
+        )}
       </Modal.Body>
       <Modal.Footer>
+        {validationReport && !advice && (
+          <Button
+            variant="outline-primary"
+            disabled={adviceLoading}
+            onClick={() => {
+              const vars = {
+                validationReport,
+                recordType,
+                recordId,
+              };
+              console.log("[Ask AI] sending request:", vars);
+              getAdvice({ variables: vars }).then((res) => {
+                if (res.error) {
+                  console.error("[Ask AI] response error:", res.error);
+                } else {
+                  console.log(
+                    "[Ask AI] response:",
+                    res.data?.getValidationAdvice
+                  );
+                }
+              });
+            }}
+          >
+            Ask AI for advice
+          </Button>
+        )}
         <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>

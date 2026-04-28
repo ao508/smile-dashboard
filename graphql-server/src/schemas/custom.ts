@@ -60,6 +60,7 @@ import {
   queryDashboardRequests,
 } from "./queries/requests";
 import { typeDefs } from "../utils/typeDefs";
+import { runValidationAdviceQuery, ValidationAdvice } from "../mcp/server";
 const request = require("request-promise-native");
 import { AuthenticationError, ForbiddenError } from "apollo-server-express";
 import { applyMiddleware } from "graphql-middleware";
@@ -76,6 +77,7 @@ type AuthMiddleware = {
     allAnchorSeqDateData: IMiddlewareResolver;
     allBlockedCohortIds: IMiddlewareResolver;
     dashboardCohorts: IMiddlewareResolver;
+    getValidationAdvice: IMiddlewareResolver;
   };
 };
 
@@ -193,6 +195,21 @@ export async function buildCustomSchema(ogm: OGM) {
         }
         return await resolve(parent, args, context, info);
       },
+
+      async getValidationAdvice(
+        resolve,
+        parent,
+        args,
+        context: ApolloServerContext,
+        info
+      ) {
+        if (!context.req.isAuthenticated()) {
+          throw new AuthenticationError(
+            "You must be logged in to access this resource."
+          );
+        }
+        return await resolve(parent, args, context, info);
+      },
     },
   };
 
@@ -266,6 +283,10 @@ export async function buildCustomSchema(ogm: OGM) {
       },
 
       async dashboardCohorts(resolve, parent, args, context, info) {
+        return await resolve(parent, args, context, info);
+      },
+
+      async getValidationAdvice(resolve, parent, args, context, info) {
         return await resolve(parent, args, context, info);
       },
     },
@@ -382,6 +403,64 @@ export async function buildCustomSchema(ogm: OGM) {
 
       async allBlockedCohortIds() {
         return await queryAllBlockedCohortIds();
+      },
+
+      async getValidationAdvice(
+        _source: undefined,
+        {
+          validationReport,
+          recordType,
+          recordId,
+        }: { validationReport: string; recordType: string; recordId?: string }
+      ): Promise<ValidationAdvice> {
+        const provider = props.llm_provider as string;
+        let providerConfig:
+          | { provider: "anthropic"; apiKey: string; model: string }
+          | { provider: "gemini"; apiKey: string; model: string }
+          | { provider: "openai"; apiKey: string; model: string };
+
+        if (provider === "gemini") {
+          providerConfig = {
+            provider: "gemini",
+            apiKey: props.gemini_api_key as string,
+            model: props.gemini_model as string,
+          };
+        } else if (provider === "openai") {
+          providerConfig = {
+            provider: "openai",
+            apiKey: props.openai_api_key as string,
+            model: props.openai_model as string,
+          };
+        } else {
+          providerConfig = {
+            provider: "anthropic",
+            apiKey: props.anthropic_api_key as string,
+            model: props.anthropic_model as string,
+          };
+        }
+        console.log("[getValidationAdvice] request:", {
+          recordType,
+          recordId,
+          validationReportLength: validationReport?.length,
+          provider: providerConfig.provider,
+          model: providerConfig.model,
+        });
+
+        let result: ValidationAdvice;
+        try {
+          result = await runValidationAdviceQuery({
+            validationReport,
+            recordType,
+            recordId,
+            providerConfig,
+            neo4jDriver,
+          });
+          console.log("[getValidationAdvice] response:", result);
+        } catch (err) {
+          console.error("[getValidationAdvice] error:", err);
+          throw err;
+        }
+        return result;
       },
 
       async dashboardCohorts(

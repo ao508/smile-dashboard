@@ -4266,6 +4266,7 @@ export type Query = {
   dbGaps: Array<DbGap>;
   dbGapsAggregate: DbGapAggregateSelection;
   dbGapsConnection: DbGapsConnection;
+  getValidationAdvice?: Maybe<ValidationAdvice>;
   mafCompletes: Array<MafComplete>;
   mafCompletesAggregate: MafCompleteAggregateSelection;
   mafCompletesConnection: MafCompletesConnection;
@@ -4413,6 +4414,12 @@ export type QueryDbGapsConnectionArgs = {
   first?: InputMaybe<Scalars["Int"]>;
   sort?: InputMaybe<Array<InputMaybe<DbGapSort>>>;
   where?: InputMaybe<DbGapWhere>;
+};
+
+export type QueryGetValidationAdviceArgs = {
+  recordId?: InputMaybe<Scalars["String"]>;
+  recordType: Scalars["String"];
+  validationReport: Scalars["String"];
 };
 
 export type QueryMafCompletesArgs = {
@@ -11359,6 +11366,12 @@ export type UpdateTemposMutationResponse = {
   tempos: Array<Tempo>;
 };
 
+export type ValidationAdvice = {
+  __typename?: "ValidationAdvice";
+  advice: Scalars["String"];
+  suggestedSteps: Array<Scalars["String"]>;
+};
+
 export type DashboardRequestsQueryVariables = Exact<{
   searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
@@ -11822,6 +11835,21 @@ export type AllBlockedCohortIdsQueryVariables = Exact<{ [key: string]: never }>;
 export type AllBlockedCohortIdsQuery = {
   __typename?: "Query";
   allBlockedCohortIds: Array<string>;
+};
+
+export type GetValidationAdviceQueryVariables = Exact<{
+  validationReport: Scalars["String"];
+  recordType: Scalars["String"];
+  recordId?: InputMaybe<Scalars["String"]>;
+}>;
+
+export type GetValidationAdviceQuery = {
+  __typename?: "Query";
+  getValidationAdvice?: {
+    __typename?: "ValidationAdvice";
+    advice: string;
+    suggestedSteps: Array<string>;
+  } | null;
 };
 
 export type AllAnchorSeqDateDataQueryVariables = Exact<{
@@ -12571,6 +12599,75 @@ export type AllBlockedCohortIdsLazyQueryHookResult = ReturnType<
 export type AllBlockedCohortIdsQueryResult = Apollo.QueryResult<
   AllBlockedCohortIdsQuery,
   AllBlockedCohortIdsQueryVariables
+>;
+export const GetValidationAdviceDocument = gql`
+  query GetValidationAdvice(
+    $validationReport: String!
+    $recordType: String!
+    $recordId: String
+  ) {
+    getValidationAdvice(
+      validationReport: $validationReport
+      recordType: $recordType
+      recordId: $recordId
+    ) {
+      advice
+      suggestedSteps
+    }
+  }
+`;
+
+/**
+ * __useGetValidationAdviceQuery__
+ *
+ * To run a query within a React component, call `useGetValidationAdviceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetValidationAdviceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetValidationAdviceQuery({
+ *   variables: {
+ *      validationReport: // value for 'validationReport'
+ *      recordType: // value for 'recordType'
+ *      recordId: // value for 'recordId'
+ *   },
+ * });
+ */
+export function useGetValidationAdviceQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetValidationAdviceQuery,
+    GetValidationAdviceQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetValidationAdviceQuery,
+    GetValidationAdviceQueryVariables
+  >(GetValidationAdviceDocument, options);
+}
+export function useGetValidationAdviceLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetValidationAdviceQuery,
+    GetValidationAdviceQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetValidationAdviceQuery,
+    GetValidationAdviceQueryVariables
+  >(GetValidationAdviceDocument, options);
+}
+export type GetValidationAdviceQueryHookResult = ReturnType<
+  typeof useGetValidationAdviceQuery
+>;
+export type GetValidationAdviceLazyQueryHookResult = ReturnType<
+  typeof useGetValidationAdviceLazyQuery
+>;
+export type GetValidationAdviceQueryResult = Apollo.QueryResult<
+  GetValidationAdviceQuery,
+  GetValidationAdviceQueryVariables
 >;
 export const AllAnchorSeqDateDataDocument = gql`
   query AllAnchorSeqDateData($phiEnabled: Boolean = false) {

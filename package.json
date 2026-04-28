@@ -6,6 +6,9 @@
   "author": "alisman <lisman.aaron@gmail.com>",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "workspaces": [
     "frontend",
     "graphql-server",

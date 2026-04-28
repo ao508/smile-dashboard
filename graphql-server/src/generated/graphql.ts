@@ -4265,6 +4265,7 @@ export type Query = {
   dbGaps: Array<DbGap>;
   dbGapsAggregate: DbGapAggregateSelection;
   dbGapsConnection: DbGapsConnection;
+  getValidationAdvice?: Maybe<ValidationAdvice>;
   mafCompletes: Array<MafComplete>;
   mafCompletesAggregate: MafCompleteAggregateSelection;
   mafCompletesConnection: MafCompletesConnection;
@@ -4412,6 +4413,12 @@ export type QueryDbGapsConnectionArgs = {
   first?: InputMaybe<Scalars["Int"]>;
   sort?: InputMaybe<Array<InputMaybe<DbGapSort>>>;
   where?: InputMaybe<DbGapWhere>;
+};
+
+export type QueryGetValidationAdviceArgs = {
+  recordId?: InputMaybe<Scalars["String"]>;
+  recordType: Scalars["String"];
+  validationReport: Scalars["String"];
 };
 
 export type QueryMafCompletesArgs = {
@@ -11358,6 +11365,12 @@ export type UpdateTemposMutationResponse = {
   tempos: Array<Tempo>;
 };
 
+export type ValidationAdvice = {
+  __typename?: "ValidationAdvice";
+  advice: Scalars["String"];
+  suggestedSteps: Array<Scalars["String"]>;
+};
+
 export type DashboardRequestsQueryVariables = Exact<{
   searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
@@ -11823,6 +11836,21 @@ export type AllBlockedCohortIdsQuery = {
   allBlockedCohortIds: Array<string>;
 };
 
+export type GetValidationAdviceQueryVariables = Exact<{
+  validationReport: Scalars["String"];
+  recordType: Scalars["String"];
+  recordId?: InputMaybe<Scalars["String"]>;
+}>;
+
+export type GetValidationAdviceQuery = {
+  __typename?: "Query";
+  getValidationAdvice?: {
+    __typename?: "ValidationAdvice";
+    advice: string;
+    suggestedSteps: Array<string>;
+  } | null;
+};
+
 export type AllAnchorSeqDateDataQueryVariables = Exact<{
   phiEnabled?: InputMaybe<Scalars["Boolean"]>;
 }>;
@@ -12233,6 +12261,26 @@ export const AllBlockedCohortIdsDocument = gql`
 export type AllBlockedCohortIdsQueryResult = Apollo.QueryResult<
   AllBlockedCohortIdsQuery,
   AllBlockedCohortIdsQueryVariables
+>;
+export const GetValidationAdviceDocument = gql`
+  query GetValidationAdvice(
+    $validationReport: String!
+    $recordType: String!
+    $recordId: String
+  ) {
+    getValidationAdvice(
+      validationReport: $validationReport
+      recordType: $recordType
+      recordId: $recordId
+    ) {
+      advice
+      suggestedSteps
+    }
+  }
+`;
+export type GetValidationAdviceQueryResult = Apollo.QueryResult<
+  GetValidationAdviceQuery,
+  GetValidationAdviceQueryVariables
 >;
 export const AllAnchorSeqDateDataDocument = gql`
   query AllAnchorSeqDateData($phiEnabled: Boolean = false) {

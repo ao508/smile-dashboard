@@ -72,6 +72,7 @@ export const requestColDefs: ColDef<DashboardRequest>[] = [
           toleratedSampleErrors={toleratedSampleErrors}
           modalTitle={`Error report for request ${igoRequestId}`}
           recordStatusMap={REQUEST_STATUS_MAP}
+          recordId={igoRequestId}
         />
       ) : (
         <Check className="check-icon" />

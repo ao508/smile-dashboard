@@ -10,6 +10,7 @@ dist/
 
 # testing
 /coverage
+/tmp
 
 # production
 /build
@@ -22,6 +23,8 @@ dist/
 *.env.test.local
 *.env.production.local
 *.code-workspace
+*.nvmrc
+*.yarnrc
 
 npm-debug.log*
 yarn-debug.log

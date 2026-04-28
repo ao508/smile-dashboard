@@ -8,6 +8,15 @@ import { configureRoutes } from "./routes";
 import { queryDatabricks } from "./utils/databricks";
 require("log-timestamp"); // adds a timestamp to every log statement
 
+const [major] = process.versions.node.split(".").map(Number);
+if (major < 18) {
+  console.error(
+    `[startup] Node.js 18+ is required (running ${process.version}). ` +
+      "Run: nvm use 18"
+  );
+  process.exit(1);
+}
+
 async function main() {
   const app: Express = express();
 

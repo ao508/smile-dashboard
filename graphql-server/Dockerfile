@@ -1,4 +1,4 @@
-FROM node:16.10.0
+FROM node:18
 ADD ./ /server
 WORKDIR /server
 RUN yarn

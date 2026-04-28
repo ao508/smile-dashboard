@@ -29,8 +29,18 @@
     "module": "commonjs" /* Specify what module code is generated. */,
     //"rootDir": "./",                                  /* Specify the root folder within your source files. */
     // "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */
+    // "moduleResolution": "node16",                        /* Respect package.json exports field for packages like @modelcontextprotocol/sdk */
     // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
+    // Redirect MCP SDK imports to local shims so TS 4.x never loads the SDK's
+    // nested zod@4 types (which use `const` type params — a TS5-only feature).
+    "baseUrl": ".",
+    "paths": {
+      "@modelcontextprotocol/sdk/server/mcp": ["src/mcp/shims/mcp-server"],
+      "@modelcontextprotocol/sdk/client": ["src/mcp/shims/mcp-client"],
+      "@modelcontextprotocol/sdk/inMemory": ["src/mcp/shims/mcp-inmemory"],
+      "@modelcontextprotocol/sdk/*": ["src/mcp/shims/mcp-catchall"]
+    },
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
