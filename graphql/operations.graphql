@@ -304,11 +304,13 @@ query GetValidationAdvice(
   $validationReport: String!
   $recordType: String!
   $recordId: String
+  $igoQcReports: String
 ) {
   getValidationAdvice(
     validationReport: $validationReport
     recordType: $recordType
     recordId: $recordId
+    igoQcReports: $igoQcReports
   ) {
     advice
     suggestedSteps

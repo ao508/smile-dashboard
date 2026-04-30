@@ -56,6 +56,8 @@ export interface RunValidationAdviceArgs {
   recordType: string;
   /** primaryId (sample) or igoRequestId (request) — optional but improves advice quality */
   recordId?: string | null;
+  /** JSON-serialized IgoQcReport[] — sample-level only, passed from the frontend row data */
+  igoQcReports?: string | null;
   providerConfig: ProviderConfig;
   neo4jDriver: Driver;
 }
@@ -137,6 +139,7 @@ export async function runValidationAdviceQuery({
   validationReport,
   recordType,
   recordId,
+  igoQcReports,
   providerConfig,
   neo4jDriver: driver,
 }: RunValidationAdviceArgs): Promise<ValidationAdvice> {
@@ -224,6 +227,7 @@ export async function runValidationAdviceQuery({
         validationReport,
         recordType,
         recordId,
+        igoQcReports,
       }),
       callTool,
     };

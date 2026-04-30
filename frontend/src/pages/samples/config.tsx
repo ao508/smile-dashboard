@@ -141,6 +141,7 @@ export const sampleColDefs: Array<ColDef<DashboardSample>> = [
         validationReport,
         sampleCategory,
         primaryId,
+        igoQcReports,
       } = params.data;
 
       if (revisable === true) {
@@ -152,6 +153,9 @@ export const sampleColDefs: Array<ColDef<DashboardSample>> = [
             modalTitle={`Error report for sample ${primaryId}`}
             recordStatusMap={SAMPLE_STATUS_MAP}
             recordId={primaryId ?? undefined}
+            igoQcReports={
+              igoQcReports ? JSON.stringify(igoQcReports) : undefined
+            }
           />
         ) : (
           <Check />
@@ -818,6 +822,7 @@ const accessSampleColDefs: Array<ColDef<DashboardSample>> = [
         validationReport,
         sampleCategory,
         primaryId,
+        igoQcReports,
       } = params.data;
 
       if (revisable === true) {
@@ -829,6 +834,9 @@ const accessSampleColDefs: Array<ColDef<DashboardSample>> = [
             modalTitle={`Error report for sample ${primaryId}`}
             recordStatusMap={SAMPLE_STATUS_MAP}
             recordId={primaryId ?? undefined}
+            igoQcReports={
+              igoQcReports ? JSON.stringify(igoQcReports) : undefined
+            }
           />
         ) : (
           <Check />

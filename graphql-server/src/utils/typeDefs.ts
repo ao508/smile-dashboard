@@ -295,6 +295,7 @@ const QUERY_TYPEDEFS = gql`
       validationReport: String!
       recordType: String!
       recordId: String
+      igoQcReports: String
     ): ValidationAdvice
   }
 `;

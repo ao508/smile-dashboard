@@ -411,7 +411,13 @@ export async function buildCustomSchema(ogm: OGM) {
           validationReport,
           recordType,
           recordId,
-        }: { validationReport: string; recordType: string; recordId?: string }
+          igoQcReports,
+        }: {
+          validationReport: string;
+          recordType: string;
+          recordId?: string;
+          igoQcReports?: string;
+        }
       ): Promise<ValidationAdvice> {
         const provider = props.llm_provider as string;
         let providerConfig:
@@ -442,6 +448,7 @@ export async function buildCustomSchema(ogm: OGM) {
           recordType,
           recordId,
           validationReportLength: validationReport?.length,
+          igoQcReportsLength: igoQcReports?.length,
           provider: providerConfig.provider,
           model: providerConfig.model,
         });
@@ -452,6 +459,7 @@ export async function buildCustomSchema(ogm: OGM) {
             validationReport,
             recordType,
             recordId,
+            igoQcReports,
             providerConfig,
             neo4jDriver,
           });

@@ -71,10 +71,12 @@ export function formatValidationReportForPrompt({
   validationReport,
   recordType,
   recordId,
+  igoQcReports,
 }: {
   validationReport: string;
   recordType: string;
   recordId?: string | null;
+  igoQcReports?: string | null;
 }): string {
   const errors = parseValidationReport(validationReport);
   const errorList = Array.from(errors.entries())
@@ -89,6 +91,29 @@ export function formatValidationReportForPrompt({
     errorList || `  (raw) ${validationReport}`,
     "",
   ];
+
+  // Inline QC reports when provided so the model has them immediately
+  if (igoQcReports) {
+    try {
+      const reports = JSON.parse(igoQcReports);
+      if (Array.isArray(reports) && reports.length > 0) {
+        lines.push("IGO QC reports for this sample:");
+        reports.forEach((r: Record<string, unknown>, i: number) => {
+          lines.push(
+            `  [${i + 1}] qcReportType: ${r.qcReportType ?? "N/A"} | ` +
+              `IGORecommendation: ${r.IGORecommendation ?? "N/A"} | ` +
+              `comments: ${r.comments ?? "N/A"} | ` +
+              `investigatorDecision: ${r.investigatorDecision ?? "N/A"}`
+          );
+        });
+      } else {
+        lines.push("IGO QC reports for this sample: none on record.");
+      }
+    } catch {
+      // malformed JSON — skip silently
+    }
+    lines.push("");
+  }
 
   if (recordId) {
     lines.push(

@@ -1,5 +1,6 @@
 import {
   AllAnchorSeqDateDataQuery,
+  AllAnchorSeqDateDataQueryVariables,
   AnchorSeqDateData,
   DashboardPatient,
   Exact,
@@ -49,7 +50,7 @@ export const allAnchorSeqDateColDefs: Array<ColDef<AnchorSeqDateData>> = [
 interface AdditionalBuildDownloadOptionsParams {
   queryAllSeqDates: LazyQueryExecFunction<
     AllAnchorSeqDateDataQuery,
-    Exact<{ phiEnabled?: InputMaybe<Scalars["Boolean"]> }>
+    AllAnchorSeqDateDataQueryVariables
   >;
   phiEnabled: boolean;
   userEmail: string | undefined;

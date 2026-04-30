@@ -24,6 +24,7 @@ export function RecordValidation({
   modalTitle,
   recordStatusMap,
   recordId,
+  igoQcReports,
 }: {
   validationStatus: DashboardRequest["validationStatus"];
   validationReport: DashboardRequest["validationReport"];
@@ -31,6 +32,7 @@ export function RecordValidation({
   modalTitle: ModalTitle;
   recordStatusMap: StatusMap;
   recordId?: string;
+  igoQcReports?: string | null;
 }) {
   const [modalShow, setModalShow] = useState(false);
   const recordType =
@@ -49,6 +51,7 @@ export function RecordValidation({
           recordStatusMap={recordStatusMap}
           recordId={recordId}
           recordType={recordType}
+          igoQcReports={igoQcReports}
         />
       )}
     </>
@@ -115,6 +118,7 @@ function ErrorReportModal({
   recordStatusMap,
   recordId,
   recordType,
+  igoQcReports,
 }: {
   show: boolean;
   onHide: () => void;
@@ -125,6 +129,7 @@ function ErrorReportModal({
   recordStatusMap: StatusMap;
   recordId?: string;
   recordType: string;
+  igoQcReports?: string | null;
 }) {
   const [
     getAdvice,
@@ -273,6 +278,7 @@ function ErrorReportModal({
                 validationReport,
                 recordType,
                 recordId,
+                igoQcReports: igoQcReports ?? undefined,
               };
               console.log("[Ask AI] sending request:", vars);
               getAdvice({ variables: vars }).then((res) => {
