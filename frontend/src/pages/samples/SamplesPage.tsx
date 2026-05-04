@@ -17,6 +17,7 @@ import {
   phiModeSwitchTooltipContent,
   BILLING_FIELDS,
   PHI_FIELDS,
+  TUMOR_ONLY_CONTEXT,
 } from "./config";
 import { Button, Col } from "react-bootstrap";
 import { FilterButtons } from "../../components/FilterButtons";
@@ -105,6 +106,11 @@ export function SamplesPage() {
   const disableCohortBuildling = !isWesAndLoggedIn;
   const includeDemographics = isWesAndLoggedIn;
 
+  const effectiveRecordContexts =
+    showCohortBuilder && !disableCohortBuildling
+      ? [...(recordContexts ?? []), ...TUMOR_ONLY_CONTEXT]
+      : recordContexts;
+
   // Reset cohort builder when transitioning from enabled to disabled
   const prevIsWesAndLoggedIn = useRef(isWesAndLoggedIn);
   useEffect(() => {
@@ -131,7 +137,7 @@ export function SamplesPage() {
     initialSortFieldName: INITIAL_SORT_FIELD_NAME,
     gridRef,
     userSearchVal,
-    recordContexts,
+    recordContexts: effectiveRecordContexts,
     pollInterval: POLL_INTERVAL,
     includeDemographics,
   });
@@ -144,7 +150,11 @@ export function SamplesPage() {
         gridRef.current.columnApi.setColumnsVisible(["selected"], false);
       }
     }
-  }, [gridRef, colDefs, showCohortBuilder, disableCohortBuildling]);
+    if (gridRef.current?.api) {
+      refreshData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showCohortBuilder, disableCohortBuildling]);
 
   const { changes, cellChangesHandlers, handleCellEditRequest, handlePaste } =
     useCellChanges({
