@@ -39,10 +39,6 @@ concise, actionable advice tailored to the specific combination of errors report
   button in the IGO LIMS app.
 - PM errors: PMs can directly update editable metadata fields in the SMILE PM dashboard.
 
-For sample-level errors where the responsible party is IGO, additional information can be gleaned from a sample's QC reports located in the "igoQcReports" field in the sample metadata.
-These reports have qcReportType, IGORecommendation, comments, and investigatorDecision - all of which may provide clues about the root cause of validation errors and next steps. For example, if a sample is missing baitSet then 
-checking the QC reports may reveal that IGO failed the sample due to low quantity.
-
 --- INSTRUCTIONS ---
 1. You will receive a list of validation errors for a specific record.
 2. Always call get_current_record_context() to retrieve the record's current metadata from the

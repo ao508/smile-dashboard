@@ -109,10 +109,24 @@ async function fetchRequestContext(
       `
       MATCH (r:Request)
       WHERE r.igoRequestId = $requestId
+      WITH
+        r,
+        COLLECT {
+          MATCH (r)-[:HAS_METADATA]->(rm:RequestMetadata)
+          RETURN rm ORDER BY rm.importDate DESC LIMIT 1
+        } AS latestRm
+      OPTIONAL MATCH (r)-[:HAS_SAMPLE]->(s:Sample)-[:HAS_METADATA]->(sm:SampleMetadata)
+      WITH 
+        r, 
+        COUNT(DISTINCT s.smileSampleId) AS totalSampleCount,
+        apoc.coll.max(
+          COLLECT(latestRm[0].rm.importDate) +
+          COLLECT(DISTINCT sm.importDate)
+        ) AS importDate
       RETURN r {
         .igoRequestId, .igoProjectId, .genePanel, .isCmoRequest,
-        .totalSampleCount, .dataAnalystName, .projectManagerName,
-        .investigatorName, .labHeadName, .importDate
+        totalSampleCount, .dataAnalystName, .projectManagerName,
+        .investigatorName, .labHeadName, importDate
       } AS metadata
       LIMIT 1
       `,
