@@ -692,11 +692,14 @@ async function updateTempoPromise(newDashboardSample: DashboardSampleInput) {
 async function publishNewTempoCohortRequestPromise(
   tempoCohortRequest: TempoCohortRequestInput
 ) {
+  const topics = [
+    props.pub_tempo_new_cohort_submit,
+    props.pub_tempo_provisional_cohort,
+  ];
+  for (const topic of topics) {
+    publishNatsMessage(topic, JSON.stringify(tempoCohortRequest));
+  }
   return new Promise((resolve) => {
-    publishNatsMessage(
-      props.pub_tempo_new_cohort_submit,
-      JSON.stringify(tempoCohortRequest)
-    );
     resolve(null);
   });
 }

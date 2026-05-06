@@ -16,6 +16,7 @@ pub_tempo_sample_billing=
 pub_dbgap_sample_update=
 pub_tempo_cohort_update=
 pub_tempo_new_cohort_submit=
+pub_tempo_provisional_cohort=
 
 [db]
 neo4j_username=
