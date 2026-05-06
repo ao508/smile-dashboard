@@ -27,6 +27,9 @@ export const props = {
   pub_tempo_new_cohort_submit: properties.get(
     "topics.pub_tempo_new_cohort_submit"
   ),
+  pub_tempo_provisional_cohort: properties.get(
+    "topics.pub_tempo_provisional_cohort"
+  ),
 
   keycloak_client_id: properties.get("auth.keycloak_client_id"),
   keycloak_client_secret: properties.get("auth.keycloak_client_secret"),
