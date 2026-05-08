@@ -172,6 +172,7 @@ const QUERY_RESULT_TYPEDEFS = gql`
 
   type DashboardCohort {
     cohortId: String!
+    cohortStatus: String
     totalSampleCount: Int
     billed: String
     initialCohortDeliveryDate: String
@@ -299,6 +300,7 @@ const MUTATION_TYPEDEFS = gql`
   input DashboardCohortInput {
     changedFieldNames: [String!]!
     cohortId: String!
+    cohortStatus: String
     totalSampleCount: Int
     billed: String
     initialCohortDeliveryDate: String
