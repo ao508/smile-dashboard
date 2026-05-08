@@ -46,6 +46,16 @@ export const PHI_FIELDS = new Set([
 ]);
 
 /**
+ * Filters samples to Tumor-only. Used when cohort builder mode is active.
+ */
+export const TUMOR_ONLY_CONTEXT: Array<DashboardRecordContext> = [
+  {
+    fieldName: "tumorOrNormal",
+    values: ["Tumor"],
+  },
+];
+
+/**
  * Applies the context in which sample records are filtered for SamplesPage.
  */
 const WES_SAMPLE_CONTEXT: Array<DashboardRecordContext> = [

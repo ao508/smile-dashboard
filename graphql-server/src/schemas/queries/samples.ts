@@ -104,6 +104,12 @@ export function buildSamplesQueryBody({
     contextField: "baitSet",
     predicateField: "latestSm.baitSet",
   });
+  // WES-specific and only active during cohort builder mode.
+  const tumorOrNormalContext = buildCypherPredicateFromContext({
+    recordContexts: recordContexts,
+    contextField: "tumorOrNormal",
+    predicateField: "latestSm.tumorOrNormal",
+  });
 
   // Filter for the current request in the Request Samples view
   const requestContext = buildCypherPredicateFromContext({
@@ -208,6 +214,7 @@ export function buildSamplesQueryBody({
     // Filters for either the WES Samples or Request Samples view, if applicable
     ${genePanelContext && `WHERE ${genePanelContext}`}
     ${baitSetContext && `OR ${baitSetContext}`}
+    ${tumorOrNormalContext && `AND ${tumorOrNormalContext}`}
     ${requestContext && `WHERE ${requestContext}`}
 
     WITH 
