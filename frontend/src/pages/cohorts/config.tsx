@@ -15,7 +15,11 @@ import {
   BuildDownloadOptionsParamsBase,
   RecordChange,
 } from "../../types/shared";
-import { createCustomHeader } from "../../configs/gridIcons";
+import {
+  createCustomHeader,
+  lockIcon,
+  toolTipIcon,
+} from "../../configs/gridIcons";
 import { buildFieldToHeaderName } from "../../utils/fieldToHeaderName";
 
 type BuildDownloadOptionsParams = BuildDownloadOptionsParamsBase & {
@@ -60,6 +64,13 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
   {
     field: "cohortId",
     headerName: "Cohort ID",
+  },
+  {
+    field: "cohortStatus",
+    headerName: "Cohort Status",
+    headerTooltip:
+      "The status of the cohort in SMILE (e.g. PROVISONAL, DELIVERED)",
+    headerComponentParams: createCustomHeader(lockIcon + toolTipIcon),
   },
   {
     field: "totalSampleCount",

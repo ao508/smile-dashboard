@@ -49,7 +49,7 @@ export const allAnchorSeqDateColDefs: Array<ColDef<AnchorSeqDateData>> = [
 interface AdditionalBuildDownloadOptionsParams {
   queryAllSeqDates: LazyQueryExecFunction<
     AllAnchorSeqDateDataQuery,
-    Exact<{ phiEnabled?: InputMaybe<Scalars["Boolean"]> }>
+    Exact<{ phiEnabled?: InputMaybe<Scalars["Boolean"]["input"]> }>
   >;
   phiEnabled: boolean;
   userEmail: string | undefined;
