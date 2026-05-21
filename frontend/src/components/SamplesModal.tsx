@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   DashboardRecordContext,
   DashboardSample,
-  useDashboardSamplesLazyQuery,
+  useDashboardSamplesLazyQuery
 } from "../generated/graphql";
 import { useFetchData } from "../hooks/useFetchData";
 import { useCellChanges } from "../hooks/useCellChanges";
@@ -12,13 +12,13 @@ import { useDownload } from "../hooks/useDownload";
 import {
   buildDownloadOptions,
   fieldToHeaderName,
-  phiModeSwitchTooltipContent,
+  phiModeSwitchTooltipContent
 } from "../pages/samples/config";
 import { useTogglePhiColumnsVisibility } from "../hooks/useTogglePhiColumns";
 import { ErrorMessage } from "./ErrorMessage";
 import { Title } from "../components/Title";
 import { Toolbar } from "../components/Toolbar";
-import { Button, Col, Modal } from "react-bootstrap";
+import { Button, Col, Form, Modal } from "react-bootstrap";
 import { SearchBar } from "../components/SearchBar";
 import { PhiModeSwitch } from "./PhiModeSwitch";
 import { CellChangesContainer } from "./CellChangesContainer";
@@ -26,14 +26,25 @@ import { DownloadButton } from "../components/DownloadButton";
 import { DataGrid } from "./DataGrid";
 import { DownloadModal } from "./DownloadModal";
 import { ColDef } from "ag-grid-community";
-import { POLL_INTERVAL, ROUTE_PARAMS } from "../configs/shared";
+import {
+  POLL_INTERVAL,
+  ROUTE_PARAMS,
+  CMO_SAMPLE_NAME_OVERWRITE_WARNING,
+  FORCE_LABEL_SOFT_REQUIRED_FIELDS,
+  MISSING_CMO_PATIENT_ID_WARNING,
+  MISSING_FORCE_LABEL_SOFT_FIELDS_WARNING
+} from "../configs/shared";
 import { RecordChange } from "../types/shared";
 import { useCellDoubleClicked } from "../hooks/useCellDoubleClicked";
 import {
   useFetchSampleHistory,
   historyColDefs,
-  historyAutoGroupColumnDef,
+  historyAutoGroupColumnDef
 } from "../hooks/useFetchSampleHistory";
+import { Refresh } from "@material-ui/icons";
+import { useUserEmail } from "../contexts/UserEmailContext";
+import { awaitLoginPopup } from "../utils/awaitLoginPopup";
+import { CustomTooltip } from "./CustomToolTip";
 
 const QUERY_NAME = "dashboardSamples";
 const INITIAL_SORT_FIELD_NAME = "importDate";
@@ -44,6 +55,7 @@ interface SamplesModalProps {
   contextFieldName: string;
   parentRecordName: keyof typeof ROUTE_PARAMS;
   showPhiModeSwitch?: boolean;
+  showForceLabelButton?: boolean;
 }
 
 export function SamplesModal({
@@ -51,12 +63,19 @@ export function SamplesModal({
   contextFieldName,
   parentRecordName,
   showPhiModeSwitch = false,
+  showForceLabelButton = false
 }: SamplesModalProps) {
   const [userSearchVal, setUserSearchVal] = useState("");
   const [colDefs, setColDefs] = useState(sampleColDefs);
   const parentRecordId = useParams()[ROUTE_PARAMS[parentRecordName]];
   const gridRef = useRef<AgGridReactType<DashboardSample>>(null);
   const { handleCellDoubleClicked } = useCellDoubleClicked();
+  const { userEmail, setUserEmail } = useUserEmail();
+  const [showForceLabelModal, setShowForceLabelModal] = useState(false);
+  const [allSamplesForForceLabel, setAllSamplesForForceLabel] = useState<
+    DashboardSample[]
+  >([]);
+  const [isFetchingAllSamples, setIsFetchingAllSamples] = useState(false);
 
   const {
     refreshData,
@@ -66,7 +85,7 @@ export function SamplesModal({
     data,
     fetchMore,
     startPolling,
-    stopPolling,
+    stopPolling
   } = useFetchData({
     useRecordsLazyQuery: useDashboardSamplesLazyQuery,
     queryName: QUERY_NAME,
@@ -76,10 +95,10 @@ export function SamplesModal({
     recordContexts: [
       {
         fieldName: contextFieldName,
-        values: [parentRecordId!],
-      },
+        values: [parentRecordId!]
+      }
     ],
-    pollInterval: POLL_INTERVAL,
+    pollInterval: POLL_INTERVAL
   });
 
   const {
@@ -88,39 +107,74 @@ export function SamplesModal({
     cellChangesHandlers,
     handleCellEditRequest,
     handlePaste,
+    handleForceLabelSubmit
   } = useCellChanges({
     gridRef,
     startPolling,
     stopPolling,
     records: data?.[QUERY_NAME],
     refreshData,
-    isSampleLevelChanges: true,
+    isSampleLevelChanges: true
   });
 
-  const { isDownloading, handleDownload, getCurrentData } =
-    useDownload<DashboardSample>({
-      gridRef,
-      downloadFileName: `${parentRecordName.slice(
-        0,
-        -1
-      )}_${parentRecordId}_samples`,
-      fetchMore,
-      userSearchVal,
-      recordCount,
-      queryName: QUERY_NAME,
-    });
+  const { isDownloading, handleDownload, getCurrentData } = useDownload<
+    DashboardSample
+  >({
+    gridRef,
+    downloadFileName: `${parentRecordName.slice(
+      0,
+      -1
+    )}_${parentRecordId}_samples`,
+    fetchMore,
+    userSearchVal,
+    recordCount,
+    queryName: QUERY_NAME
+  });
 
   const downloadOptions = buildDownloadOptions({
     getCurrentData,
-    currentColDefs: colDefs,
+    currentColDefs: colDefs
   });
 
-  const { handlePhiColumnsVisibilityBeforeSearch } =
-    useTogglePhiColumnsVisibility({
-      setColDefs,
-      phiFields: PHI_FIELDS,
-      userSearchVal,
-    });
+  const {
+    handlePhiColumnsVisibilityBeforeSearch
+  } = useTogglePhiColumnsVisibility({
+    setColDefs,
+    phiFields: PHI_FIELDS,
+    userSearchVal
+  });
+
+  async function handleForceLabelClick() {
+    if (!userEmail) {
+      const loggedInEmail = await awaitLoginPopup();
+      if (!loggedInEmail) return;
+      setUserEmail(loggedInEmail);
+    }
+    setIsFetchingAllSamples(true);
+    try {
+      const { data: allSamplesData } = await fetchMore({
+        variables: {
+          searchVals: [],
+          offset: 0,
+          limit: recordCount
+        }
+      });
+      const allSamples: DashboardSample[] = allSamplesData?.[QUERY_NAME] ?? [];
+      setAllSamplesForForceLabel(allSamples);
+      setShowForceLabelModal(true);
+    } catch (error) {
+      console.error("Failed to fetch all samples for force label:", error);
+    } finally {
+      setIsFetchingAllSamples(false);
+    }
+  }
+
+  function handleForceLabelConfirm() {
+    if (!userEmail) return;
+    setShowForceLabelModal(false);
+    const username = userEmail.split("@")[0];
+    handleForceLabelSubmit(allSamplesForForceLabel, username);
+  }
 
   if (error) {
     return <ErrorMessage error={error} />;
@@ -162,7 +216,28 @@ export function SamplesModal({
           )}
         </Col>
 
-        <Col className="text-end">
+        <Col className="text-end d-flex gap-2 justify-content-end align-items-center">
+          {showForceLabelButton && (
+            <CustomTooltip
+              icon={
+                <Button
+                  className="btn btn-secondary"
+                  size="sm"
+                  onClick={handleForceLabelClick}
+                  disabled={recordCount === 0 || isFetchingAllSamples}
+                >
+                  <Refresh fontSize="small" className="me-1" />
+                  {isFetchingAllSamples
+                    ? "Loading..."
+                    : "Force Label Generation"}
+                </Button>
+              }
+            >
+              {!userEmail
+                ? "Must be logged in to make changes to sample data"
+                : ""}
+            </CustomTooltip>
+          )}
           <DownloadButton
             downloadOptions={downloadOptions}
             onDownload={handleDownload}
@@ -183,6 +258,90 @@ export function SamplesModal({
       />
 
       {isDownloading && <DownloadModal />}
+
+      {showForceLabelModal && (
+        <Modal
+          show={true}
+          centered
+          onHide={() => setShowForceLabelModal(false)}
+          className="overlay"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Force Label Generation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              This will force label generation for{" "}
+              <strong>{recordCount}</strong> sample
+              {recordCount !== 1 ? "s" : ""} in this request.
+            </p>
+            {allSamplesForForceLabel.some(s => s.cmoSampleName) && (
+              <p className="text-warning mb-0">
+                <strong>Caution:</strong> {CMO_SAMPLE_NAME_OVERWRITE_WARNING}
+              </p>
+            )}
+            <Form.Group className="d-flex align-items-center mt-3">
+              <Form.Label className="mb-0 me-2 text-nowrap">
+                Reason for Change:
+              </Form.Label>
+              <Form.Control
+                type="text"
+                size="sm"
+                className="me-3"
+                value="Forcing label generation"
+                disabled
+              />
+              <Form.Label className="mb-0 me-2 text-nowrap">Author:</Form.Label>
+              <Form.Control
+                style={{ width: "30%" }}
+                type="text"
+                size="sm"
+                value={userEmail?.split("@")[0] ?? ""}
+                disabled
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            {(() => {
+              const hasMissingCmoPatientId = allSamplesForForceLabel.some(
+                s => !s["cmoPatientId"]
+              );
+              const hasMissingSoftFields = allSamplesForForceLabel.some(s =>
+                FORCE_LABEL_SOFT_REQUIRED_FIELDS.some(field => !s[field])
+              );
+              return (
+                <>
+                  <Button
+                    className="btn btn-secondary"
+                    onClick={() => setShowForceLabelModal(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="btn btn-success"
+                    onClick={handleForceLabelConfirm}
+                    disabled={hasMissingCmoPatientId}
+                  >
+                    {hasMissingSoftFields && !hasMissingCmoPatientId
+                      ? "Proceed Anyway"
+                      : "Submit Updates"}
+                  </Button>
+                  {hasMissingCmoPatientId && (
+                    <span className="changelog-alert">
+                      {MISSING_CMO_PATIENT_ID_WARNING}
+                    </span>
+                  )}
+                  {hasMissingSoftFields && !hasMissingCmoPatientId && (
+                    <span className="changelog-alert">
+                      {MISSING_FORCE_LABEL_SOFT_FIELDS_WARNING}
+                    </span>
+                  )}
+                </>
+              );
+            })()}
+          </Modal.Footer>
+        </Modal>
+      )}
     </ModalContainerWithClosingWarning>
   );
 }
@@ -194,7 +353,7 @@ interface SampleHistoryModalProps {
 
 export function SampleHistoryModal({
   recordContext,
-  parentRecordName,
+  parentRecordName
 }: SampleHistoryModalProps) {
   const smileSampleId = recordContext.values?.[0] ?? "";
 
@@ -205,7 +364,7 @@ export function SampleHistoryModal({
     displayText,
     isDownloading,
     historyDownloadOptions,
-    handleDownload,
+    handleDownload
   } = useFetchSampleHistory(smileSampleId);
 
   if (error) {
@@ -238,7 +397,7 @@ export function SampleHistoryModal({
           groupRemoveSingleChildren={true}
           autoGroupColumnDef={historyAutoGroupColumnDef}
           groupDefaultExpanded={1}
-          onFirstDataRendered={(e) => e.columnApi.autoSizeAllColumns()}
+          onFirstDataRendered={e => e.columnApi.autoSizeAllColumns()}
         />
       </div>
 
@@ -260,7 +419,7 @@ function ModalContainerWithClosingWarning({
   setChanges,
   parentRecordName,
   children,
-  displayText,
+  displayText
 }: ModalContainerProps) {
   const navigate = useNavigate();
   const parentRecordId = useParams()[ROUTE_PARAMS[parentRecordName]];
