@@ -10,7 +10,7 @@ import {
   QueryDashboardRequestsArgs,
   QueryDashboardSamplesArgs,
   SeqDateAccessionBySampleId,
-  TempoCohortRequestInput
+  TempoCohortRequestInput,
 } from "../generated/graphql";
 import { props } from "../utils/constants";
 import { connect, headers, StringCodec } from "nats";
@@ -22,12 +22,12 @@ import {
   queryAllAnchorSeqDateData,
   queryAnchorSeqDateData,
   queryDashboardPatients,
-  queryPatientIdsTriplets
+  queryPatientIdsTriplets,
 } from "./queries/patients";
 import {
   buildCohortsQueryBody,
   buildCohortsQueryFinal,
-  queryDashboardCohorts
+  queryDashboardCohorts,
 } from "./queries/cohorts";
 import {
   buildSampleMetadataHistoryQueryBody,
@@ -36,7 +36,7 @@ import {
   getAddlOtCodesMatchingCtOrCtdVals,
   mapPhiToSamplesData,
   queryDashboardSamples,
-  querySeqDatesByDmpSampleId
+  querySeqDatesByDmpSampleId,
 } from "./queries/samples";
 import {
   COHORTS_CACHE_KEY,
@@ -52,12 +52,12 @@ import {
   SAMPLES_CACHE_KEY,
   SamplesCache,
   updateCacheWithNewCohortUpdates,
-  updateCacheWithNewSampleUpdates
+  updateCacheWithNewSampleUpdates,
 } from "../utils/cache";
 import {
   buildRequestsQueryBody,
   buildRequestsQueryFinal,
-  queryDashboardRequests
+  queryDashboardRequests,
 } from "./queries/requests";
 import { typeDefs } from "../utils/typeDefs";
 const request = require("request-promise-native");
@@ -86,7 +86,7 @@ type AuthMiddleware = {
 function canSearchPhiData({
   phiEnabled,
   searchVals,
-  searchValsIsRequired = true
+  searchValsIsRequired = true,
 }: {
   phiEnabled?: boolean | null;
   searchVals?: string[] | null;
@@ -111,7 +111,7 @@ export async function buildCustomSchema(ogm: OGM) {
         if (
           canSearchPhiData({
             phiEnabled: args.phiEnabled,
-            searchVals: args.searchVals
+            searchVals: args.searchVals,
           }) &&
           !context.req.isAuthenticated()
         ) {
@@ -132,7 +132,7 @@ export async function buildCustomSchema(ogm: OGM) {
         if (
           canSearchPhiData({
             phiEnabled: args.phiEnabled,
-            searchVals: args.searchVals
+            searchVals: args.searchVals,
           }) &&
           !context.req.isAuthenticated()
         ) {
@@ -153,7 +153,7 @@ export async function buildCustomSchema(ogm: OGM) {
         if (
           !canSearchPhiData({
             phiEnabled: args.phiEnabled,
-            searchValsIsRequired: false
+            searchValsIsRequired: false,
           }) ||
           !context.req.isAuthenticated()
         ) {
@@ -192,8 +192,8 @@ export async function buildCustomSchema(ogm: OGM) {
           );
         }
         return await resolve(parent, args, context, info);
-      }
-    }
+      },
+    },
   };
 
   const authorizationMiddleware: AuthMiddleware = {
@@ -208,7 +208,7 @@ export async function buildCustomSchema(ogm: OGM) {
         if (
           canSearchPhiData({
             phiEnabled: args.phiEnabled,
-            searchVals: args.searchVals
+            searchVals: args.searchVals,
           }) &&
           !context.req.user.groups.includes(KEYCLOAK_PHI_ACCESS_GROUP)
         ) {
@@ -229,7 +229,7 @@ export async function buildCustomSchema(ogm: OGM) {
         if (
           canSearchPhiData({
             phiEnabled: args.phiEnabled,
-            searchVals: args.searchVals
+            searchVals: args.searchVals,
           }) &&
           !context.req.user.groups.includes(KEYCLOAK_PHI_ACCESS_GROUP)
         ) {
@@ -250,7 +250,7 @@ export async function buildCustomSchema(ogm: OGM) {
         if (
           !canSearchPhiData({
             phiEnabled: args.phiEnabled,
-            searchValsIsRequired: false
+            searchValsIsRequired: false,
           }) ||
           !context.req.user.groups.includes(KEYCLOAK_PHI_ACCESS_GROUP)
         ) {
@@ -267,8 +267,8 @@ export async function buildCustomSchema(ogm: OGM) {
 
       async dashboardCohorts(resolve, parent, args, context, info) {
         return await resolve(parent, args, context, info);
-      }
-    }
+      },
+    },
   };
 
   const resolvers = {
@@ -280,7 +280,7 @@ export async function buildCustomSchema(ogm: OGM) {
           columnFilters,
           sort,
           limit,
-          offset
+          offset,
         }: QueryDashboardRequestsArgs,
         { inMemoryCache }: ApolloServerContext
       ) {
@@ -293,7 +293,7 @@ export async function buildCustomSchema(ogm: OGM) {
           queryBody,
           sort,
           limit,
-          offset
+          offset,
         });
 
         if (requestsCache && requestsCypherQuery in requestsCache) {
@@ -304,7 +304,7 @@ export async function buildCustomSchema(ogm: OGM) {
           queryBody,
           sort,
           limit,
-          offset
+          offset,
         });
       },
 
@@ -316,7 +316,7 @@ export async function buildCustomSchema(ogm: OGM) {
           sort,
           limit,
           offset,
-          phiEnabled
+          phiEnabled,
         }: QueryDashboardPatientsArgs,
         { inMemoryCache }: ApolloServerContext
       ) {
@@ -328,9 +328,9 @@ export async function buildCustomSchema(ogm: OGM) {
         if (searchVals && canSearchPhiData({ phiEnabled, searchVals })) {
           patientIdsTriplets = await queryPatientIdsTriplets(searchVals);
           const mappedPatientIds = patientIdsTriplets
-            .flatMap(triplet => [
+            .flatMap((triplet) => [
               triplet.DMP_PATIENT_ID,
-              triplet.CMO_PATIENT_ID
+              triplet.CMO_PATIENT_ID,
             ])
             .filter((id): id is string => !!id && !searchVals.includes(id));
           searchVals.push(...mappedPatientIds);
@@ -338,13 +338,13 @@ export async function buildCustomSchema(ogm: OGM) {
 
         const queryBody = buildPatientsQueryBody({
           searchVals,
-          columnFilters
+          columnFilters,
         });
         const queryFinal = buildPatientsQueryFinal({
           queryBody,
           sort,
           limit,
-          offset
+          offset,
         });
 
         if (patientsCache && queryFinal in patientsCache) {
@@ -358,21 +358,21 @@ export async function buildCustomSchema(ogm: OGM) {
         }
 
         const allMappedPatientIds = patientIdsTriplets
-          .flatMap(triplet => [
+          .flatMap((triplet) => [
             triplet.MRN,
             triplet.DMP_PATIENT_ID,
-            triplet.CMO_PATIENT_ID
+            triplet.CMO_PATIENT_ID,
           ])
           .filter((id): id is string => !!id);
         const [patientsData, anchorSeqDateData] = await Promise.all([
           patientsDataPromise,
-          queryAnchorSeqDateData(allMappedPatientIds)
+          queryAnchorSeqDateData(allMappedPatientIds),
         ]);
 
         return mapPhiToPatientsData({
           patientsData,
           patientIdsTriplets,
-          anchorSeqDateData
+          anchorSeqDateData,
         });
       },
 
@@ -391,7 +391,7 @@ export async function buildCustomSchema(ogm: OGM) {
           columnFilters,
           sort,
           limit,
-          offset
+          offset,
         }: QueryDashboardCohortsArgs,
         { inMemoryCache }: ApolloServerContext
       ) {
@@ -404,7 +404,7 @@ export async function buildCustomSchema(ogm: OGM) {
           queryBody,
           sort,
           limit,
-          offset
+          offset,
         });
 
         if (cohortsCache && cohortsCypherQuery in cohortsCache) {
@@ -415,7 +415,7 @@ export async function buildCustomSchema(ogm: OGM) {
           queryBody,
           sort,
           limit,
-          offset
+          offset,
         });
       },
 
@@ -429,7 +429,7 @@ export async function buildCustomSchema(ogm: OGM) {
           limit,
           offset,
           phiEnabled,
-          includeDemographics
+          includeDemographics,
         }: QueryDashboardSamplesArgs,
         { inMemoryCache }: ApolloServerContext
       ) {
@@ -451,7 +451,7 @@ export async function buildCustomSchema(ogm: OGM) {
           );
           let mappedSampleIds: string[] = [];
           let toRemove: string[] = [];
-          dmpSampleSeqDateAccessions.forEach(v => {
+          dmpSampleSeqDateAccessions.forEach((v) => {
             if (
               v.DMP_SAMPLE_ID &&
               searchVals &&
@@ -468,26 +468,26 @@ export async function buildCustomSchema(ogm: OGM) {
             }
           });
           searchVals.push(...mappedSampleIds);
-          searchVals = searchVals.filter(val => !toRemove.includes(val));
+          searchVals = searchVals.filter((val) => !toRemove.includes(val));
         }
 
         const addlOncotreeCodes = getAddlOtCodesMatchingCtOrCtdVals({
           searchVals,
-          oncotreeCache
+          oncotreeCache,
         });
 
         const queryBody = buildSamplesQueryBody({
           searchVals,
           recordContexts,
           columnFilters,
-          addlOncotreeCodes
+          addlOncotreeCodes,
         });
 
         const samplesCypherQuery = buildSamplesQueryFinal({
           queryBody,
           sort,
           limit,
-          offset
+          offset,
         });
 
         if (samplesCache && samplesCypherQuery in samplesCache) {
@@ -497,7 +497,7 @@ export async function buildCustomSchema(ogm: OGM) {
         const samplesDataPromise = queryDashboardSamples({
           samplesCypherQuery,
           oncotreeCache,
-          patientDemographicsCache
+          patientDemographicsCache,
         });
 
         if (!canSearchPhiData({ phiEnabled, searchVals })) {
@@ -506,12 +506,12 @@ export async function buildCustomSchema(ogm: OGM) {
 
         const [samplesData, seqDatesBySampleId] = await Promise.all([
           samplesDataPromise,
-          querySeqDatesByDmpSampleId(searchVals!)
+          querySeqDatesByDmpSampleId(searchVals!),
         ]);
 
         return mapPhiToSamplesData({
           samplesData,
-          seqDatesBySampleId
+          seqDatesBySampleId,
         });
       },
 
@@ -528,29 +528,29 @@ export async function buildCustomSchema(ogm: OGM) {
         ) as PatientDemographicsCache;
 
         const queryBody = buildSampleMetadataHistoryQueryBody({
-          smileSampleId: searchVals ? searchVals[0] : ""
+          smileSampleId: searchVals ? searchVals[0] : "",
         });
 
         const samplesCypherQuery = buildSamplesQueryFinal({
           queryBody,
           sort,
           limit,
-          offset
+          offset,
         });
 
         return await queryDashboardSamples({
           samplesCypherQuery,
           oncotreeCache,
-          patientDemographicsCache
+          patientDemographicsCache,
         });
-      }
+      },
     },
 
     Mutation: {
       async updateDashboardSamples(
         _source: undefined,
         {
-          newDashboardSamples
+          newDashboardSamples,
         }: { newDashboardSamples: DashboardSampleInput[] },
         { inMemoryCache }: ApolloServerContext
       ) {
@@ -570,7 +570,7 @@ export async function buildCustomSchema(ogm: OGM) {
       async updateTempoCohort(
         _source: undefined,
         {
-          dashboardCohort
+          dashboardCohort,
         }: {
           dashboardCohort: DashboardCohortInput;
         },
@@ -582,19 +582,19 @@ export async function buildCustomSchema(ogm: OGM) {
       async publishNewTempoCohortRequest(
         _source: undefined,
         {
-          tempoCohortRequest
+          tempoCohortRequest,
         }: {
           tempoCohortRequest: TempoCohortRequestInput;
         }
       ) {
         await publishNewTempoCohortRequestPromise(tempoCohortRequest);
-      }
-    }
+      },
+    },
   };
 
   const executableSchema = makeExecutableSchema({
     typeDefs: typeDefs,
-    resolvers: resolvers
+    resolvers: resolvers,
   });
 
   return applyMiddleware(
@@ -613,11 +613,11 @@ async function updateSampleMetadataPromises(
     const sampleManifest = await request(
       props.smile_sample_endpoint + newDashboardSample.primaryId,
       {
-        json: true
+        json: true,
       }
     );
 
-    Object.keys(newDashboardSample).forEach(key => {
+    Object.keys(newDashboardSample).forEach((key) => {
       if (key in sampleManifest) {
         sampleManifest[key] =
           newDashboardSample[key as keyof DashboardSampleInput];
@@ -646,9 +646,10 @@ async function updateSampleMetadataPromises(
         const requestId = sampleManifest.additionalProperties.igoRequestId;
         let requestOgm = ogm.model("Request");
         const requestOfSample = await requestOgm.find({
-          where: { igoRequestId: requestId }
+          where: { igoRequestId: requestId },
         });
-        sampleManifest.additionalProperties.isCmoSample = requestOfSample[0].isCmoRequest.toString();
+        sampleManifest.additionalProperties.isCmoSample =
+          requestOfSample[0].isCmoRequest.toString();
       }
 
       if (sampleManifest.datasource === "dmp") {
@@ -658,13 +659,13 @@ async function updateSampleMetadataPromises(
 
     await ogm.model("Sample").update({
       where: { smileSampleId: sampleManifest.smileSampleId },
-      update: { revisable: false }
+      update: { revisable: false },
     });
 
     sampleManifests.push(sampleManifest);
   }
 
-  return new Promise(async resolve => {
+  return new Promise(async (resolve) => {
     publishNatsMessage(
       props.pub_validate_sample_update,
       JSON.stringify(sampleManifests)
@@ -674,14 +675,14 @@ async function updateSampleMetadataPromises(
 }
 
 async function updateTempoPromise(newDashboardSample: DashboardSampleInput) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const dataForTempoBillingUpdate = {
       primaryId: newDashboardSample.primaryId,
       billed: newDashboardSample.billed,
       billedBy: newDashboardSample.billedBy,
       costCenter: newDashboardSample.costCenter,
       accessLevel: newDashboardSample.accessLevel,
-      custodianInformation: newDashboardSample.custodianInformation
+      custodianInformation: newDashboardSample.custodianInformation,
     };
 
     publishNatsMessage(
@@ -698,22 +699,22 @@ async function publishNewTempoCohortRequestPromise(
 ) {
   const topics = [
     props.pub_tempo_new_cohort_submit,
-    props.pub_tempo_provisional_cohort
+    props.pub_tempo_provisional_cohort,
   ];
   for (const topic of topics) {
     publishNatsMessage(topic, JSON.stringify(tempoCohortRequest));
   }
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     resolve(null);
   });
 }
 
 async function updateDbGapPromise(newDashboardSample: DashboardSampleInput) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const dataForDbGapUpdate = {
       primaryId: newDashboardSample.primaryId,
       dbGapStudy: newDashboardSample.dbGapStudy,
-      irbConsentProtocol: newDashboardSample.irbConsentProtocol
+      irbConsentProtocol: newDashboardSample.irbConsentProtocol,
     };
 
     publishNatsMessage(
@@ -726,7 +727,7 @@ async function updateDbGapPromise(newDashboardSample: DashboardSampleInput) {
 }
 
 async function updateTempoCohortPromise(dashboardCohort: DashboardCohort) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const dataForTempoCohortUpdate = {
       cohortId: dashboardCohort.cohortId,
       date: dashboardCohort.initialCohortDeliveryDate,
@@ -736,7 +737,7 @@ async function updateTempoCohortPromise(dashboardCohort: DashboardCohort) {
       status: dashboardCohort.status,
       projectTitle: dashboardCohort.projectTitle,
       projectSubtitle: dashboardCohort.projectSubtitle,
-      pipelineVersion: dashboardCohort.pipelineVersion || ""
+      pipelineVersion: dashboardCohort.pipelineVersion || "",
     };
     publishNatsMessage(
       props.pub_tempo_cohort_update,
@@ -759,7 +760,7 @@ const EDITABLE_SAMPLEMETADATA_FIELDS = new Set([
   "tissueLocation",
   "sex",
   "changelog",
-  "forceCmoLabel"
+  "forceCmoLabel",
 ]);
 
 const EDITABLE_TEMPO_FIELDS = new Set([
@@ -767,7 +768,7 @@ const EDITABLE_TEMPO_FIELDS = new Set([
   "costCenter",
   "billedBy",
   "custodianInformation",
-  "accessLevel"
+  "accessLevel",
 ]);
 
 const EDITABLE_DBGAP_FIELDS = new Set(["dbGapStudy", "irbConsentProtocol"]);
@@ -784,13 +785,13 @@ async function updateAllSamplesConcurrently(
     try {
       const { changedFieldNames } = dashboardSample;
 
-      const metadataChanged = changedFieldNames.some(field =>
+      const metadataChanged = changedFieldNames.some((field) =>
         EDITABLE_SAMPLEMETADATA_FIELDS.has(field)
       );
-      const tempoChanged = changedFieldNames.some(field =>
+      const tempoChanged = changedFieldNames.some((field) =>
         EDITABLE_TEMPO_FIELDS.has(field)
       );
-      const dbGapChanged = changedFieldNames.some(field =>
+      const dbGapChanged = changedFieldNames.some((field) =>
         EDITABLE_DBGAP_FIELDS.has(field)
       );
 
@@ -827,14 +828,14 @@ async function publishNatsMessage(topic: string, message: string) {
     keyFile: props.nats_key_pem,
     certFile: props.nats_cert_pem,
     caFile: props.nats_ca_pem,
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
   };
 
   const natsConnProperties = {
     servers: [props.nats_url],
     user: props.nats_username,
     pass: props.nats_password,
-    tls: tlsOptions
+    tls: tlsOptions,
   };
 
   try {
@@ -869,7 +870,7 @@ async function getCohortIdsFromNeo4j() {
     const result = await session.run(`
       MATCH (c:Cohort) RETURN DISTINCT c.cohortId AS cohortId
     `);
-    return result.records.map(record => record.get("cohortId"));
+    return result.records.map((record) => record.get("cohortId"));
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
@@ -893,7 +894,7 @@ function formatUsersString(val: string) {
       .split(/[\s,]+(?=(?:[^'"]|'[^']*'|"[^"]*")*$)/)
       .compact()
       .uniq()
-      .map(val => {
+      .map((val) => {
         // handle users entering full email addresses just in case
         return val.split("@")[0].trim();
       })

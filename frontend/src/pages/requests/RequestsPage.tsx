@@ -4,7 +4,7 @@ import { AgGridReact as AgGridReactType } from "ag-grid-react/lib/agGridReact";
 import { useFetchData } from "../../hooks/useFetchData";
 import {
   DashboardRequest,
-  useDashboardRequestsLazyQuery
+  useDashboardRequestsLazyQuery,
 } from "../../generated/graphql";
 import { Title } from "../../components/Title";
 import { Toolbar } from "../../components/Toolbar";
@@ -30,34 +30,28 @@ export function RequestsPage() {
   const gridRef = useRef<AgGridReactType<DashboardRequest>>(null);
   const hasParams = Object.keys(useParams()).length > 0;
 
-  const {
-    refreshData,
-    recordCount,
-    isLoading,
-    error,
-    fetchMore
-  } = useFetchData({
-    useRecordsLazyQuery: useDashboardRequestsLazyQuery,
-    queryName: QUERY_NAME,
-    initialSortFieldName: INITIAL_SORT_FIELD_NAME,
-    gridRef,
-    userSearchVal
-  });
+  const { refreshData, recordCount, isLoading, error, fetchMore } =
+    useFetchData({
+      useRecordsLazyQuery: useDashboardRequestsLazyQuery,
+      queryName: QUERY_NAME,
+      initialSortFieldName: INITIAL_SORT_FIELD_NAME,
+      gridRef,
+      userSearchVal,
+    });
 
-  const { isDownloading, handleDownload, getCurrentData } = useDownload<
-    DashboardRequest
-  >({
-    gridRef,
-    downloadFileName: RECORD_NAME,
-    fetchMore,
-    userSearchVal,
-    recordCount,
-    queryName: QUERY_NAME
-  });
+  const { isDownloading, handleDownload, getCurrentData } =
+    useDownload<DashboardRequest>({
+      gridRef,
+      downloadFileName: RECORD_NAME,
+      fetchMore,
+      userSearchVal,
+      recordCount,
+      queryName: QUERY_NAME,
+    });
 
   const downloadOptions = buildDownloadOptions({
     getCurrentData,
-    currentColDefs: requestColDefs
+    currentColDefs: requestColDefs,
   });
 
   if (error) {

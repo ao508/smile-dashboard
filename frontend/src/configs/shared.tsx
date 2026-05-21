@@ -18,11 +18,11 @@ export const ROUTE_PARAMS = {
   requests: "igoRequestId",
   patients: "patientId",
   cohorts: "cohortId",
-  samples: "smileSampleId"
+  samples: "smileSampleId",
 } as const;
 
 export function getPhiColDefProps({
-  widthSize
+  widthSize,
 }: {
   widthSize: number;
 }): ColDef {
@@ -30,7 +30,7 @@ export function getPhiColDefProps({
     width: widthSize, // prevent truncation when columns are unhidden
     hide: true,
     cellStyle: { color: "crimson" },
-    sortable: false
+    sortable: false,
   };
 }
 
@@ -40,8 +40,8 @@ export const multiLineColDef: ColDef = {
   cellStyle: {
     wordBreak: "break-word",
     lineHeight: "1.25",
-    padding: "6px 18px"
-  }
+    padding: "6px 18px",
+  },
 };
 
 export const PHI_WARNING =
@@ -83,9 +83,8 @@ export const FORCE_LABEL_REQUIRED_FIELDS = [
   "baitSet",
   "sampleOrigin",
   "tumorOrNormal",
-  "sampleClass"
+  "sampleClass",
 ] as const;
 
-export const FORCE_LABEL_SOFT_REQUIRED_FIELDS = FORCE_LABEL_REQUIRED_FIELDS.filter(
-  f => f !== "cmoPatientId"
-);
+export const FORCE_LABEL_SOFT_REQUIRED_FIELDS =
+  FORCE_LABEL_REQUIRED_FIELDS.filter((f) => f !== "cmoPatientId");

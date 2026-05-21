@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   DashboardRecordContext,
   DashboardSample,
-  useDashboardSamplesLazyQuery
+  useDashboardSamplesLazyQuery,
 } from "../generated/graphql";
 import { useFetchData } from "../hooks/useFetchData";
 import { useCellChanges } from "../hooks/useCellChanges";
@@ -12,7 +12,7 @@ import { useDownload } from "../hooks/useDownload";
 import {
   buildDownloadOptions,
   fieldToHeaderName,
-  phiModeSwitchTooltipContent
+  phiModeSwitchTooltipContent,
 } from "../pages/samples/config";
 import { useTogglePhiColumnsVisibility } from "../hooks/useTogglePhiColumns";
 import { ErrorMessage } from "./ErrorMessage";
@@ -32,14 +32,14 @@ import {
   CMO_SAMPLE_NAME_OVERWRITE_WARNING,
   FORCE_LABEL_SOFT_REQUIRED_FIELDS,
   MISSING_CMO_PATIENT_ID_WARNING,
-  MISSING_FORCE_LABEL_SOFT_FIELDS_WARNING
+  MISSING_FORCE_LABEL_SOFT_FIELDS_WARNING,
 } from "../configs/shared";
 import { RecordChange } from "../types/shared";
 import { useCellDoubleClicked } from "../hooks/useCellDoubleClicked";
 import {
   useFetchSampleHistory,
   historyColDefs,
-  historyAutoGroupColumnDef
+  historyAutoGroupColumnDef,
 } from "../hooks/useFetchSampleHistory";
 import { Refresh } from "@material-ui/icons";
 import { useUserEmail } from "../contexts/UserEmailContext";
@@ -63,7 +63,7 @@ export function SamplesModal({
   contextFieldName,
   parentRecordName,
   showPhiModeSwitch = false,
-  showForceLabelButton = false
+  showForceLabelButton = false,
 }: SamplesModalProps) {
   const [userSearchVal, setUserSearchVal] = useState("");
   const [colDefs, setColDefs] = useState(sampleColDefs);
@@ -85,7 +85,7 @@ export function SamplesModal({
     data,
     fetchMore,
     startPolling,
-    stopPolling
+    stopPolling,
   } = useFetchData({
     useRecordsLazyQuery: useDashboardSamplesLazyQuery,
     queryName: QUERY_NAME,
@@ -95,10 +95,10 @@ export function SamplesModal({
     recordContexts: [
       {
         fieldName: contextFieldName,
-        values: [parentRecordId!]
-      }
+        values: [parentRecordId!],
+      },
     ],
-    pollInterval: POLL_INTERVAL
+    pollInterval: POLL_INTERVAL,
   });
 
   const {
@@ -107,42 +107,40 @@ export function SamplesModal({
     cellChangesHandlers,
     handleCellEditRequest,
     handlePaste,
-    handleForceLabelSubmit
+    handleForceLabelSubmit,
   } = useCellChanges({
     gridRef,
     startPolling,
     stopPolling,
     records: data?.[QUERY_NAME],
     refreshData,
-    isSampleLevelChanges: true
+    isSampleLevelChanges: true,
   });
 
-  const { isDownloading, handleDownload, getCurrentData } = useDownload<
-    DashboardSample
-  >({
-    gridRef,
-    downloadFileName: `${parentRecordName.slice(
-      0,
-      -1
-    )}_${parentRecordId}_samples`,
-    fetchMore,
-    userSearchVal,
-    recordCount,
-    queryName: QUERY_NAME
-  });
+  const { isDownloading, handleDownload, getCurrentData } =
+    useDownload<DashboardSample>({
+      gridRef,
+      downloadFileName: `${parentRecordName.slice(
+        0,
+        -1
+      )}_${parentRecordId}_samples`,
+      fetchMore,
+      userSearchVal,
+      recordCount,
+      queryName: QUERY_NAME,
+    });
 
   const downloadOptions = buildDownloadOptions({
     getCurrentData,
-    currentColDefs: colDefs
+    currentColDefs: colDefs,
   });
 
-  const {
-    handlePhiColumnsVisibilityBeforeSearch
-  } = useTogglePhiColumnsVisibility({
-    setColDefs,
-    phiFields: PHI_FIELDS,
-    userSearchVal
-  });
+  const { handlePhiColumnsVisibilityBeforeSearch } =
+    useTogglePhiColumnsVisibility({
+      setColDefs,
+      phiFields: PHI_FIELDS,
+      userSearchVal,
+    });
 
   async function handleForceLabelClick() {
     if (!userEmail) {
@@ -156,8 +154,8 @@ export function SamplesModal({
         variables: {
           searchVals: [],
           offset: 0,
-          limit: recordCount
-        }
+          limit: recordCount,
+        },
       });
       const allSamples: DashboardSample[] = allSamplesData?.[QUERY_NAME] ?? [];
       setAllSamplesForForceLabel(allSamples);
@@ -275,7 +273,7 @@ export function SamplesModal({
               <strong>{recordCount}</strong> sample
               {recordCount !== 1 ? "s" : ""} in this request.
             </p>
-            {allSamplesForForceLabel.some(s => s.cmoSampleName) && (
+            {allSamplesForForceLabel.some((s) => s.cmoSampleName) && (
               <p className="text-warning mb-0">
                 <strong>Caution:</strong> {CMO_SAMPLE_NAME_OVERWRITE_WARNING}
               </p>
@@ -304,10 +302,10 @@ export function SamplesModal({
           <Modal.Footer>
             {(() => {
               const hasMissingCmoPatientId = allSamplesForForceLabel.some(
-                s => !s["cmoPatientId"]
+                (s) => !s["cmoPatientId"]
               );
-              const hasMissingSoftFields = allSamplesForForceLabel.some(s =>
-                FORCE_LABEL_SOFT_REQUIRED_FIELDS.some(field => !s[field])
+              const hasMissingSoftFields = allSamplesForForceLabel.some((s) =>
+                FORCE_LABEL_SOFT_REQUIRED_FIELDS.some((field) => !s[field])
               );
               return (
                 <>
@@ -353,7 +351,7 @@ interface SampleHistoryModalProps {
 
 export function SampleHistoryModal({
   recordContext,
-  parentRecordName
+  parentRecordName,
 }: SampleHistoryModalProps) {
   const smileSampleId = recordContext.values?.[0] ?? "";
 
@@ -364,7 +362,7 @@ export function SampleHistoryModal({
     displayText,
     isDownloading,
     historyDownloadOptions,
-    handleDownload
+    handleDownload,
   } = useFetchSampleHistory(smileSampleId);
 
   if (error) {
@@ -397,7 +395,7 @@ export function SampleHistoryModal({
           groupRemoveSingleChildren={true}
           autoGroupColumnDef={historyAutoGroupColumnDef}
           groupDefaultExpanded={1}
-          onFirstDataRendered={e => e.columnApi.autoSizeAllColumns()}
+          onFirstDataRendered={(e) => e.columnApi.autoSizeAllColumns()}
         />
       </div>
 
@@ -419,7 +417,7 @@ function ModalContainerWithClosingWarning({
   setChanges,
   parentRecordName,
   children,
-  displayText
+  displayText,
 }: ModalContainerProps) {
   const navigate = useNavigate();
   const parentRecordId = useParams()[ROUTE_PARAMS[parentRecordName]];
