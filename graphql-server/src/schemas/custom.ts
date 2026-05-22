@@ -627,6 +627,11 @@ async function updateSampleMetadataPromises(
     sampleManifest.additionalProperties.changelog =
       newDashboardSample.changelog || "";
 
+    // promote forceCmoLabel to additional properties when force label generation is requested
+    if (newDashboardSample.changedFieldNames.includes("forceCmoLabel")) {
+      sampleManifest.additionalProperties.forceCmoLabel = "true";
+    }
+
     // Ensure validator and label generator use latest status data added during validation
     delete sampleManifest.status;
 
@@ -755,6 +760,7 @@ const EDITABLE_SAMPLEMETADATA_FIELDS = new Set([
   "tissueLocation",
   "sex",
   "changelog",
+  "forceCmoLabel",
 ]);
 
 const EDITABLE_TEMPO_FIELDS = new Set([

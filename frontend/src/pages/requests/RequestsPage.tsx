@@ -96,6 +96,7 @@ export function RequestsPage() {
           sampleColDefs={sampleColDefs}
           contextFieldName={ROUTE_PARAMS.requests}
           parentRecordName={RECORD_NAME}
+          showForceLabelButton={true}
         />
       )}
 

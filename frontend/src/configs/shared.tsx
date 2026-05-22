@@ -65,3 +65,26 @@ export const INVALID_COST_CENTER_WARNING =
 
 export const NO_CHANGELOG_WARNING =
   "Reason for Change field must be filled in before submitting updates.";
+
+export const CMO_SAMPLE_NAME_OVERWRITE_WARNING =
+  "At least 1 sample already has a CMO Sample Name. Proceeding may overwrite existing CMO Sample Names.";
+
+export const MISSING_CMO_PATIENT_ID_WARNING =
+  "All samples must have a CMO Patient ID before forcing label generation.";
+
+export const MISSING_FORCE_LABEL_SOFT_FIELDS_WARNING =
+  "Some samples have missing values in one or more of the following fields: Sample Type, Gene Panel, Recipe, Bait Set, Sample Origin, Tumor or Normal, Sample Class. Proceeding may result in incomplete label generation.";
+
+export const FORCE_LABEL_REQUIRED_FIELDS = [
+  "cmoPatientId",
+  "sampleType",
+  "genePanel",
+  "recipe",
+  "baitSet",
+  "sampleOrigin",
+  "tumorOrNormal",
+  "sampleClass",
+] as const;
+
+export const FORCE_LABEL_SOFT_REQUIRED_FIELDS =
+  FORCE_LABEL_REQUIRED_FIELDS.filter((f) => f !== "cmoPatientId");

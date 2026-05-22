@@ -32,9 +32,11 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
-    "node-gyp": "9.4.1"
+    "node-gyp": "9.4.1",
+    "prettier": "2.8.8"
   },
   "resolutions": {
+    "prettier": "2.8.8",
     "@whatwg-node/fetch": "0.9.16",
     "@whatwg-node/node-fetch": "0.5.18",
     "@whatwg-node/events": "0.1.1",

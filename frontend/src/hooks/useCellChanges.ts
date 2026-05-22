@@ -276,11 +276,60 @@ export function useCellChanges({
     setShowUpdateModal(false);
   }
 
+  function handleForceLabelSubmit(
+    allSamples: DashboardSample[],
+    username: string
+  ) {
+    stopPolling();
+    const changelog = `${username}: Forcing label generation`;
+
+    const newDashboardSamples: DashboardSampleInput[] = allSamples.map(
+      (sample) => {
+        const { __typename, igoQcReports, ...sampleData } = sample as any;
+        return {
+          ...sampleData,
+          changedFieldNames: ["forceCmoLabel", "changelog"],
+          changelog,
+          revisable: false,
+        };
+      }
+    );
+
+    updateDashboardSamplesMutation({ variables: { newDashboardSamples } });
+
+    const optimisticSamples = allSamples.map((s) => ({
+      ...s,
+      changelog,
+      revisable: false,
+      importDate: formatCellDate(new Date()) as string,
+    }));
+    optimisticSamples.sort(
+      (a, b) =>
+        new Date(b.importDate ?? "").getTime() -
+        new Date(a.importDate ?? "").getTime()
+    );
+    gridRef.current?.api?.setServerSideDatasource({
+      getRows: (params: IServerSideGetRowsParams) => {
+        params.success({
+          rowData: optimisticSamples,
+          rowCount: optimisticSamples[0]?._total || 0,
+        });
+      },
+    });
+
+    setTimeout(async () => {
+      refreshData();
+      // No need to resume polling here as `refreshData` already does it
+    }, POLLING_PAUSE_AFTER_UPDATE);
+    startPolling();
+  }
+
   return {
     changes,
     setChanges,
     handleCellEditRequest,
     handlePaste,
+    handleForceLabelSubmit,
     cellChangesHandlers: {
       handleDiscardChanges,
       handleConfirmUpdates,
