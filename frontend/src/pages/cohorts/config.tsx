@@ -19,7 +19,7 @@ import {
   createCustomHeader,
   lockIcon,
   toolTipIcon,
-  LoadingIcon
+  LoadingIcon,
 } from "../../configs/gridIcons";
 import { buildFieldToHeaderName } from "../../utils/fieldToHeaderName";
 import { Check } from "@material-ui/icons";
@@ -74,6 +74,13 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
     headerTooltip:
       "The status of the cohort in SMILE (e.g. PROVISONAL, DELIVERED)",
     headerComponentParams: createCustomHeader(lockIcon + toolTipIcon),
+    cellRenderer: (params: ICellRendererParams<DashboardCohort>) => {
+      if (!params.data) return null;
+      if ((params.data as any).revisable === false) {
+        return <LoadingIcon />;
+      }
+      return params.value ?? null;
+    },
   },
   {
     field: "totalSampleCount",
@@ -125,9 +132,6 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
     headerName: "Status",
     cellRenderer: (params: ICellRendererParams<DashboardCohort>) => {
       if (!params.data) return null;
-      if ((params.data as any).revisable === false) {
-        return <LoadingIcon />;
-      }
       const status = params.data.status;
       if (status === "PASS") {
         return <Check />;

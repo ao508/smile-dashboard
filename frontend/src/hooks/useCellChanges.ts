@@ -33,6 +33,7 @@ interface UseCellChangesParams {
   records: Array<DashboardSample> | Array<DashboardCohort> | undefined;
   refreshData: () => void;
   isSampleLevelChanges: boolean;
+  pinnedRecordIds?: string[];
 }
 
 export function useCellChanges({
@@ -42,6 +43,7 @@ export function useCellChanges({
   records,
   refreshData,
   isSampleLevelChanges,
+  pinnedRecordIds = [],
 }: UseCellChangesParams) {
   const [changes, setChanges] = useState<Array<RecordChange>>([]);
   const { userEmail, setUserEmail } = useUserEmail();
@@ -286,6 +288,17 @@ export function useCellChanges({
         return c;
       });
       optimisticCohorts.sort((a, b) => {
+        const aPinned = pinnedRecordIds.includes(
+          (a as DashboardCohort).cohortId ?? ""
+        )
+          ? 0
+          : 1;
+        const bPinned = pinnedRecordIds.includes(
+          (b as DashboardCohort).cohortId ?? ""
+        )
+          ? 0
+          : 1;
+        if (aPinned !== bPinned) return aPinned - bPinned;
         return (
           new Date(b.importDate ?? "").getTime() -
           new Date(a.importDate ?? "").getTime()
