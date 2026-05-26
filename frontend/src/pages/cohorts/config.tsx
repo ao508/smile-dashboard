@@ -22,8 +22,6 @@ import {
   LoadingIcon,
 } from "../../configs/gridIcons";
 import { buildFieldToHeaderName } from "../../utils/fieldToHeaderName";
-import { Check } from "@material-ui/icons";
-import WarningIcon from "@material-ui/icons/Warning";
 
 type BuildDownloadOptionsParams = BuildDownloadOptionsParamsBase & {
   // Put additional parameters here if needed
@@ -111,7 +109,8 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
     field: "endUsers",
     headerName: "End Users",
     editable: true,
-    headerComponentParams: createCustomHeader(""), // hides the lock icon
+    headerComponentParams: createCustomHeader(""), // hides the lock icon,
+    maxWidth: 240,
   },
   {
     field: "pmUsers",
@@ -130,18 +129,6 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
   {
     field: "status",
     headerName: "Status",
-    cellRenderer: (params: ICellRendererParams<DashboardCohort>) => {
-      if (!params.data) return null;
-      const status = params.data.status;
-      if (status === "PASS") {
-        return <Check />;
-      }
-      if (status) {
-        return <WarningIcon className="warning-icon" />;
-      }
-      return null;
-    },
-    sortable: false,
   },
   {
     field: "type",

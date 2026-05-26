@@ -5,7 +5,6 @@ import {
   CellEditRequestEvent,
   IServerSideGetRowsParams,
 } from "ag-grid-community";
-import { getUserEmail } from "../utils/getUserEmail";
 import { AgGridReact as AgGridReactType } from "ag-grid-react/lib/agGridReact";
 import {
   DashboardCohort,
@@ -281,7 +280,7 @@ export function useCellChanges({
           return {
             ...c,
             ...changedFields,
-            revisable: false,
+            revisable: false, // revisable is not part of the data structure but plays a role in the rendering the "pending updates" animation
             importDate: formatCellDate(new Date()) as string,
           };
         }
