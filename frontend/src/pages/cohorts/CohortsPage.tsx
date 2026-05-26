@@ -66,6 +66,7 @@ export function CohortsPage() {
       records: data?.[QUERY_NAME],
       refreshData,
       isSampleLevelChanges: false,
+      pinnedRecordIds: PINNED_COHORT_IDS,
     });
 
   const { isDownloading, handleDownload, getCurrentData } =

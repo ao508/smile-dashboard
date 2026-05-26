@@ -144,6 +144,17 @@ export const REQUEST_STATUS_MAP: StatusMap = {
       actionItem: getActionItemForMissingIgoField("samples"),
       responsibleParty: "IGO",
     },
+  //TO-DO: Request-level validation status needs to update if all of its samples are ultimately updated and resolved in the database.
+  // Currently changes to request-level validation status are not being caught and updated in the database when all of its samples
+  // have been fixed
+  "samples (failed) Some request samples failed validation": {
+    item: "samples (failed)",
+    description:
+      "Some samples in Request JSON failed validation. Review sample valdiation reports for more information on how to proceed if applicable.",
+    actionItem:
+      "See individual sample validation reports on how to proceed if applicable.",
+    responsibleParty: "PMs",
+  },
 };
 
 /**

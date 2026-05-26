@@ -19,6 +19,7 @@ import {
   createCustomHeader,
   lockIcon,
   toolTipIcon,
+  LoadingIcon,
 } from "../../configs/gridIcons";
 import { buildFieldToHeaderName } from "../../utils/fieldToHeaderName";
 
@@ -71,6 +72,13 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
     headerTooltip:
       "The status of the cohort in SMILE (e.g. PROVISONAL, DELIVERED)",
     headerComponentParams: createCustomHeader(lockIcon + toolTipIcon),
+    cellRenderer: (params: ICellRendererParams<DashboardCohort>) => {
+      if (!params.data) return null;
+      if ((params.data as any).revisable === false) {
+        return <LoadingIcon />;
+      }
+      return params.value ?? null;
+    },
   },
   {
     field: "totalSampleCount",
@@ -101,7 +109,8 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
     field: "endUsers",
     headerName: "End Users",
     editable: true,
-    headerComponentParams: createCustomHeader(""), // hides the lock icon
+    headerComponentParams: createCustomHeader(""), // hides the lock icon,
+    maxWidth: 240,
   },
   {
     field: "pmUsers",

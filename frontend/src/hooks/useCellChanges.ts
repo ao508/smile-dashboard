@@ -5,7 +5,6 @@ import {
   CellEditRequestEvent,
   IServerSideGetRowsParams,
 } from "ag-grid-community";
-import { getUserEmail } from "../utils/getUserEmail";
 import { AgGridReact as AgGridReactType } from "ag-grid-react/lib/agGridReact";
 import {
   DashboardCohort,
@@ -33,6 +32,7 @@ interface UseCellChangesParams {
   records: Array<DashboardSample> | Array<DashboardCohort> | undefined;
   refreshData: () => void;
   isSampleLevelChanges: boolean;
+  pinnedRecordIds?: string[];
 }
 
 export function useCellChanges({
@@ -42,6 +42,7 @@ export function useCellChanges({
   records,
   refreshData,
   isSampleLevelChanges,
+  pinnedRecordIds = [],
 }: UseCellChangesParams) {
   const [changes, setChanges] = useState<Array<RecordChange>>([]);
   const { userEmail, setUserEmail } = useUserEmail();
@@ -265,6 +266,52 @@ export function useCellChanges({
       for (const dashboardCohort of newDashboardCohorts) {
         updateTempoCohortMutation({ variables: { dashboardCohort } });
       }
+
+      // Manually handle optimistic updates for cohorts (same pattern as samples)
+      const optimisticCohorts = records!.map((c) => {
+        c = c as DashboardCohort;
+        const changesForCohort =
+          c.cohortId != null ? changesByRecordId.get(c.cohortId) : undefined;
+        if (changesForCohort) {
+          const changedFields = changesForCohort.reduce((acc, change) => {
+            acc[change.fieldName] = change.newValue;
+            return acc;
+          }, {} as Record<string, any>);
+          return {
+            ...c,
+            ...changedFields,
+            revisable: false, // revisable is not part of the data structure but plays a role in the rendering the "pending updates" animation
+            importDate: formatCellDate(new Date()) as string,
+          };
+        }
+        return c;
+      });
+      optimisticCohorts.sort((a, b) => {
+        const aPinned = pinnedRecordIds.includes(
+          (a as DashboardCohort).cohortId ?? ""
+        )
+          ? 0
+          : 1;
+        const bPinned = pinnedRecordIds.includes(
+          (b as DashboardCohort).cohortId ?? ""
+        )
+          ? 0
+          : 1;
+        if (aPinned !== bPinned) return aPinned - bPinned;
+        return (
+          new Date(b.importDate ?? "").getTime() -
+          new Date(a.importDate ?? "").getTime()
+        );
+      });
+      const optimisticDatasource = {
+        getRows: (params: IServerSideGetRowsParams) => {
+          params.success({
+            rowData: optimisticCohorts!,
+            rowCount: optimisticCohorts[0]?._total || 0,
+          });
+        },
+      };
+      gridRef.current?.api?.setServerSideDatasource(optimisticDatasource);
     }
 
     // "Reset" the grid with the latest data
