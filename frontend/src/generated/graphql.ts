@@ -1635,14 +1635,18 @@ export type DashboardSample = {
   changelog?: Maybe<Scalars["String"]["output"]>;
   cmoPatientId?: Maybe<Scalars["String"]["output"]>;
   cmoSampleName?: Maybe<Scalars["String"]["output"]>;
+  collectionStudy?: Maybe<Scalars["String"]["output"]>;
   collectionYear?: Maybe<Scalars["String"]["output"]>;
+  consentVersion?: Maybe<Scalars["String"]["output"]>;
   costCenter?: Maybe<Scalars["String"]["output"]>;
   custodianInformation?: Maybe<Scalars["String"]["output"]>;
+  dateOfConsent?: Maybe<Scalars["String"]["output"]>;
   dbGapStudy?: Maybe<Scalars["String"]["output"]>;
   dmpPatientAlias?: Maybe<Scalars["String"]["output"]>;
   dmpRecommendedCoverage?: Maybe<Scalars["String"]["output"]>;
   embargoDate?: Maybe<Scalars["String"]["output"]>;
   genePanel?: Maybe<Scalars["String"]["output"]>;
+  genomicResearchUseStudy?: Maybe<Scalars["String"]["output"]>;
   historicalCmoSampleNames?: Maybe<Scalars["String"]["output"]>;
   igoComplete?: Maybe<Scalars["Boolean"]["output"]>;
   igoDeliveryDate?: Maybe<Scalars["String"]["output"]>;
@@ -1701,14 +1705,18 @@ export type DashboardSampleInput = {
   changelog?: InputMaybe<Scalars["String"]["input"]>;
   cmoPatientId?: InputMaybe<Scalars["String"]["input"]>;
   cmoSampleName?: InputMaybe<Scalars["String"]["input"]>;
+  collectionStudy?: InputMaybe<Scalars["String"]["input"]>;
   collectionYear?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion?: InputMaybe<Scalars["String"]["input"]>;
   costCenter?: InputMaybe<Scalars["String"]["input"]>;
   custodianInformation?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent?: InputMaybe<Scalars["String"]["input"]>;
   dbGapStudy?: InputMaybe<Scalars["String"]["input"]>;
   dmpPatientAlias?: InputMaybe<Scalars["String"]["input"]>;
   dmpRecommendedCoverage?: InputMaybe<Scalars["String"]["input"]>;
   embargoDate?: InputMaybe<Scalars["String"]["input"]>;
   genePanel?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy?: InputMaybe<Scalars["String"]["input"]>;
   historicalCmoSampleNames?: InputMaybe<Scalars["String"]["input"]>;
   igoComplete?: InputMaybe<Scalars["Boolean"]["input"]>;
   igoDeliveryDate?: InputMaybe<Scalars["String"]["input"]>;
@@ -1751,7 +1759,11 @@ export type DashboardSampleInput = {
 
 export type DbGap = {
   __typename?: "DbGap";
-  dbGapStudy: Scalars["String"]["output"];
+  collectionStudy?: Maybe<Scalars["String"]["output"]>;
+  consentVersion?: Maybe<Scalars["String"]["output"]>;
+  dateOfConsent?: Maybe<Scalars["String"]["output"]>;
+  dbGapStudy?: Maybe<Scalars["String"]["output"]>;
+  genomicResearchUseStudy?: Maybe<Scalars["String"]["output"]>;
   samplesHasDbgap: Array<Sample>;
   samplesHasDbgapAggregate?: Maybe<DbGapSampleSamplesHasDbgapAggregationSelection>;
   samplesHasDbgapConnection: DbGapSamplesHasDbgapConnection;
@@ -1779,8 +1791,12 @@ export type DbGapSamplesHasDbgapConnectionArgs = {
 
 export type DbGapAggregateSelection = {
   __typename?: "DbGapAggregateSelection";
+  collectionStudy: StringAggregateSelection;
+  consentVersion: StringAggregateSelection;
   count: Scalars["Int"]["output"];
+  dateOfConsent: StringAggregateSelection;
   dbGapStudy: StringAggregateSelection;
+  genomicResearchUseStudy: StringAggregateSelection;
   smileDbGapId: StringAggregateSelection;
 };
 
@@ -1793,7 +1809,11 @@ export type DbGapConnectWhere = {
 };
 
 export type DbGapCreateInput = {
-  dbGapStudy: Scalars["String"]["input"];
+  collectionStudy?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent?: InputMaybe<Scalars["String"]["input"]>;
+  dbGapStudy?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy?: InputMaybe<Scalars["String"]["input"]>;
   samplesHasDbgap?: InputMaybe<DbGapSamplesHasDbgapFieldInput>;
   smileDbGapId: Scalars["String"]["input"];
 };
@@ -1980,12 +2000,20 @@ export type DbGapSamplesHasDbgapUpdateFieldInput = {
 
 /** Fields to sort DbGaps by. The order in which sorts are applied is not guaranteed when specifying many fields in one DbGapSort object. */
 export type DbGapSort = {
+  collectionStudy?: InputMaybe<SortDirection>;
+  consentVersion?: InputMaybe<SortDirection>;
+  dateOfConsent?: InputMaybe<SortDirection>;
   dbGapStudy?: InputMaybe<SortDirection>;
+  genomicResearchUseStudy?: InputMaybe<SortDirection>;
   smileDbGapId?: InputMaybe<SortDirection>;
 };
 
 export type DbGapUpdateInput = {
+  collectionStudy?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent?: InputMaybe<Scalars["String"]["input"]>;
   dbGapStudy?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy?: InputMaybe<Scalars["String"]["input"]>;
   samplesHasDbgap?: InputMaybe<Array<DbGapSamplesHasDbgapUpdateFieldInput>>;
   smileDbGapId?: InputMaybe<Scalars["String"]["input"]>;
 };
@@ -1994,12 +2022,40 @@ export type DbGapWhere = {
   AND?: InputMaybe<Array<DbGapWhere>>;
   NOT?: InputMaybe<DbGapWhere>;
   OR?: InputMaybe<Array<DbGapWhere>>;
+  collectionStudy?: InputMaybe<Scalars["String"]["input"]>;
+  collectionStudy_CONTAINS?: InputMaybe<Scalars["String"]["input"]>;
+  collectionStudy_ENDS_WITH?: InputMaybe<Scalars["String"]["input"]>;
+  collectionStudy_IN?: InputMaybe<
+    Array<InputMaybe<Scalars["String"]["input"]>>
+  >;
+  collectionStudy_MATCHES?: InputMaybe<Scalars["String"]["input"]>;
+  collectionStudy_STARTS_WITH?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion_CONTAINS?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion_ENDS_WITH?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion_IN?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
+  consentVersion_MATCHES?: InputMaybe<Scalars["String"]["input"]>;
+  consentVersion_STARTS_WITH?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent_CONTAINS?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent_ENDS_WITH?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent_IN?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
+  dateOfConsent_MATCHES?: InputMaybe<Scalars["String"]["input"]>;
+  dateOfConsent_STARTS_WITH?: InputMaybe<Scalars["String"]["input"]>;
   dbGapStudy?: InputMaybe<Scalars["String"]["input"]>;
   dbGapStudy_CONTAINS?: InputMaybe<Scalars["String"]["input"]>;
   dbGapStudy_ENDS_WITH?: InputMaybe<Scalars["String"]["input"]>;
-  dbGapStudy_IN?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  dbGapStudy_IN?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   dbGapStudy_MATCHES?: InputMaybe<Scalars["String"]["input"]>;
   dbGapStudy_STARTS_WITH?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy_CONTAINS?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy_ENDS_WITH?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy_IN?: InputMaybe<
+    Array<InputMaybe<Scalars["String"]["input"]>>
+  >;
+  genomicResearchUseStudy_MATCHES?: InputMaybe<Scalars["String"]["input"]>;
+  genomicResearchUseStudy_STARTS_WITH?: InputMaybe<Scalars["String"]["input"]>;
   samplesHasDbgapAggregate?: InputMaybe<DbGapSamplesHasDbgapAggregateInput>;
   /** Return DbGaps where all of the related DbGapSamplesHasDbgapConnections match this filter */
   samplesHasDbgapConnection_ALL?: InputMaybe<DbGapSamplesHasDbgapConnectionWhere>;
@@ -7133,7 +7189,11 @@ export type SampleDbGapHasDbgapDbGapsAggregationSelection = {
 
 export type SampleDbGapHasDbgapDbGapsNodeAggregateSelection = {
   __typename?: "SampleDbGapHasDbgapDbGapsNodeAggregateSelection";
+  collectionStudy: StringAggregateSelection;
+  consentVersion: StringAggregateSelection;
+  dateOfConsent: StringAggregateSelection;
   dbGapStudy: StringAggregateSelection;
+  genomicResearchUseStudy: StringAggregateSelection;
   smileDbGapId: StringAggregateSelection;
 };
 
@@ -7243,6 +7303,51 @@ export type SampleHasDbgapDbGapsNodeAggregationWhereInput = {
   AND?: InputMaybe<Array<SampleHasDbgapDbGapsNodeAggregationWhereInput>>;
   NOT?: InputMaybe<SampleHasDbgapDbGapsNodeAggregationWhereInput>;
   OR?: InputMaybe<Array<SampleHasDbgapDbGapsNodeAggregationWhereInput>>;
+  collectionStudy_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionStudy_AVERAGE_LENGTH_GT?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionStudy_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionStudy_AVERAGE_LENGTH_LT?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionStudy_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionStudy_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_LONGEST_LENGTH_GT?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_LONGEST_LENGTH_GTE?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_LONGEST_LENGTH_LT?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_LONGEST_LENGTH_LTE?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_SHORTEST_LENGTH_GT?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_SHORTEST_LENGTH_LT?: InputMaybe<Scalars["Int"]["input"]>;
+  collectionStudy_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars["Float"]["input"]>;
+  consentVersion_AVERAGE_LENGTH_GT?: InputMaybe<Scalars["Float"]["input"]>;
+  consentVersion_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars["Float"]["input"]>;
+  consentVersion_AVERAGE_LENGTH_LT?: InputMaybe<Scalars["Float"]["input"]>;
+  consentVersion_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars["Float"]["input"]>;
+  consentVersion_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_LONGEST_LENGTH_GT?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_LONGEST_LENGTH_GTE?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_LONGEST_LENGTH_LT?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_LONGEST_LENGTH_LTE?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_SHORTEST_LENGTH_GT?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_SHORTEST_LENGTH_LT?: InputMaybe<Scalars["Int"]["input"]>;
+  consentVersion_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars["Float"]["input"]>;
+  dateOfConsent_AVERAGE_LENGTH_GT?: InputMaybe<Scalars["Float"]["input"]>;
+  dateOfConsent_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars["Float"]["input"]>;
+  dateOfConsent_AVERAGE_LENGTH_LT?: InputMaybe<Scalars["Float"]["input"]>;
+  dateOfConsent_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars["Float"]["input"]>;
+  dateOfConsent_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_LONGEST_LENGTH_GT?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_LONGEST_LENGTH_GTE?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_LONGEST_LENGTH_LT?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_LONGEST_LENGTH_LTE?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_SHORTEST_LENGTH_GT?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_SHORTEST_LENGTH_LT?: InputMaybe<Scalars["Int"]["input"]>;
+  dateOfConsent_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars["Int"]["input"]>;
   dbGapStudy_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars["Float"]["input"]>;
   dbGapStudy_AVERAGE_LENGTH_GT?: InputMaybe<Scalars["Float"]["input"]>;
   dbGapStudy_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars["Float"]["input"]>;
@@ -7258,6 +7363,51 @@ export type SampleHasDbgapDbGapsNodeAggregationWhereInput = {
   dbGapStudy_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars["Int"]["input"]>;
   dbGapStudy_SHORTEST_LENGTH_LT?: InputMaybe<Scalars["Int"]["input"]>;
   dbGapStudy_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars["Int"]["input"]>;
+  genomicResearchUseStudy_AVERAGE_LENGTH_EQUAL?: InputMaybe<
+    Scalars["Float"]["input"]
+  >;
+  genomicResearchUseStudy_AVERAGE_LENGTH_GT?: InputMaybe<
+    Scalars["Float"]["input"]
+  >;
+  genomicResearchUseStudy_AVERAGE_LENGTH_GTE?: InputMaybe<
+    Scalars["Float"]["input"]
+  >;
+  genomicResearchUseStudy_AVERAGE_LENGTH_LT?: InputMaybe<
+    Scalars["Float"]["input"]
+  >;
+  genomicResearchUseStudy_AVERAGE_LENGTH_LTE?: InputMaybe<
+    Scalars["Float"]["input"]
+  >;
+  genomicResearchUseStudy_LONGEST_LENGTH_EQUAL?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_LONGEST_LENGTH_GT?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_LONGEST_LENGTH_GTE?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_LONGEST_LENGTH_LT?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_LONGEST_LENGTH_LTE?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_SHORTEST_LENGTH_EQUAL?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_SHORTEST_LENGTH_GT?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_SHORTEST_LENGTH_GTE?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_SHORTEST_LENGTH_LT?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
+  genomicResearchUseStudy_SHORTEST_LENGTH_LTE?: InputMaybe<
+    Scalars["Int"]["input"]
+  >;
   smileDbGapId_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars["Float"]["input"]>;
   smileDbGapId_AVERAGE_LENGTH_GT?: InputMaybe<Scalars["Float"]["input"]>;
   smileDbGapId_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars["Float"]["input"]>;
@@ -11943,6 +12093,10 @@ export type DashboardSamplesQuery = {
     sampleCohortIds?: string | null;
     dbGapStudy?: string | null;
     irbConsentProtocol?: string | null;
+    collectionStudy?: string | null;
+    dateOfConsent?: string | null;
+    genomicResearchUseStudy?: string | null;
+    consentVersion?: string | null;
     dmpPatientAlias?: string | null;
     igoQcReports?: Array<{
       __typename?: "IgoQcReport";
@@ -12022,6 +12176,10 @@ export type DashboardSampleHistoryQuery = {
     sampleCohortIds?: string | null;
     dbGapStudy?: string | null;
     irbConsentProtocol?: string | null;
+    collectionStudy?: string | null;
+    dateOfConsent?: string | null;
+    genomicResearchUseStudy?: string | null;
+    consentVersion?: string | null;
     dmpPatientAlias?: string | null;
   }>;
 };
@@ -12107,6 +12265,10 @@ export type DashboardDbGapPartsFragment = {
   __typename?: "DashboardSample";
   dbGapStudy?: string | null;
   irbConsentProtocol?: string | null;
+  collectionStudy?: string | null;
+  dateOfConsent?: string | null;
+  genomicResearchUseStudy?: string | null;
+  consentVersion?: string | null;
 };
 
 export type DashboardPatientPartsFragment = {
@@ -12202,6 +12364,10 @@ export type UpdateDashboardSamplesMutation = {
     sampleCohortIds?: string | null;
     dbGapStudy?: string | null;
     irbConsentProtocol?: string | null;
+    collectionStudy?: string | null;
+    dateOfConsent?: string | null;
+    genomicResearchUseStudy?: string | null;
+    consentVersion?: string | null;
     igoQcReports?: Array<{
       __typename?: "IgoQcReport";
       qcReportType?: string | null;
@@ -12363,6 +12529,10 @@ export const DashboardDbGapPartsFragmentDoc = gql`
   fragment DashboardDbGapParts on DashboardSample {
     dbGapStudy
     irbConsentProtocol
+    collectionStudy
+    dateOfConsent
+    genomicResearchUseStudy
+    consentVersion
   }
 `;
 export const DashboardPatientPartsFragmentDoc = gql`
@@ -12465,7 +12635,11 @@ export function useDashboardRequestsQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardRequestsQuery,
     DashboardRequestsQueryVariables
-  >
+  > &
+    (
+      | { variables: DashboardRequestsQueryVariables; skip?: boolean }
+      | { skip: boolean }
+    )
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -12485,11 +12659,52 @@ export function useDashboardRequestsLazyQuery(
     DashboardRequestsQueryVariables
   >(DashboardRequestsDocument, options);
 }
+// @ts-ignore
+export function useDashboardRequestsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    DashboardRequestsQuery,
+    DashboardRequestsQueryVariables
+  >
+): Apollo.UseSuspenseQueryResult<
+  DashboardRequestsQuery,
+  DashboardRequestsQueryVariables
+>;
+export function useDashboardRequestsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardRequestsQuery,
+        DashboardRequestsQueryVariables
+      >
+): Apollo.UseSuspenseQueryResult<
+  DashboardRequestsQuery | undefined,
+  DashboardRequestsQueryVariables
+>;
+export function useDashboardRequestsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardRequestsQuery,
+        DashboardRequestsQueryVariables
+      >
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    DashboardRequestsQuery,
+    DashboardRequestsQueryVariables
+  >(DashboardRequestsDocument, options);
+}
 export type DashboardRequestsQueryHookResult = ReturnType<
   typeof useDashboardRequestsQuery
 >;
 export type DashboardRequestsLazyQueryHookResult = ReturnType<
   typeof useDashboardRequestsLazyQuery
+>;
+export type DashboardRequestsSuspenseQueryHookResult = ReturnType<
+  typeof useDashboardRequestsSuspenseQuery
 >;
 export type DashboardRequestsQueryResult = Apollo.QueryResult<
   DashboardRequestsQuery,
@@ -12554,7 +12769,11 @@ export function useDashboardPatientsQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardPatientsQuery,
     DashboardPatientsQueryVariables
-  >
+  > &
+    (
+      | { variables: DashboardPatientsQueryVariables; skip?: boolean }
+      | { skip: boolean }
+    )
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -12574,11 +12793,52 @@ export function useDashboardPatientsLazyQuery(
     DashboardPatientsQueryVariables
   >(DashboardPatientsDocument, options);
 }
+// @ts-ignore
+export function useDashboardPatientsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    DashboardPatientsQuery,
+    DashboardPatientsQueryVariables
+  >
+): Apollo.UseSuspenseQueryResult<
+  DashboardPatientsQuery,
+  DashboardPatientsQueryVariables
+>;
+export function useDashboardPatientsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardPatientsQuery,
+        DashboardPatientsQueryVariables
+      >
+): Apollo.UseSuspenseQueryResult<
+  DashboardPatientsQuery | undefined,
+  DashboardPatientsQueryVariables
+>;
+export function useDashboardPatientsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardPatientsQuery,
+        DashboardPatientsQueryVariables
+      >
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    DashboardPatientsQuery,
+    DashboardPatientsQueryVariables
+  >(DashboardPatientsDocument, options);
+}
 export type DashboardPatientsQueryHookResult = ReturnType<
   typeof useDashboardPatientsQuery
 >;
 export type DashboardPatientsLazyQueryHookResult = ReturnType<
   typeof useDashboardPatientsLazyQuery
+>;
+export type DashboardPatientsSuspenseQueryHookResult = ReturnType<
+  typeof useDashboardPatientsSuspenseQuery
 >;
 export type DashboardPatientsQueryResult = Apollo.QueryResult<
   DashboardPatientsQuery,
@@ -12643,7 +12903,11 @@ export function useDashboardCohortsQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardCohortsQuery,
     DashboardCohortsQueryVariables
-  >
+  > &
+    (
+      | { variables: DashboardCohortsQueryVariables; skip?: boolean }
+      | { skip: boolean }
+    )
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<DashboardCohortsQuery, DashboardCohortsQueryVariables>(
@@ -12663,11 +12927,52 @@ export function useDashboardCohortsLazyQuery(
     DashboardCohortsQueryVariables
   >(DashboardCohortsDocument, options);
 }
+// @ts-ignore
+export function useDashboardCohortsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    DashboardCohortsQuery,
+    DashboardCohortsQueryVariables
+  >
+): Apollo.UseSuspenseQueryResult<
+  DashboardCohortsQuery,
+  DashboardCohortsQueryVariables
+>;
+export function useDashboardCohortsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardCohortsQuery,
+        DashboardCohortsQueryVariables
+      >
+): Apollo.UseSuspenseQueryResult<
+  DashboardCohortsQuery | undefined,
+  DashboardCohortsQueryVariables
+>;
+export function useDashboardCohortsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardCohortsQuery,
+        DashboardCohortsQueryVariables
+      >
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    DashboardCohortsQuery,
+    DashboardCohortsQueryVariables
+  >(DashboardCohortsDocument, options);
+}
 export type DashboardCohortsQueryHookResult = ReturnType<
   typeof useDashboardCohortsQuery
 >;
 export type DashboardCohortsLazyQueryHookResult = ReturnType<
   typeof useDashboardCohortsLazyQuery
+>;
+export type DashboardCohortsSuspenseQueryHookResult = ReturnType<
+  typeof useDashboardCohortsSuspenseQuery
 >;
 export type DashboardCohortsQueryResult = Apollo.QueryResult<
   DashboardCohortsQuery,
@@ -12741,7 +13046,11 @@ export function useDashboardSamplesQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardSamplesQuery,
     DashboardSamplesQueryVariables
-  >
+  > &
+    (
+      | { variables: DashboardSamplesQueryVariables; skip?: boolean }
+      | { skip: boolean }
+    )
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<DashboardSamplesQuery, DashboardSamplesQueryVariables>(
@@ -12761,11 +13070,52 @@ export function useDashboardSamplesLazyQuery(
     DashboardSamplesQueryVariables
   >(DashboardSamplesDocument, options);
 }
+// @ts-ignore
+export function useDashboardSamplesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    DashboardSamplesQuery,
+    DashboardSamplesQueryVariables
+  >
+): Apollo.UseSuspenseQueryResult<
+  DashboardSamplesQuery,
+  DashboardSamplesQueryVariables
+>;
+export function useDashboardSamplesSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardSamplesQuery,
+        DashboardSamplesQueryVariables
+      >
+): Apollo.UseSuspenseQueryResult<
+  DashboardSamplesQuery | undefined,
+  DashboardSamplesQueryVariables
+>;
+export function useDashboardSamplesSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardSamplesQuery,
+        DashboardSamplesQueryVariables
+      >
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    DashboardSamplesQuery,
+    DashboardSamplesQueryVariables
+  >(DashboardSamplesDocument, options);
+}
 export type DashboardSamplesQueryHookResult = ReturnType<
   typeof useDashboardSamplesQuery
 >;
 export type DashboardSamplesLazyQueryHookResult = ReturnType<
   typeof useDashboardSamplesLazyQuery
+>;
+export type DashboardSamplesSuspenseQueryHookResult = ReturnType<
+  typeof useDashboardSamplesSuspenseQuery
 >;
 export type DashboardSamplesQueryResult = Apollo.QueryResult<
   DashboardSamplesQuery,
@@ -12822,7 +13172,11 @@ export function useDashboardSampleHistoryQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardSampleHistoryQuery,
     DashboardSampleHistoryQueryVariables
-  >
+  > &
+    (
+      | { variables: DashboardSampleHistoryQueryVariables; skip?: boolean }
+      | { skip: boolean }
+    )
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -12842,11 +13196,52 @@ export function useDashboardSampleHistoryLazyQuery(
     DashboardSampleHistoryQueryVariables
   >(DashboardSampleHistoryDocument, options);
 }
+// @ts-ignore
+export function useDashboardSampleHistorySuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    DashboardSampleHistoryQuery,
+    DashboardSampleHistoryQueryVariables
+  >
+): Apollo.UseSuspenseQueryResult<
+  DashboardSampleHistoryQuery,
+  DashboardSampleHistoryQueryVariables
+>;
+export function useDashboardSampleHistorySuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardSampleHistoryQuery,
+        DashboardSampleHistoryQueryVariables
+      >
+): Apollo.UseSuspenseQueryResult<
+  DashboardSampleHistoryQuery | undefined,
+  DashboardSampleHistoryQueryVariables
+>;
+export function useDashboardSampleHistorySuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        DashboardSampleHistoryQuery,
+        DashboardSampleHistoryQueryVariables
+      >
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    DashboardSampleHistoryQuery,
+    DashboardSampleHistoryQueryVariables
+  >(DashboardSampleHistoryDocument, options);
+}
 export type DashboardSampleHistoryQueryHookResult = ReturnType<
   typeof useDashboardSampleHistoryQuery
 >;
 export type DashboardSampleHistoryLazyQueryHookResult = ReturnType<
   typeof useDashboardSampleHistoryLazyQuery
+>;
+export type DashboardSampleHistorySuspenseQueryHookResult = ReturnType<
+  typeof useDashboardSampleHistorySuspenseQuery
 >;
 export type DashboardSampleHistoryQueryResult = Apollo.QueryResult<
   DashboardSampleHistoryQuery,
@@ -12958,11 +13353,52 @@ export function useAllBlockedCohortIdsLazyQuery(
     AllBlockedCohortIdsQueryVariables
   >(AllBlockedCohortIdsDocument, options);
 }
+// @ts-ignore
+export function useAllBlockedCohortIdsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    AllBlockedCohortIdsQuery,
+    AllBlockedCohortIdsQueryVariables
+  >
+): Apollo.UseSuspenseQueryResult<
+  AllBlockedCohortIdsQuery,
+  AllBlockedCohortIdsQueryVariables
+>;
+export function useAllBlockedCohortIdsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        AllBlockedCohortIdsQuery,
+        AllBlockedCohortIdsQueryVariables
+      >
+): Apollo.UseSuspenseQueryResult<
+  AllBlockedCohortIdsQuery | undefined,
+  AllBlockedCohortIdsQueryVariables
+>;
+export function useAllBlockedCohortIdsSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        AllBlockedCohortIdsQuery,
+        AllBlockedCohortIdsQueryVariables
+      >
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    AllBlockedCohortIdsQuery,
+    AllBlockedCohortIdsQueryVariables
+  >(AllBlockedCohortIdsDocument, options);
+}
 export type AllBlockedCohortIdsQueryHookResult = ReturnType<
   typeof useAllBlockedCohortIdsQuery
 >;
 export type AllBlockedCohortIdsLazyQueryHookResult = ReturnType<
   typeof useAllBlockedCohortIdsLazyQuery
+>;
+export type AllBlockedCohortIdsSuspenseQueryHookResult = ReturnType<
+  typeof useAllBlockedCohortIdsSuspenseQuery
 >;
 export type AllBlockedCohortIdsQueryResult = Apollo.QueryResult<
   AllBlockedCohortIdsQuery,
@@ -13019,11 +13455,52 @@ export function useAllAnchorSeqDateDataLazyQuery(
     AllAnchorSeqDateDataQueryVariables
   >(AllAnchorSeqDateDataDocument, options);
 }
+// @ts-ignore
+export function useAllAnchorSeqDateDataSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    AllAnchorSeqDateDataQuery,
+    AllAnchorSeqDateDataQueryVariables
+  >
+): Apollo.UseSuspenseQueryResult<
+  AllAnchorSeqDateDataQuery,
+  AllAnchorSeqDateDataQueryVariables
+>;
+export function useAllAnchorSeqDateDataSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        AllAnchorSeqDateDataQuery,
+        AllAnchorSeqDateDataQueryVariables
+      >
+): Apollo.UseSuspenseQueryResult<
+  AllAnchorSeqDateDataQuery | undefined,
+  AllAnchorSeqDateDataQueryVariables
+>;
+export function useAllAnchorSeqDateDataSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        AllAnchorSeqDateDataQuery,
+        AllAnchorSeqDateDataQueryVariables
+      >
+) {
+  const options =
+    baseOptions === Apollo.skipToken
+      ? baseOptions
+      : { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    AllAnchorSeqDateDataQuery,
+    AllAnchorSeqDateDataQueryVariables
+  >(AllAnchorSeqDateDataDocument, options);
+}
 export type AllAnchorSeqDateDataQueryHookResult = ReturnType<
   typeof useAllAnchorSeqDateDataQuery
 >;
 export type AllAnchorSeqDateDataLazyQueryHookResult = ReturnType<
   typeof useAllAnchorSeqDateDataLazyQuery
+>;
+export type AllAnchorSeqDateDataSuspenseQueryHookResult = ReturnType<
+  typeof useAllAnchorSeqDateDataSuspenseQuery
 >;
 export type AllAnchorSeqDateDataQueryResult = Apollo.QueryResult<
   AllAnchorSeqDateDataQuery,

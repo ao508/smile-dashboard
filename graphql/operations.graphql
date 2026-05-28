@@ -254,6 +254,10 @@ fragment DashboardDbGapParts on DashboardSample {
   # (s:Sample)-[:HAS_DBGAP]->(d:DbGap)
   dbGapStudy
   irbConsentProtocol
+  collectionStudy
+  dateOfConsent
+  genomicResearchUseStudy
+  consentVersion
 }
 
 fragment DashboardPatientParts on DashboardSample {
