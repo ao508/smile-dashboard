@@ -32,7 +32,7 @@ packages/**/dist/**
 yarn.lock
 .env.example
 frontend/public/**
-generated/**
+**/generated/**
 *html
 Dockerfile
 *.properties.EXAMPLE

@@ -36,6 +36,8 @@
     "prettier": "2.8.8"
   },
   "resolutions": {
+    "node-releases": "2.0.44",
+    "sass": "1.99.0",
     "prettier": "2.8.8",
     "@whatwg-node/fetch": "0.9.16",
     "@whatwg-node/node-fetch": "0.5.18",
