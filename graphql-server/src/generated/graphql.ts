@@ -6576,7 +6576,7 @@ export type Sample = {
   requestsHasSample: Array<Request>;
   requestsHasSampleAggregate?: Maybe<SampleRequestRequestsHasSampleAggregationSelection>;
   requestsHasSampleConnection: SampleRequestsHasSampleConnection;
-  revisable?: Maybe<Scalars["Boolean"]["output"]>;
+  revisable: Scalars["Boolean"]["output"];
   sampleAliasesIsAlias: Array<SampleAlias>;
   sampleAliasesIsAliasAggregate?: Maybe<SampleSampleAliasSampleAliasesIsAliasAggregationSelection>;
   sampleAliasesIsAliasConnection: SampleSampleAliasesIsAliasConnection;
@@ -7173,7 +7173,7 @@ export type SampleCreateInput = {
   hasTempoTempos?: InputMaybe<SampleHasTempoTemposFieldInput>;
   patientsHasSample?: InputMaybe<SamplePatientsHasSampleFieldInput>;
   requestsHasSample?: InputMaybe<SampleRequestsHasSampleFieldInput>;
-  revisable?: InputMaybe<Scalars["Boolean"]["input"]>;
+  revisable: Scalars["Boolean"]["input"];
   sampleAliasesIsAlias?: InputMaybe<SampleSampleAliasesIsAliasFieldInput>;
   sampleCategory: Scalars["String"]["input"];
   sampleClass?: InputMaybe<Scalars["String"]["input"]>;
@@ -11895,15 +11895,13 @@ export type UpdateTemposMutationResponse = {
 };
 
 export type DashboardRequestsQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
 }>;
 
 export type DashboardRequestsQuery = {
@@ -11943,16 +11941,14 @@ export type DashboardRequestsQuery = {
 };
 
 export type DashboardPatientsQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
-  phiEnabled?: InputMaybe<Scalars["Boolean"]["input"]>;
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
+  phiEnabled?: InputMaybe<Scalars["Boolean"]>;
 }>;
 
 export type DashboardPatientsQuery = {
@@ -11976,15 +11972,13 @@ export type DashboardPatientsQuery = {
 };
 
 export type DashboardCohortsQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
 }>;
 
 export type DashboardCohortsQuery = {
@@ -12011,9 +12005,7 @@ export type DashboardCohortsQuery = {
 };
 
 export type DashboardSamplesQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   recordContexts?: InputMaybe<
     | Array<InputMaybe<DashboardRecordContext>>
     | InputMaybe<DashboardRecordContext>
@@ -12022,10 +12014,10 @@ export type DashboardSamplesQueryVariables = Exact<{
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
-  phiEnabled?: InputMaybe<Scalars["Boolean"]["input"]>;
-  includeDemographics?: InputMaybe<Scalars["Boolean"]["input"]>;
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
+  phiEnabled?: InputMaybe<Scalars["Boolean"]>;
+  includeDemographics?: InputMaybe<Scalars["Boolean"]>;
 }>;
 
 export type DashboardSamplesQuery = {
@@ -12108,10 +12100,10 @@ export type DashboardSamplesQuery = {
 };
 
 export type DashboardSampleHistoryQueryVariables = Exact<{
-  searchVals: Array<Scalars["String"]["input"]> | Scalars["String"]["input"];
+  searchVals: Array<Scalars["String"]> | Scalars["String"];
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
 }>;
 
 export type DashboardSampleHistoryQuery = {
@@ -12385,7 +12377,7 @@ export type AllBlockedCohortIdsQuery = {
 };
 
 export type AllAnchorSeqDateDataQueryVariables = Exact<{
-  phiEnabled?: InputMaybe<Scalars["Boolean"]["input"]>;
+  phiEnabled?: InputMaybe<Scalars["Boolean"]>;
 }>;
 
 export type AllAnchorSeqDateDataQuery = {

@@ -709,7 +709,10 @@ async function publishNewTempoCohortRequestPromise(
   });
 }
 
-async function updateDbGapPromise(newDashboardSample: DashboardSampleInput) {
+async function updateDbGapPromise(
+  newDashboardSample: DashboardSampleInput,
+  ogm: OGM
+) {
   return new Promise((resolve) => {
     const dataForDbGapUpdate = {
       primaryId: newDashboardSample.primaryId,
@@ -725,6 +728,11 @@ async function updateDbGapPromise(newDashboardSample: DashboardSampleInput) {
       props.pub_dbgap_sample_update,
       JSON.stringify(dataForDbGapUpdate)
     );
+
+    ogm.model("Sample").update({
+      where: { smileSampleId: newDashboardSample.smileSampleId },
+      update: { revisable: false },
+    });
 
     resolve(null);
   });
@@ -814,7 +822,7 @@ async function updateAllSamplesConcurrently(
         tempoUpdatePromises.push(updateTempoPromise(dashboardSample));
       }
       if (dbGapChanged) {
-        dbGapUpdatePromises.push(updateDbGapPromise(dashboardSample));
+        dbGapUpdatePromises.push(updateDbGapPromise(dashboardSample, ogm));
       }
     } catch (error) {
       console.error(

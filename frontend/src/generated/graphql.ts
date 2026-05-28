@@ -6577,7 +6577,7 @@ export type Sample = {
   requestsHasSample: Array<Request>;
   requestsHasSampleAggregate?: Maybe<SampleRequestRequestsHasSampleAggregationSelection>;
   requestsHasSampleConnection: SampleRequestsHasSampleConnection;
-  revisable?: Maybe<Scalars["Boolean"]["output"]>;
+  revisable: Scalars["Boolean"]["output"];
   sampleAliasesIsAlias: Array<SampleAlias>;
   sampleAliasesIsAliasAggregate?: Maybe<SampleSampleAliasSampleAliasesIsAliasAggregationSelection>;
   sampleAliasesIsAliasConnection: SampleSampleAliasesIsAliasConnection;
@@ -7174,7 +7174,7 @@ export type SampleCreateInput = {
   hasTempoTempos?: InputMaybe<SampleHasTempoTemposFieldInput>;
   patientsHasSample?: InputMaybe<SamplePatientsHasSampleFieldInput>;
   requestsHasSample?: InputMaybe<SampleRequestsHasSampleFieldInput>;
-  revisable?: InputMaybe<Scalars["Boolean"]["input"]>;
+  revisable: Scalars["Boolean"]["input"];
   sampleAliasesIsAlias?: InputMaybe<SampleSampleAliasesIsAliasFieldInput>;
   sampleCategory: Scalars["String"]["input"];
   sampleClass?: InputMaybe<Scalars["String"]["input"]>;
@@ -11896,15 +11896,13 @@ export type UpdateTemposMutationResponse = {
 };
 
 export type DashboardRequestsQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
 }>;
 
 export type DashboardRequestsQuery = {
@@ -11944,16 +11942,14 @@ export type DashboardRequestsQuery = {
 };
 
 export type DashboardPatientsQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
-  phiEnabled?: InputMaybe<Scalars["Boolean"]["input"]>;
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
+  phiEnabled?: InputMaybe<Scalars["Boolean"]>;
 }>;
 
 export type DashboardPatientsQuery = {
@@ -11977,15 +11973,13 @@ export type DashboardPatientsQuery = {
 };
 
 export type DashboardCohortsQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
 }>;
 
 export type DashboardCohortsQuery = {
@@ -12012,9 +12006,7 @@ export type DashboardCohortsQuery = {
 };
 
 export type DashboardSamplesQueryVariables = Exact<{
-  searchVals?: InputMaybe<
-    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
-  >;
+  searchVals?: InputMaybe<Array<Scalars["String"]> | Scalars["String"]>;
   recordContexts?: InputMaybe<
     | Array<InputMaybe<DashboardRecordContext>>
     | InputMaybe<DashboardRecordContext>
@@ -12023,10 +12015,10 @@ export type DashboardSamplesQueryVariables = Exact<{
   columnFilters?: InputMaybe<
     Array<DashboardRecordColumnFilter> | DashboardRecordColumnFilter
   >;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
-  phiEnabled?: InputMaybe<Scalars["Boolean"]["input"]>;
-  includeDemographics?: InputMaybe<Scalars["Boolean"]["input"]>;
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
+  phiEnabled?: InputMaybe<Scalars["Boolean"]>;
+  includeDemographics?: InputMaybe<Scalars["Boolean"]>;
 }>;
 
 export type DashboardSamplesQuery = {
@@ -12109,10 +12101,10 @@ export type DashboardSamplesQuery = {
 };
 
 export type DashboardSampleHistoryQueryVariables = Exact<{
-  searchVals: Array<Scalars["String"]["input"]> | Scalars["String"]["input"];
+  searchVals: Array<Scalars["String"]> | Scalars["String"];
   sort: DashboardRecordSort;
-  limit: Scalars["Int"]["input"];
-  offset: Scalars["Int"]["input"];
+  limit: Scalars["Int"];
+  offset: Scalars["Int"];
 }>;
 
 export type DashboardSampleHistoryQuery = {
@@ -12386,7 +12378,7 @@ export type AllBlockedCohortIdsQuery = {
 };
 
 export type AllAnchorSeqDateDataQueryVariables = Exact<{
-  phiEnabled?: InputMaybe<Scalars["Boolean"]["input"]>;
+  phiEnabled?: InputMaybe<Scalars["Boolean"]>;
 }>;
 
 export type AllAnchorSeqDateDataQuery = {
@@ -12635,11 +12627,7 @@ export function useDashboardRequestsQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardRequestsQuery,
     DashboardRequestsQueryVariables
-  > &
-    (
-      | { variables: DashboardRequestsQueryVariables; skip?: boolean }
-      | { skip: boolean }
-    )
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -12659,52 +12647,11 @@ export function useDashboardRequestsLazyQuery(
     DashboardRequestsQueryVariables
   >(DashboardRequestsDocument, options);
 }
-// @ts-ignore
-export function useDashboardRequestsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    DashboardRequestsQuery,
-    DashboardRequestsQueryVariables
-  >
-): Apollo.UseSuspenseQueryResult<
-  DashboardRequestsQuery,
-  DashboardRequestsQueryVariables
->;
-export function useDashboardRequestsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardRequestsQuery,
-        DashboardRequestsQueryVariables
-      >
-): Apollo.UseSuspenseQueryResult<
-  DashboardRequestsQuery | undefined,
-  DashboardRequestsQueryVariables
->;
-export function useDashboardRequestsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardRequestsQuery,
-        DashboardRequestsQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<
-    DashboardRequestsQuery,
-    DashboardRequestsQueryVariables
-  >(DashboardRequestsDocument, options);
-}
 export type DashboardRequestsQueryHookResult = ReturnType<
   typeof useDashboardRequestsQuery
 >;
 export type DashboardRequestsLazyQueryHookResult = ReturnType<
   typeof useDashboardRequestsLazyQuery
->;
-export type DashboardRequestsSuspenseQueryHookResult = ReturnType<
-  typeof useDashboardRequestsSuspenseQuery
 >;
 export type DashboardRequestsQueryResult = Apollo.QueryResult<
   DashboardRequestsQuery,
@@ -12769,11 +12716,7 @@ export function useDashboardPatientsQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardPatientsQuery,
     DashboardPatientsQueryVariables
-  > &
-    (
-      | { variables: DashboardPatientsQueryVariables; skip?: boolean }
-      | { skip: boolean }
-    )
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -12793,52 +12736,11 @@ export function useDashboardPatientsLazyQuery(
     DashboardPatientsQueryVariables
   >(DashboardPatientsDocument, options);
 }
-// @ts-ignore
-export function useDashboardPatientsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    DashboardPatientsQuery,
-    DashboardPatientsQueryVariables
-  >
-): Apollo.UseSuspenseQueryResult<
-  DashboardPatientsQuery,
-  DashboardPatientsQueryVariables
->;
-export function useDashboardPatientsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardPatientsQuery,
-        DashboardPatientsQueryVariables
-      >
-): Apollo.UseSuspenseQueryResult<
-  DashboardPatientsQuery | undefined,
-  DashboardPatientsQueryVariables
->;
-export function useDashboardPatientsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardPatientsQuery,
-        DashboardPatientsQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<
-    DashboardPatientsQuery,
-    DashboardPatientsQueryVariables
-  >(DashboardPatientsDocument, options);
-}
 export type DashboardPatientsQueryHookResult = ReturnType<
   typeof useDashboardPatientsQuery
 >;
 export type DashboardPatientsLazyQueryHookResult = ReturnType<
   typeof useDashboardPatientsLazyQuery
->;
-export type DashboardPatientsSuspenseQueryHookResult = ReturnType<
-  typeof useDashboardPatientsSuspenseQuery
 >;
 export type DashboardPatientsQueryResult = Apollo.QueryResult<
   DashboardPatientsQuery,
@@ -12903,11 +12805,7 @@ export function useDashboardCohortsQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardCohortsQuery,
     DashboardCohortsQueryVariables
-  > &
-    (
-      | { variables: DashboardCohortsQueryVariables; skip?: boolean }
-      | { skip: boolean }
-    )
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<DashboardCohortsQuery, DashboardCohortsQueryVariables>(
@@ -12927,52 +12825,11 @@ export function useDashboardCohortsLazyQuery(
     DashboardCohortsQueryVariables
   >(DashboardCohortsDocument, options);
 }
-// @ts-ignore
-export function useDashboardCohortsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    DashboardCohortsQuery,
-    DashboardCohortsQueryVariables
-  >
-): Apollo.UseSuspenseQueryResult<
-  DashboardCohortsQuery,
-  DashboardCohortsQueryVariables
->;
-export function useDashboardCohortsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardCohortsQuery,
-        DashboardCohortsQueryVariables
-      >
-): Apollo.UseSuspenseQueryResult<
-  DashboardCohortsQuery | undefined,
-  DashboardCohortsQueryVariables
->;
-export function useDashboardCohortsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardCohortsQuery,
-        DashboardCohortsQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<
-    DashboardCohortsQuery,
-    DashboardCohortsQueryVariables
-  >(DashboardCohortsDocument, options);
-}
 export type DashboardCohortsQueryHookResult = ReturnType<
   typeof useDashboardCohortsQuery
 >;
 export type DashboardCohortsLazyQueryHookResult = ReturnType<
   typeof useDashboardCohortsLazyQuery
->;
-export type DashboardCohortsSuspenseQueryHookResult = ReturnType<
-  typeof useDashboardCohortsSuspenseQuery
 >;
 export type DashboardCohortsQueryResult = Apollo.QueryResult<
   DashboardCohortsQuery,
@@ -13046,11 +12903,7 @@ export function useDashboardSamplesQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardSamplesQuery,
     DashboardSamplesQueryVariables
-  > &
-    (
-      | { variables: DashboardSamplesQueryVariables; skip?: boolean }
-      | { skip: boolean }
-    )
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<DashboardSamplesQuery, DashboardSamplesQueryVariables>(
@@ -13070,52 +12923,11 @@ export function useDashboardSamplesLazyQuery(
     DashboardSamplesQueryVariables
   >(DashboardSamplesDocument, options);
 }
-// @ts-ignore
-export function useDashboardSamplesSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    DashboardSamplesQuery,
-    DashboardSamplesQueryVariables
-  >
-): Apollo.UseSuspenseQueryResult<
-  DashboardSamplesQuery,
-  DashboardSamplesQueryVariables
->;
-export function useDashboardSamplesSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardSamplesQuery,
-        DashboardSamplesQueryVariables
-      >
-): Apollo.UseSuspenseQueryResult<
-  DashboardSamplesQuery | undefined,
-  DashboardSamplesQueryVariables
->;
-export function useDashboardSamplesSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardSamplesQuery,
-        DashboardSamplesQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<
-    DashboardSamplesQuery,
-    DashboardSamplesQueryVariables
-  >(DashboardSamplesDocument, options);
-}
 export type DashboardSamplesQueryHookResult = ReturnType<
   typeof useDashboardSamplesQuery
 >;
 export type DashboardSamplesLazyQueryHookResult = ReturnType<
   typeof useDashboardSamplesLazyQuery
->;
-export type DashboardSamplesSuspenseQueryHookResult = ReturnType<
-  typeof useDashboardSamplesSuspenseQuery
 >;
 export type DashboardSamplesQueryResult = Apollo.QueryResult<
   DashboardSamplesQuery,
@@ -13172,11 +12984,7 @@ export function useDashboardSampleHistoryQuery(
   baseOptions: Apollo.QueryHookOptions<
     DashboardSampleHistoryQuery,
     DashboardSampleHistoryQueryVariables
-  > &
-    (
-      | { variables: DashboardSampleHistoryQueryVariables; skip?: boolean }
-      | { skip: boolean }
-    )
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -13196,52 +13004,11 @@ export function useDashboardSampleHistoryLazyQuery(
     DashboardSampleHistoryQueryVariables
   >(DashboardSampleHistoryDocument, options);
 }
-// @ts-ignore
-export function useDashboardSampleHistorySuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    DashboardSampleHistoryQuery,
-    DashboardSampleHistoryQueryVariables
-  >
-): Apollo.UseSuspenseQueryResult<
-  DashboardSampleHistoryQuery,
-  DashboardSampleHistoryQueryVariables
->;
-export function useDashboardSampleHistorySuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardSampleHistoryQuery,
-        DashboardSampleHistoryQueryVariables
-      >
-): Apollo.UseSuspenseQueryResult<
-  DashboardSampleHistoryQuery | undefined,
-  DashboardSampleHistoryQueryVariables
->;
-export function useDashboardSampleHistorySuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        DashboardSampleHistoryQuery,
-        DashboardSampleHistoryQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<
-    DashboardSampleHistoryQuery,
-    DashboardSampleHistoryQueryVariables
-  >(DashboardSampleHistoryDocument, options);
-}
 export type DashboardSampleHistoryQueryHookResult = ReturnType<
   typeof useDashboardSampleHistoryQuery
 >;
 export type DashboardSampleHistoryLazyQueryHookResult = ReturnType<
   typeof useDashboardSampleHistoryLazyQuery
->;
-export type DashboardSampleHistorySuspenseQueryHookResult = ReturnType<
-  typeof useDashboardSampleHistorySuspenseQuery
 >;
 export type DashboardSampleHistoryQueryResult = Apollo.QueryResult<
   DashboardSampleHistoryQuery,
@@ -13353,52 +13120,11 @@ export function useAllBlockedCohortIdsLazyQuery(
     AllBlockedCohortIdsQueryVariables
   >(AllBlockedCohortIdsDocument, options);
 }
-// @ts-ignore
-export function useAllBlockedCohortIdsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    AllBlockedCohortIdsQuery,
-    AllBlockedCohortIdsQueryVariables
-  >
-): Apollo.UseSuspenseQueryResult<
-  AllBlockedCohortIdsQuery,
-  AllBlockedCohortIdsQueryVariables
->;
-export function useAllBlockedCohortIdsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        AllBlockedCohortIdsQuery,
-        AllBlockedCohortIdsQueryVariables
-      >
-): Apollo.UseSuspenseQueryResult<
-  AllBlockedCohortIdsQuery | undefined,
-  AllBlockedCohortIdsQueryVariables
->;
-export function useAllBlockedCohortIdsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        AllBlockedCohortIdsQuery,
-        AllBlockedCohortIdsQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<
-    AllBlockedCohortIdsQuery,
-    AllBlockedCohortIdsQueryVariables
-  >(AllBlockedCohortIdsDocument, options);
-}
 export type AllBlockedCohortIdsQueryHookResult = ReturnType<
   typeof useAllBlockedCohortIdsQuery
 >;
 export type AllBlockedCohortIdsLazyQueryHookResult = ReturnType<
   typeof useAllBlockedCohortIdsLazyQuery
->;
-export type AllBlockedCohortIdsSuspenseQueryHookResult = ReturnType<
-  typeof useAllBlockedCohortIdsSuspenseQuery
 >;
 export type AllBlockedCohortIdsQueryResult = Apollo.QueryResult<
   AllBlockedCohortIdsQuery,
@@ -13455,52 +13181,11 @@ export function useAllAnchorSeqDateDataLazyQuery(
     AllAnchorSeqDateDataQueryVariables
   >(AllAnchorSeqDateDataDocument, options);
 }
-// @ts-ignore
-export function useAllAnchorSeqDateDataSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    AllAnchorSeqDateDataQuery,
-    AllAnchorSeqDateDataQueryVariables
-  >
-): Apollo.UseSuspenseQueryResult<
-  AllAnchorSeqDateDataQuery,
-  AllAnchorSeqDateDataQueryVariables
->;
-export function useAllAnchorSeqDateDataSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        AllAnchorSeqDateDataQuery,
-        AllAnchorSeqDateDataQueryVariables
-      >
-): Apollo.UseSuspenseQueryResult<
-  AllAnchorSeqDateDataQuery | undefined,
-  AllAnchorSeqDateDataQueryVariables
->;
-export function useAllAnchorSeqDateDataSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        AllAnchorSeqDateDataQuery,
-        AllAnchorSeqDateDataQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<
-    AllAnchorSeqDateDataQuery,
-    AllAnchorSeqDateDataQueryVariables
-  >(AllAnchorSeqDateDataDocument, options);
-}
 export type AllAnchorSeqDateDataQueryHookResult = ReturnType<
   typeof useAllAnchorSeqDateDataQuery
 >;
 export type AllAnchorSeqDateDataLazyQueryHookResult = ReturnType<
   typeof useAllAnchorSeqDateDataLazyQuery
->;
-export type AllAnchorSeqDateDataSuspenseQueryHookResult = ReturnType<
-  typeof useAllAnchorSeqDateDataSuspenseQuery
 >;
 export type AllAnchorSeqDateDataQueryResult = Apollo.QueryResult<
   AllAnchorSeqDateDataQuery,
