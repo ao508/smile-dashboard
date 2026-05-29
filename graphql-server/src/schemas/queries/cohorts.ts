@@ -24,7 +24,6 @@ const FIELDS_TO_SEARCH = [
   "type",
   "searchableSampleIds", // hidden searchable field,
   "pipelineVersion",
-  "cohortStatus",
 ];
 
 export function buildCohortsQueryBody({
@@ -128,8 +127,7 @@ export function buildCohortsQueryBody({
       totalSampleCount: totalSampleCount,
       searchableSampleIds: apoc.text.join(searchableSampleIds, ","),
       billed: billed,
-      initialCohortDeliveryDate: initialCohortDeliveryDate,
-      cohortStatus: c.cohortStatus
+      initialCohortDeliveryDate: initialCohortDeliveryDate
     }) as tempNode,
     COLLECT {
       MATCH (c)-[:HAS_COHORT_COMPLETE]->(cc: CohortComplete)

@@ -90,7 +90,6 @@ query DashboardCohorts(
     offset: $offset
   ) {
     cohortId
-    cohortStatus
     totalSampleCount
     billed
     initialCohortDeliveryDate
