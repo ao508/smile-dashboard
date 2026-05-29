@@ -103,6 +103,10 @@ const SAMPLE_FIELDS = `
   # (s:Sample)-[:HAS_DBGAP]->(d:DbGap)
   dbGapStudy: String
   irbConsentProtocol: String
+  collectionStudy: String
+  dateOfConsent: String
+  genomicResearchUseStudy: String
+  consentVersion: String
 
   # (r:Request)-[:HAS_SAMPLE]->(s:Sample)
   igoDeliveryDate: String

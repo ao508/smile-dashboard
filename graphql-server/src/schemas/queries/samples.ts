@@ -56,6 +56,10 @@ const FIELDS_TO_SEARCH = [
   "sampleCategory",
   "dbGapStudy",
   "irbConsentProtocol",
+  "collectionStudy",
+  "dateOfConsent",
+  "genomicResearchUseStudy",
+  "consentVersion",
   "cfDNA2dBarcode",
   "igoComplete",
   "sampleCohortIds",
@@ -415,6 +419,10 @@ export function buildSamplesQueryBody({
 
         dbGapStudy: d.dbGapStudy,
         irbConsentProtocol: d.irbConsentProtocol,
+        collectionStudy: d.collectionStudy,
+        dateOfConsent: d.dateOfConsent,
+        genomicResearchUseStudy: d.genomicResearchUseStudy,
+        consentVersion: d.consentVersion,
 
         dmpPatientAlias: dmpPatientAlias
       }) AS tempNode
@@ -732,13 +740,20 @@ export async function querySelectSampleDataForCacheUpdate(
         ),
       ", ") AS historicalCmoSampleNames
     WHERE latestSm.primaryId IN $primaryIds
+    OPTIONAL MATCH (s)-[:HAS_DBGAP]->(d:DbGap)
     RETURN DISTINCT
       latestSm.primaryId AS primaryId,
       latestSm.cmoSampleName AS cmoSampleName,
       apoc.date.format(latestSm.importDate, 'ms', 'yyyy-MM-dd') AS importDate,
       historicalCmoSampleNames,
       s.revisable AS revisable,
-      apoc.convert.fromJsonMap(latestSm.additionalProperties).changelog AS changelog
+      apoc.convert.fromJsonMap(latestSm.additionalProperties).changelog AS changelog,
+      d.dbGapStudy AS dbGapStudy,
+      d.irbConsentProtocol AS irbConsentProtocol,
+      d.collectionStudy AS collectionStudy,
+      d.dateOfConsent AS dateOfConsent,
+      d.genomicResearchUseStudy AS genomicResearchUseStudy,
+      d.consentVersion AS consentVersion
   `;
 
   const session = neo4jDriver.session();

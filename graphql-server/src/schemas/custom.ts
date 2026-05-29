@@ -709,18 +709,30 @@ async function publishNewTempoCohortRequestPromise(
   });
 }
 
-async function updateDbGapPromise(newDashboardSample: DashboardSampleInput) {
+async function updateDbGapPromise(
+  newDashboardSample: DashboardSampleInput,
+  ogm: OGM
+) {
   return new Promise((resolve) => {
     const dataForDbGapUpdate = {
       primaryId: newDashboardSample.primaryId,
       dbGapStudy: newDashboardSample.dbGapStudy,
       irbConsentProtocol: newDashboardSample.irbConsentProtocol,
+      collectionStudy: newDashboardSample.collectionStudy,
+      dateOfConsent: newDashboardSample.dateOfConsent,
+      genomicResearchUseStudy: newDashboardSample.genomicResearchUseStudy,
+      consentVersion: newDashboardSample.consentVersion,
     };
 
     publishNatsMessage(
       props.pub_dbgap_sample_update,
       JSON.stringify(dataForDbGapUpdate)
     );
+
+    ogm.model("Sample").update({
+      where: { smileSampleId: newDashboardSample.smileSampleId },
+      update: { revisable: false },
+    });
 
     resolve(null);
   });
@@ -771,7 +783,14 @@ const EDITABLE_TEMPO_FIELDS = new Set([
   "accessLevel",
 ]);
 
-const EDITABLE_DBGAP_FIELDS = new Set(["dbGapStudy", "irbConsentProtocol"]);
+const EDITABLE_DBGAP_FIELDS = new Set([
+  "dbGapStudy",
+  "irbConsentProtocol",
+  "collectionStudy",
+  "dateOfConsent",
+  "genomicResearchUseStudy",
+  "consentVersion",
+]);
 
 async function updateAllSamplesConcurrently(
   newDashboardSamples: DashboardSampleInput[],
@@ -785,8 +804,9 @@ async function updateAllSamplesConcurrently(
     try {
       const { changedFieldNames } = dashboardSample;
 
-      const metadataChanged = changedFieldNames.some((field) =>
-        EDITABLE_SAMPLEMETADATA_FIELDS.has(field)
+      const metadataChanged = changedFieldNames.some(
+        (field) =>
+          EDITABLE_SAMPLEMETADATA_FIELDS.has(field) && field !== "changelog"
       );
       const tempoChanged = changedFieldNames.some((field) =>
         EDITABLE_TEMPO_FIELDS.has(field)
@@ -802,7 +822,7 @@ async function updateAllSamplesConcurrently(
         tempoUpdatePromises.push(updateTempoPromise(dashboardSample));
       }
       if (dbGapChanged) {
-        dbGapUpdatePromises.push(updateDbGapPromise(dashboardSample));
+        dbGapUpdatePromises.push(updateDbGapPromise(dashboardSample, ogm));
       }
     } catch (error) {
       console.error(

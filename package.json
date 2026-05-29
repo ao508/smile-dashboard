@@ -36,6 +36,8 @@
     "prettier": "2.8.8"
   },
   "resolutions": {
+    "node-releases": "2.0.44",
+    "sass": "1.99.0",
     "prettier": "2.8.8",
     "@whatwg-node/fetch": "0.9.16",
     "@whatwg-node/node-fetch": "0.5.18",
@@ -45,7 +47,7 @@
     "@graphql-tools/executor": "1.3.3",
     "inquirer": "8.2.6",
     "graphql-config": "5.1.5",
-    "@graphql-codegen/typescript-operations": "4.4.1",
+    "@graphql-codegen/typescript-operations": "4.6.1",
     "@graphql-codegen/typescript": "4.1.6",
     "@graphql-tools/apollo-engine-loader": "8.0.12",
     "@graphql-tools/github-loader": "8.0.12",

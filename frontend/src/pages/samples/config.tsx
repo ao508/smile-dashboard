@@ -574,6 +574,22 @@ export const wesSampleColDefs: Array<ColDef<DashboardSample>> = [
     headerComponentParams: createCustomHeader(toolTipIcon),
   },
   {
+    field: "collectionStudy",
+    headerName: "Collection Study",
+  },
+  {
+    field: "dateOfConsent",
+    headerName: "Date of Consent",
+  },
+  {
+    field: "genomicResearchUseStudy",
+    headerName: "Genomic Research Use Study",
+  },
+  {
+    field: "consentVersion",
+    headerName: "Consent Version",
+  },
+  {
     field: "sampleCohortIds",
     headerName: "Sample Cohort IDs",
   },
@@ -978,6 +994,10 @@ const editableWesSampleFields = new Set([
   "accessLevel",
   "dbGapStudy",
   "irbConsentProtocol",
+  "collectionStudy",
+  "dateOfConsent",
+  "genomicResearchUseStudy",
+  "consentVersion",
 ]);
 
 export const allEditableFields = new Set(
