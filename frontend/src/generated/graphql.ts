@@ -376,7 +376,6 @@ export type BigIntAggregateSelection = {
 export type Cohort = {
   __typename?: 'Cohort';
   cohortId: Scalars['String']['output'];
-  cohortStatus: Scalars['String']['output'];
   hasCohortCompleteCohortCompletes: Array<CohortComplete>;
   hasCohortCompleteCohortCompletesAggregate?: Maybe<CohortCohortCompleteHasCohortCompleteCohortCompletesAggregationSelection>;
   hasCohortCompleteCohortCompletesConnection: CohortHasCohortCompleteCohortCompletesConnection;
@@ -432,7 +431,6 @@ export type CohortHasCohortSampleSamplesConnectionArgs = {
 export type CohortAggregateSelection = {
   __typename?: 'CohortAggregateSelection';
   cohortId: StringAggregateSelection;
-  cohortStatus: StringAggregateSelection;
   count: Scalars['Int']['output'];
 };
 
@@ -467,7 +465,7 @@ export type CohortComplete = {
   pmUsers: Scalars['String']['output'];
   projectSubtitle: Scalars['String']['output'];
   projectTitle: Scalars['String']['output'];
-  status?: Maybe<Scalars['String']['output']>;
+  status: Scalars['String']['output'];
   type: Scalars['String']['output'];
 };
 
@@ -516,7 +514,6 @@ export type CohortCompleteCohortCohortsHasCohortCompleteAggregationSelection = {
 export type CohortCompleteCohortCohortsHasCohortCompleteNodeAggregateSelection = {
   __typename?: 'CohortCompleteCohortCohortsHasCohortCompleteNodeAggregateSelection';
   cohortId: StringAggregateSelection;
-  cohortStatus: StringAggregateSelection;
 };
 
 export type CohortCompleteCohortsHasCohortCompleteAggregateInput = {
@@ -594,21 +591,6 @@ export type CohortCompleteCohortsHasCohortCompleteNodeAggregationWhereInput = {
   cohortId_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
   cohortId_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
   cohortId_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CohortCompleteCohortsHasCohortCompleteRelationship = {
@@ -647,7 +629,7 @@ export type CohortCompleteCreateInput = {
   pmUsers: Scalars['String']['input'];
   projectSubtitle: Scalars['String']['input'];
   projectTitle: Scalars['String']['input'];
-  status?: InputMaybe<Scalars['String']['input']>;
+  status: Scalars['String']['input'];
   type: Scalars['String']['input'];
 };
 
@@ -770,7 +752,7 @@ export type CohortCompleteWhere = {
   status?: InputMaybe<Scalars['String']['input']>;
   status_CONTAINS?: InputMaybe<Scalars['String']['input']>;
   status_ENDS_WITH?: InputMaybe<Scalars['String']['input']>;
-  status_IN?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status_IN?: InputMaybe<Array<Scalars['String']['input']>>;
   status_MATCHES?: InputMaybe<Scalars['String']['input']>;
   status_STARTS_WITH?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
@@ -799,7 +781,6 @@ export type CohortConnectWhere = {
 
 export type CohortCreateInput = {
   cohortId: Scalars['String']['input'];
-  cohortStatus: Scalars['String']['input'];
   hasCohortCompleteCohortCompletes?: InputMaybe<CohortHasCohortCompleteCohortCompletesFieldInput>;
   hasCohortSampleSamples?: InputMaybe<CohortHasCohortSampleSamplesFieldInput>;
 };
@@ -1211,12 +1192,10 @@ export type CohortSampleHasCohortSampleSamplesNodeAggregateSelection = {
 /** Fields to sort Cohorts by. The order in which sorts are applied is not guaranteed when specifying many fields in one CohortSort object. */
 export type CohortSort = {
   cohortId?: InputMaybe<SortDirection>;
-  cohortStatus?: InputMaybe<SortDirection>;
 };
 
 export type CohortUpdateInput = {
   cohortId?: InputMaybe<Scalars['String']['input']>;
-  cohortStatus?: InputMaybe<Scalars['String']['input']>;
   hasCohortCompleteCohortCompletes?: InputMaybe<Array<CohortHasCohortCompleteCohortCompletesUpdateFieldInput>>;
   hasCohortSampleSamples?: InputMaybe<Array<CohortHasCohortSampleSamplesUpdateFieldInput>>;
 };
@@ -1231,12 +1210,6 @@ export type CohortWhere = {
   cohortId_IN?: InputMaybe<Array<Scalars['String']['input']>>;
   cohortId_MATCHES?: InputMaybe<Scalars['String']['input']>;
   cohortId_STARTS_WITH?: InputMaybe<Scalars['String']['input']>;
-  cohortStatus?: InputMaybe<Scalars['String']['input']>;
-  cohortStatus_CONTAINS?: InputMaybe<Scalars['String']['input']>;
-  cohortStatus_ENDS_WITH?: InputMaybe<Scalars['String']['input']>;
-  cohortStatus_IN?: InputMaybe<Array<Scalars['String']['input']>>;
-  cohortStatus_MATCHES?: InputMaybe<Scalars['String']['input']>;
-  cohortStatus_STARTS_WITH?: InputMaybe<Scalars['String']['input']>;
   hasCohortCompleteCohortCompletesAggregate?: InputMaybe<CohortHasCohortCompleteCohortCompletesAggregateInput>;
   /** Return Cohorts where all of the related CohortHasCohortCompleteCohortCompletesConnections match this filter */
   hasCohortCompleteCohortCompletesConnection_ALL?: InputMaybe<CohortHasCohortCompleteCohortCompletesConnectionWhere>;
@@ -1391,7 +1364,6 @@ export type DashboardCohort = {
   _uniqueSampleCount?: Maybe<Scalars['Int']['output']>;
   billed?: Maybe<Scalars['String']['output']>;
   cohortId: Scalars['String']['output'];
-  cohortStatus?: Maybe<Scalars['String']['output']>;
   endUsers?: Maybe<Scalars['String']['output']>;
   importDate?: Maybe<Scalars['String']['output']>;
   initialCohortDeliveryDate?: Maybe<Scalars['String']['output']>;
@@ -1412,7 +1384,6 @@ export type DashboardCohortInput = {
   changedFieldNames: Array<Scalars['String']['input']>;
   changelog?: InputMaybe<Scalars['String']['input']>;
   cohortId: Scalars['String']['input'];
-  cohortStatus?: InputMaybe<Scalars['String']['input']>;
   endUsers?: InputMaybe<Scalars['String']['input']>;
   importDate?: InputMaybe<Scalars['String']['input']>;
   initialCohortDeliveryDate?: InputMaybe<Scalars['String']['input']>;
@@ -6791,7 +6762,6 @@ export type SampleCohortCohortsHasCohortSampleAggregationSelection = {
 export type SampleCohortCohortsHasCohortSampleNodeAggregateSelection = {
   __typename?: 'SampleCohortCohortsHasCohortSampleNodeAggregateSelection';
   cohortId: StringAggregateSelection;
-  cohortStatus: StringAggregateSelection;
 };
 
 export type SampleCohortsHasCohortSampleAggregateInput = {
@@ -6869,21 +6839,6 @@ export type SampleCohortsHasCohortSampleNodeAggregationWhereInput = {
   cohortId_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
   cohortId_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
   cohortId_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']['input']>;
-  cohortStatus_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  cohortStatus_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SampleCohortsHasCohortSampleRelationship = {
@@ -11371,7 +11326,7 @@ export type DashboardCohortsQueryVariables = Exact<{
 }>;
 
 
-export type DashboardCohortsQuery = { __typename?: 'Query', dashboardCohorts: Array<{ __typename?: 'DashboardCohort', cohortId: string, cohortStatus?: string | null, totalSampleCount?: number | null, billed?: string | null, initialCohortDeliveryDate?: string | null, importDate?: string | null, endUsers?: string | null, pmUsers?: string | null, projectTitle?: string | null, projectSubtitle?: string | null, status?: string | null, type?: string | null, pipelineVersion?: string | null, searchableSampleIds?: string | null, _total?: number | null, _uniqueSampleCount?: number | null }> };
+export type DashboardCohortsQuery = { __typename?: 'Query', dashboardCohorts: Array<{ __typename?: 'DashboardCohort', cohortId: string, totalSampleCount?: number | null, billed?: string | null, initialCohortDeliveryDate?: string | null, importDate?: string | null, endUsers?: string | null, pmUsers?: string | null, projectTitle?: string | null, projectSubtitle?: string | null, status?: string | null, type?: string | null, pipelineVersion?: string | null, searchableSampleIds?: string | null, _total?: number | null, _uniqueSampleCount?: number | null }> };
 
 export type DashboardSamplesQueryVariables = Exact<{
   searchVals?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
@@ -11716,7 +11671,6 @@ export const DashboardCohortsDocument = gql`
     offset: $offset
   ) {
     cohortId
-    cohortStatus
     totalSampleCount
     billed
     initialCohortDeliveryDate

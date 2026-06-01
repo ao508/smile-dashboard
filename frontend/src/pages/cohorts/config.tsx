@@ -67,10 +67,10 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
     headerName: "Cohort ID",
   },
   {
-    field: "cohortStatus",
-    headerName: "Cohort Status",
+    field: "status",
+    headerName: "Status",
     headerTooltip:
-      "The status of the cohort in SMILE (e.g. PROVISONAL, DELIVERED)",
+      "The status of the cohort in TEMPO (e.g. PROVISONAL, PASS, FAIL)",
     headerComponentParams: createCustomHeader(lockIcon + toolTipIcon),
     cellRenderer: (params: ICellRendererParams<DashboardCohort>) => {
       if (!params.data) return null;
@@ -125,10 +125,6 @@ export const cohortColDefs: ColDef<DashboardCohort>[] = [
   {
     field: "projectSubtitle",
     headerName: "Project Subtitle",
-  },
-  {
-    field: "status",
-    headerName: "Status",
   },
   {
     field: "type",
