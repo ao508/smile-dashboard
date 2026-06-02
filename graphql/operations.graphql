@@ -343,6 +343,7 @@ mutation PublishNewTempoCohortRequest(
     endUsers
     pmUsers
     type
+    status
     samples {
       primaryId
       cmoId

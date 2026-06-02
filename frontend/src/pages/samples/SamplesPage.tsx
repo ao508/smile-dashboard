@@ -73,6 +73,7 @@ export function SamplesPage() {
       projectSubtitle: "",
       samples: [],
       type: "investigator",
+      status: "PROVISIONAL",
     });
 
   const showCohortBuilder = cohortBuilderMode !== "hidden";
@@ -89,6 +90,7 @@ export function SamplesPage() {
       projectSubtitle: "",
       samples: [],
       type: "investigator",
+      status: "PROVISIONAL",
     });
   }
 
