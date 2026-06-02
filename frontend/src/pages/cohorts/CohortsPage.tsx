@@ -1,10 +1,12 @@
-import { useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { DataGrid } from "../../components/DataGrid";
 import { AgGridReact as AgGridReactType } from "ag-grid-react/lib/agGridReact";
 import { useFetchData } from "../../hooks/useFetchData";
 import {
+  AgGridSortDirection,
   DashboardCohort,
   DashboardSample,
+  TempoCohortRequest,
   useDashboardCohortsLazyQuery,
 } from "../../generated/graphql";
 import { Title } from "../../components/Title";
@@ -39,6 +41,36 @@ export function CohortsPage() {
   const [userSearchVal, setUserSearchVal] = useState("");
   const gridRef = useRef<AgGridReactType<DashboardSample>>(null);
   const hasParams = Object.keys(useParams()).length > 0;
+  const cohortId = useParams()[ROUTE_PARAMS.cohorts];
+
+  const [fetchSelectedCohort, { data: selectedCohortData }] =
+    useDashboardCohortsLazyQuery();
+
+  useEffect(() => {
+    if (!cohortId) return;
+    fetchSelectedCohort({
+      variables: {
+        searchVals: [`"${cohortId}"`],
+        sort: { colId: "cohortId", sort: AgGridSortDirection.Asc },
+        limit: 1,
+        offset: 0,
+      },
+    });
+  }, [cohortId, fetchSelectedCohort]);
+
+  const selectedCohort = selectedCohortData?.["dashboardCohorts"]?.[0];
+  const tempoCohortRequest: TempoCohortRequest | undefined = selectedCohort
+    ? {
+        cohortId: selectedCohort.cohortId,
+        endUsers: selectedCohort.endUsers ?? "",
+        pmUsers: selectedCohort.pmUsers ?? "",
+        projectTitle: selectedCohort.projectTitle ?? "",
+        projectSubtitle: selectedCohort.projectSubtitle ?? "",
+        type: selectedCohort.type ?? "",
+        status: selectedCohort.status ?? "",
+        samples: [],
+      }
+    : undefined;
 
   const {
     refreshData,
@@ -159,6 +191,7 @@ export function CohortsPage() {
           sampleColDefs={filteredWesSampleColDefs}
           contextFieldName={ROUTE_PARAMS.cohorts}
           parentRecordName={RECORD_NAME}
+          tempoCohortRequest={tempoCohortRequest}
         />
       )}
 

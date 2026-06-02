@@ -10382,6 +10382,7 @@ export type TempoCohortRequest = {
   projectSubtitle: Scalars['String']['output'];
   projectTitle: Scalars['String']['output'];
   samples: Array<TempoCohortSample>;
+  status: Scalars['String']['output'];
   type: Scalars['String']['output'];
 };
 
@@ -10392,6 +10393,7 @@ export type TempoCohortRequestInput = {
   projectSubtitle: Scalars['String']['input'];
   projectTitle: Scalars['String']['input'];
   samples: Array<TempoCohortSampleInput>;
+  status: Scalars['String']['input'];
   type: Scalars['String']['input'];
 };
 
@@ -11396,7 +11398,7 @@ export type PublishNewTempoCohortRequestMutationVariables = Exact<{
 }>;
 
 
-export type PublishNewTempoCohortRequestMutation = { __typename?: 'Mutation', publishNewTempoCohortRequest?: { __typename?: 'TempoCohortRequest', cohortId: string, projectTitle: string, projectSubtitle: string, endUsers: string, pmUsers: string, type: string, samples: Array<{ __typename?: 'TempoCohortSample', primaryId: string, cmoId?: string | null, embargoDate?: string | null }> } | null };
+export type PublishNewTempoCohortRequestMutation = { __typename?: 'Mutation', publishNewTempoCohortRequest?: { __typename?: 'TempoCohortRequest', cohortId: string, projectTitle: string, projectSubtitle: string, endUsers: string, pmUsers: string, type: string, status: string, samples: Array<{ __typename?: 'TempoCohortSample', primaryId: string, cmoId?: string | null, embargoDate?: string | null }> } | null };
 
 export const DashboardSamplePartsFragmentDoc = gql`
     fragment DashboardSampleParts on DashboardSample {
@@ -11730,6 +11732,7 @@ export const PublishNewTempoCohortRequestDocument = gql`
     endUsers
     pmUsers
     type
+    status
     samples {
       primaryId
       cmoId

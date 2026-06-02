@@ -237,6 +237,7 @@ const QUERY_RESULT_TYPEDEFS = gql`
     endUsers: String!
     pmUsers: String!
     type: String!
+    status: String!
     samples: [TempoCohortSample!]!
   }
 `;
@@ -333,6 +334,7 @@ const MUTATION_TYPEDEFS = gql`
     endUsers: [String!]!
     pmUsers: [String!]!
     type: String!
+    status: String!
     samples: [TempoCohortSampleInput!]!
   }
 

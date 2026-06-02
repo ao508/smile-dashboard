@@ -4,8 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   DashboardRecordContext,
   DashboardSample,
+  TempoCohortRequest,
   useDashboardSamplesLazyQuery,
 } from "../generated/graphql";
+import { CohortBuilderPublishButton } from "../components/CohortBuilderPublishButton";
 import { useFetchData } from "../hooks/useFetchData";
 import { useCellChanges } from "../hooks/useCellChanges";
 import { useDownload } from "../hooks/useDownload";
@@ -56,6 +58,7 @@ interface SamplesModalProps {
   parentRecordName: keyof typeof ROUTE_PARAMS;
   showPhiModeSwitch?: boolean;
   showForceLabelButton?: boolean;
+  tempoCohortRequest?: TempoCohortRequest;
 }
 
 export function SamplesModal({
@@ -64,6 +67,7 @@ export function SamplesModal({
   parentRecordName,
   showPhiModeSwitch = false,
   showForceLabelButton = false,
+  tempoCohortRequest,
 }: SamplesModalProps) {
   const [userSearchVal, setUserSearchVal] = useState("");
   const [colDefs, setColDefs] = useState(sampleColDefs);
@@ -236,6 +240,23 @@ export function SamplesModal({
                 : ""}
             </CustomTooltip>
           )}
+          {parentRecordName === "cohorts" &&
+            tempoCohortRequest &&
+            tempoCohortRequest.status === "PROVISIONAL" && (
+              <CohortBuilderPublishButton
+                tempoCohortRequest={tempoCohortRequest}
+                cohortSamples={(data?.[QUERY_NAME] ?? []).map(
+                  (s: DashboardSample) => ({
+                    primaryId: s.primaryId ?? "",
+                    cmoSampleName: s.cmoSampleName ?? "",
+                    mafCompleteStatus: s.mafCompleteStatus ?? "",
+                    sampleCohortIds: s.sampleCohortIds ?? "",
+                    initialPipelineRunDate: s.initialPipelineRunDate ?? null,
+                    embargoDate: s.embargoDate ?? null,
+                  })
+                )}
+              />
+            )}
           <DownloadButton
             downloadOptions={downloadOptions}
             onDownload={handleDownload}
