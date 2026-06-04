@@ -67,9 +67,13 @@ export function useCellChanges({
     const fieldName = params.colDef.field!;
     const { oldValue, newValue, node: rowNode } = params;
 
-    // Prevent registering a change if no actual changes are made
+    // Prevent registering a change if no actual changes are made.
+    // Use explicit null/empty check instead of falsy to avoid treating boolean
+    // `false` as "empty" (which would cause selecting "No" to be discarded).
+    const isNullOrEmpty = (val: any) => val == null || val === "";
     const noChangeInVal = rowNode.data[fieldName] === newValue;
-    const noChangeInEmptyCell = !rowNode.data[fieldName] && !newValue;
+    const noChangeInEmptyCell =
+      isNullOrEmpty(rowNode.data[fieldName]) && isNullOrEmpty(newValue);
     if (noChangeInVal || noChangeInEmptyCell) {
       setChanges((changes) => {
         const updatedChanges = changes.filter(
