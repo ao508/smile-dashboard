@@ -24,6 +24,7 @@ import {
 } from "../configs/shared";
 import { formatCohortUsersString } from "../utils/formatCohortUsersString";
 import _ from "lodash";
+import { BILLING_FIELDS } from "../pages/samples/config";
 
 interface UseCellChangesParams {
   gridRef: RefObject<AgGridReactType<any>>;
@@ -89,7 +90,7 @@ export function useCellChanges({
     stopPolling();
 
     // Add/update the billedBy cell to/in the changes array
-    if (fieldName === "billed" && setUserEmail) {
+    if (BILLING_FIELDS.has(fieldName) && setUserEmail) {
       let currUserEmail = userEmail;
 
       if (!currUserEmail) {
