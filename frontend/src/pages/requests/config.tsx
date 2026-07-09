@@ -106,28 +106,12 @@ export const requestColDefs: ColDef<DashboardRequest>[] = [
     headerName: "# Samples",
   },
   {
-    field: "projectManagerName",
-    headerName: "Project Manager Name",
-  },
-  {
     field: "investigatorName",
     headerName: "Investigator Name",
   },
   {
     field: "investigatorEmail",
     headerName: "Investigator Email",
-  },
-  {
-    field: "piEmail",
-    headerName: "PI Email",
-  },
-  {
-    field: "dataAnalystName",
-    headerName: "Data Analyst Name",
-  },
-  {
-    field: "dataAnalystEmail",
-    headerName: "Data Analyst Email",
   },
   {
     field: "genePanel",
@@ -170,5 +154,21 @@ export const requestColDefs: ColDef<DashboardRequest>[] = [
   {
     field: "otherContactEmails",
     headerName: "Other Contact Emails",
+  },
+  {
+    field: "projectManagerName",
+    headerName: "Project Manager Name",
+  },
+  {
+    field: "piEmail",
+    headerName: "PI Email",
+  },
+  {
+    field: "dataAnalystName",
+    headerName: "Data Analyst Name",
+  },
+  {
+    field: "dataAnalystEmail",
+    headerName: "Data Analyst Email",
   },
 ];
