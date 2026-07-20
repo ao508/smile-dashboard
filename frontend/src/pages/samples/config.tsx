@@ -24,6 +24,7 @@ import {
   getAgGridBooleanValueFormatter,
   getAgGridDateColFilterConfigs,
   isInvalidCostCenter,
+  isInvalidCmoPatientId,
 } from "../../utils/agGrid";
 import _ from "lodash";
 import { Link } from "react-router-dom";
@@ -222,6 +223,11 @@ export const sampleColDefs: Array<ColDef<DashboardSample>> = [
       } else {
         return <></>;
       }
+    },
+    cellClassRules: {
+      "cmoPatientId-validation-error": (params: CellClassParams) => {
+        return isInvalidCmoPatientId(params.colDef.field!, params.value);
+      },
     },
   },
   {
@@ -552,6 +558,11 @@ export const wesSampleColDefs: Array<ColDef<DashboardSample>> = [
         return <></>;
       }
     },
+    cellClassRules: {
+      "cmoPatientId-validation-error": (params: CellClassParams) => {
+        return isInvalidCmoPatientId(params.colDef.field!, params.value);
+      },
+    },
   },
   {
     field: "historicalCmoSampleNames",
@@ -881,6 +892,11 @@ const accessSampleColDefs: Array<ColDef<DashboardSample>> = [
   {
     field: "cmoPatientId",
     headerName: "CMO Patient ID",
+    cellClassRules: {
+      "cmoPatientId-validation-error": (params: CellClassParams) => {
+        return isInvalidCmoPatientId(params.colDef.field!, params.value);
+      },
+    },
   },
   {
     field: "investigatorSampleId",

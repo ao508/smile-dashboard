@@ -17,9 +17,14 @@ import {
 import { handleAgGridPaste } from "../utils/handleAgGridPaste";
 import { awaitLoginPopup } from "../utils/awaitLoginPopup";
 import { RecordChange } from "../types/shared";
-import { formatCellDate, isInvalidCostCenter } from "../utils/agGrid";
+import {
+  formatCellDate,
+  isInvalidCostCenter,
+  isInvalidCmoPatientId,
+} from "../utils/agGrid";
 import {
   INVALID_COST_CENTER_WARNING,
+  INVALID_CMO_PATIENT_ID_WARNING,
   POLLING_PAUSE_AFTER_UPDATE,
 } from "../configs/shared";
 import { formatCohortUsersString } from "../utils/formatCohortUsersString";
@@ -142,6 +147,13 @@ export function useCellChanges({
     // Validate Cost Center inputs
     if (isInvalidCostCenter(fieldName, newValue)) {
       setWarningModalContent(INVALID_COST_CENTER_WARNING);
+    }
+
+    // Warn on CMO Patient ID inputs that don't match the expected format.
+    // This is a non-blocking warning: it does not prevent the user from
+    // submitting the update, it only flags that label generation may fail.
+    if (isInvalidCmoPatientId(fieldName, newValue)) {
+      setWarningModalContent(INVALID_CMO_PATIENT_ID_WARNING);
     }
 
     gridRef.current?.api?.redrawRows({ rowNodes: [rowNode] });
