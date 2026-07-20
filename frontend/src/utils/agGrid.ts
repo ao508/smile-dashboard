@@ -62,3 +62,12 @@ export function isInvalidCostCenter(fieldName: string, value: string) {
   const validCostCenter = new RegExp("^\\w{5,9}/\\d{5}$");
   return !validCostCenter.test(value);
 }
+
+export function isInvalidCmoPatientId(fieldName: string, value: string) {
+  // if field not cmoPatientId then return false
+  if (fieldName !== "cmoPatientId") return false;
+  // if value is blank and field is cmoPatientId then return invalid
+  if (!value && fieldName === "cmoPatientId") return true;
+  const validCmoPatientId = new RegExp("^C-\\w{6}$");
+  return !validCmoPatientId.test(value);
+}

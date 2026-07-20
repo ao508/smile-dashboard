@@ -63,6 +63,11 @@ export const INVALID_COST_CENTER_WARNING =
   "(CC followed by 7 alphanumeric characters, a forward slash, then 5 digits). For example: CC1234567/12345. " +
   "Please note that 5 digit legacy Cost Center formats (#####/#####) will also be accepted temporarily.";
 
+export const INVALID_CMO_PATIENT_ID_WARNING =
+  "This CMO Patient ID does not follow the expected format C-#######" +
+  " (C, a hyphen, then 6 alphanumeric characters). Proceeding with this value" +
+  " may cause issues with label generation.";
+
 export const NO_CHANGELOG_WARNING =
   "Reason for Change field must be filled in before submitting updates.";
 
